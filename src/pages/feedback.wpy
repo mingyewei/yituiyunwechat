@@ -1,0 +1,120 @@
+<style lang="less">
+  .wrap{
+    background-color:#fff;
+    text-align: center;
+  }
+  page{
+    background-color: #fff;
+  }
+  .txt{
+    color:#121212;
+    font-size:30rpx;
+    text-align:left;
+    width:90%;
+    padding: 20rpx 25rpx;
+    background: #f8f8f8;
+    margin: 10% auto 50rpx auto;
+  }
+.loginBtn{
+  background:#0ec3bc!important;
+  width:94%;
+  font-size:32rpx;
+  margin-top:100rpx;
+  border-radius:60rpx;
+  color: #fff!important;
+  line-height:80rpx;
+  margin-left:auto;
+  margin-right:auto;
+}
+  .left{
+    font-size: 25rpx;
+    margin-top: 40%;
+  }
+  .highlight{
+    color: #0ec3bc;
+  }
+  .general{
+    color: #aaaaaa;
+    margin-right: 10rpx;
+  }
+  .inline{
+    display: inline-block;
+  }
+
+</style>
+
+<template lang="wxml">
+  <view class="wrap">
+    <textarea
+      cols="30"
+      rows="10"
+      class="txt"
+      placeholder="请写下您对我们的意见或建议，我们会努力为您提供更好地服务"
+      placeholder-style="color:#cbcbcb"
+      bindinput='listenerMakeSuggest'
+      value="{{suggest}}"
+    ></textarea>
+    <view class="loginBtn" bindtap='submitSuggest'>提交</view>
+    <view class="left">
+      <text  class="general">客服电话：</text>
+      <view class="highlight inline">010-4568-3255</view>
+    </view>
+  </view>
+
+</template>
+<script>
+    import wepy from 'wepy'
+    import {makeSuggestion} from '../actions/workerAction'
+    export default class feedback extends wepy.page {
+      config = {
+        navigationBarTitleText: '意见反馈'
+      };
+      data = {
+        suggest: '',
+        userId: ''
+      };
+      methods = {
+        listenerMakeSuggest: function (e) {
+          this.suggest = e.detail.value
+          this.$apply()
+        },
+        submitSuggest: function () {
+          var info = {
+            suggestionContent: this.suggest,
+            userId: this.userId
+          }
+          console.log('this.suggest', info)
+          wx.showLoading({title: '提交中'})
+          makeSuggestion(info).then((data) => {
+            if (data.data.success) {
+              wx.hideLoading()
+              wx.showModal({
+                title: '提示',
+                content: '感谢您的反馈，我们定会做得更好！',
+                showCancel: false,
+                success: function(res) {
+                  if (res.confirm) {
+                    wx.navigateBack({
+                      delta: 1
+                    })
+                  }
+                }
+              })
+            } else {
+              wx.showModal({
+                title: '提示',
+                content: '抱歉，提交失败！请重试',
+                showCancel: false
+              })
+              wx.hideLoading()
+            }
+          })
+        }
+      };
+      onLoad() {
+        var meInfo = wepy.$instance.globalData.meInfo
+        this.userId = meInfo.id
+      }
+      onShow() {}
+    }
+</script>

@@ -1,0 +1,342 @@
+<style lang="less">
+  .wrap{
+    text-align: center;
+  }
+  .inline{
+    display: inline-block;
+  }
+  .user{
+    border-radius:20rpx;
+    padding:40rpx 28rpx 15rpx 28rpx;
+    background-color:#fff;
+    text-align:left;
+    margin:20rpx auto;
+    width: 86%;
+  }
+  .list{
+    background: #fff;
+    border-radius: 15rpx;
+    text-align: left;
+  }
+  .time, .personPrice, .address{
+    font-size:24rpx;
+    color:#898989;
+    padding-bottom:25rpx;
+  }
+  .time icon{
+    margin-right: 20rpx;
+  }
+  .iconpiont{
+    width:22rpx;
+    height:22rpx;
+    border-radius: 50%;
+    background:#ffa301;
+    margin-right:20rpx;
+    display:inline-block;
+  }
+  .address .iconpiont{
+    background: #fc7e94;
+  }
+  .total{
+    font-size:24rpx;
+    color:#121212;
+    border-top: 1rpx solid #e1e1e1;
+    display: flex;
+  }
+  .work{
+    text-align:right;
+    flex: 1;
+  }
+  .date{
+    color: #0ec3bc;
+  }
+  .date, .work{
+    padding: 20rpx 0 10rpx 0;
+    flex: 1;
+  }
+  .title{
+    font-size: 45rpx;
+    color: #fff;
+  }
+  .totaltime,.totalmoney{
+    flex: 1;
+    font-size: 24rpx;
+    color: #b7e8e5;
+  }
+  .num{
+    font-size: 30rpx;
+    font-weight: bold;
+    margin-left: 10rpx;
+  }
+  .num text{
+    margin-right: 5rpx;
+  }
+  .person{
+    padding:30rpx 13rpx;
+    background-color:#fff;
+    text-align:left;
+    border-bottom:1rpx solid #e1e1e1;
+  }
+  .head{
+    width:90rpx;
+    height:90rpx;
+    border-radius:50%;
+    margin-right:25rpx;
+    vertical-align:top;
+  }
+  .sex{
+    width: 19rpx;
+    height: 26rpx;
+    margin-left: 10rpx;
+  }
+  .sexm{
+    width: 25rpx;
+    height: 25rpx;
+    margin-left: 10rpx;
+  }
+  .general{
+    color: #aaaaaa;
+    font-size:24rpx;
+    text-align: left;
+    margin-bottom: 30rpx;
+    width: 100%;
+  }
+  .times{
+    color: #aaaaaa;
+    font-size:26rpx;
+    margin-bottom: 30rpx;
+    width: 100%;
+  }
+  .gnrl{
+    margin-bottom: 0;
+    margin-right: 20rpx;
+  }
+  .name{
+    color:#121212;
+    font-size:28rpx;
+    text-align:left;
+    line-height:35rpx;
+  }
+  /*弹窗*/
+  /*mask*/
+  .drawer_screen {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+  }
+  .drawer_box {
+    overflow:hidden;
+    position:fixed;
+    bottom:0;
+    left:0;
+    z-index:1001;
+    background:#fff;
+    width:100%;
+    border-top-left-radius:20rpx;
+    border-top-right-radius:20rpx;
+    text-align: center;
+  }
+  .drawer_title{
+    line-height:100rpx;
+    font-size:42rpx;
+    color:#000;
+    text-align: center;
+  }
+  .drawer_content{
+    height:650rpx;
+    overflow: scroll;
+  }
+  .contentMessage{
+    height:105rpx;
+    line-height: 105rpx;
+    font-size:28rpx;
+    text-align: left;
+    padding-left: 12rpx;
+    padding-right: 12rpx;
+    margin-left:22rpx;
+    border-bottom: 1rpx solid #e1e1e1;
+  }
+  .contentMessage view{
+    width:44rpx;
+    height:44rpx;
+    border-radius: 50%;
+    border: 1rpx solid #ccc;
+    float: right;
+    margin-top:34rpx;
+  }
+  .sureBtn{
+    line-height:100rpx;
+    background-color: #0ec3bc;
+    font-size:26rpx;
+    border-radius: 0;
+    color: #fff;
+  }
+  .signin{
+    width:90%;
+    background-color: #f8f8f8;
+    padding: 15rpx 0;
+    display:flex;
+    margin: 30rpx auto;
+  }
+  .signinItem{
+    flex: 1;
+    background-color: #f8f8f8;
+  }
+  .signinItem view{
+    text-align: center;
+  }
+  .all{
+    display: flex;
+  }
+  .txt{
+    color:#121212;
+    font-size:23rpx;
+    text-align:left;
+    line-height:55rpx;
+  }
+  .totalLeft{
+    text-align: left;
+    flex: 1;
+    margin-left:20rpx;
+  }
+  .totalRight{
+    flex: 1;
+    text-align: right;
+    margin-right: 20rpx;
+  }
+  .text{
+    font-size:26rpx;
+    text-align:left;
+    margin-top:6px;
+    font-weight:600;
+    flex:1;
+    margin-bottom: 35rpx;
+  }
+  .light{
+    color: #13bfc1;
+    font-size:34rpx;
+    margin-top:72%;
+    margin-bottom: 40rpx;
+    font-weight: bold;
+  }
+  .light text{
+    font-weight: normal;
+    font-size: 23rpx;
+  }
+  .times{
+    color: #aaaaaa;
+    font-size:26rpx;
+    margin-bottom: 30rpx;
+    width: 100%;
+  }
+  .drawer_box .general{
+    text-align: center!important;
+  }
+
+</style>
+
+<template lang="wxml">
+  <view class="wrap">
+    <view class="user">
+      <view class="list">
+        <view class="time"><icon type="waiting" size="12" color="#13c0c4"/>2018.02.03 9:00-18:00</view>
+        <view class="personPrice"><view class="iconpiont"></view>人数: 10 | 定价: 20元/小时</view>
+        <view class="address"><view class="iconpiont"></view>酒店1层20个客房的清扫工作</view>
+      </view>
+      <view class="total">
+        <view class="date">结算中</view>
+        <view class="work">未结款数：<text class="num">500<text>元</text></text></view>
+      </view>
+    </view>
+    <view class="details">
+      <view class="person" @tap="showModal">
+        <image src="../images/my/head.png" class="head"></image>
+        <view class="inline">
+        <view class="name">
+          梁艺婷
+          <image src="../images/my/man.png" class="sexm"></image>
+        </view>
+        <text class="general gnrl">工作总时长：3小时</text>
+        <text class="general gnrl">应结总金额：60元</text>
+        </view>
+      </view>
+      <view class="person" @tap="showModal">
+        <image src="../images/my/head.png" class="head"></image>
+        <view class="inline">
+          <view class="name">
+            梁艺婷
+            <image src="../images/my/man.png" class="sexm"></image>
+          </view>
+          <text class="general gnrl">工作总时长：3小时</text>
+          <text class="general gnrl">应结总金额：60元</text>
+        </view>
+      </view>
+    </view>
+
+  <!--弹窗-->
+  <view class="drawer_screen" wx:if="{{showModalStatus}}">
+    <view class="drawer_box">
+      <view class="drawer_title">工作记录</view>
+      <view class="drawer_content">
+        <view class="general">小时工： 梁艺婷 </view>
+
+        <view class="signin">
+          <view class="signinItem">
+          <view class="text">工作日期</view>
+          <view class="times">2018.02.01</view>
+          <view class="times">2018.02.04</view>
+          </view>
+          <view class="signinItem">
+            <view class="text">签到时间</view>
+            <view class="times">9:00</view>
+            <view class="times">15:00</view>
+          </view>
+          <view class="signinItem">
+            <view class="text">就餐次数</view>
+            <view class="times">0</view>
+            <view class="times">0</view>
+          </view>
+          <view class="signinItem">
+            <view class="text">签退时间</view>
+            <view class="times">9:00</view>
+            <view class="times">15:00</view>
+          </view>
+        </view>
+        <view class="all">
+          <view class="totalLeft txt">工作时间： <text class="light">3 <text>小时</text></text></view>
+          <view class="totalRight txt">应结金额： <text class="light">60 <text>元</text></text></view>
+        </view>
+
+      </view>
+      <button class="sureBtn" bindtap="sureModal" >确定</button>
+    </view>
+  </view>
+
+  </view>
+</template>
+<script>
+    import wepy from 'wepy'
+    export default class hotelNoSettlement extends wepy.page {
+      config = {
+        navigationBarTitleText: '未结算'
+      };
+      data = {
+        showModalStatus: false
+      };
+      methods = {
+        showModal: function() {
+          this.showModalStatus = true
+        },
+        sureModal: function () {
+          this.showModalStatus = false
+        }
+      };
+      onLoad() {}
+      onShow() {}
+    }
+</script>

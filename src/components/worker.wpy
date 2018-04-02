@@ -1,0 +1,726 @@
+<style lang="less">
+  .btnwrap{
+    background-color: #fff;
+    margin-bottom: 20rpx;
+    height: 5rem;
+  }
+  .txt{
+    color:#121212;
+    font-size:30rpx;
+    text-align:left;
+    line-height:55rpx;
+    margin-bottom:40rpx;
+  }
+  .btxt{
+    color:#121212;
+    font-size:35rpx;
+    line-height:65rpx;
+    font-weight: bold;
+  }
+  .title{
+    font-size:30rpx;
+    text-align:left;
+    display:block;
+    margin-bottom: 15rpx;
+    font-weight: 600;
+    margin-left: 10rpx;
+  }
+  .general{
+    color: #aaaaaa;
+    font-size:24rpx;
+    text-align: left;
+    margin-bottom: 30rpx;
+    width: 100%;
+  }
+  /*.time{*/
+    /*margin-left: 10rpx;*/
+    /*font-size: 28rpx;*/
+    /*color: #aaaaaa;*/
+  /*}*/
+  .head{
+    width:130rpx;
+    height:130rpx;
+    border-radius:50%;
+    margin-right:25rpx;
+    vertical-align:top;
+  }
+  .hotal{
+    padding:30rpx 15rpx 5rpx 15rpx;
+    background-color:#fff;
+    text-align:left;
+    border-top: 1rpx solid #e1e1e1;
+    clear: both;
+    margin-bottom: 30rpx;
+  }
+  .map{
+    width: 19rpx;
+    height: 26rpx;
+  }
+  .inline{
+    display: inline-block;
+  }
+  .text {
+    color:#858585;
+    font-size:25rpx;
+    text-align:right;
+  }
+  .btn{
+    display:inline-block;
+    width:35%;
+    border-radius:50rpx;
+    color:#fff;
+    text-align:center;
+    font-size:30rpx;
+    line-height:90rpx;
+    margin-top:6.5%;
+  }
+  .refuse{
+    background-color:#1ea0eb;
+    box-shadow:0 10rpx 40rpx #c2e5f9;
+    margin-left:6%;
+    float: left;
+  }
+  .refuseGray{
+    background-color:#ccc;
+    margin-left:6%;
+    float: left;
+  }
+  .receiveGray{
+    background-color: #ccc;
+    margin-right:6%;
+    float: right;
+  }
+  .receive{
+    background-color: #ff6181;
+    box-shadow:0 10rpx 40rpx #ffd6de;
+    margin-right:6%;
+    float: right;
+  }
+  .name{
+    color:#121212;
+    font-size:30rpx;
+    text-align:left;
+    line-height:35rpx;
+  }
+  .weui-cell {
+    padding:20rpx 0!important;
+  }
+  .light{
+    color: #1fbfb7;
+    float: right;
+    margin-right: 20rpx;
+    font-size: 26rpx;
+    font-weight: normal;
+  }
+  .hour{
+    color: #1fbfb7;
+    font-size: 24rpx;
+  }
+  .tasktime{
+    color: #1fbfb7;
+    font-size: 35rpx;
+    font-weight: bold;
+    margin-left: 5rpx;
+    margin-right: 3rpx;
+  }
+  .work{
+    color: #454545;
+    font-size: 24rpx;
+    padding: 20rpx 0;
+    text-align:center;
+    width:100%;
+  }
+  .date{
+    color:#121212;
+    font-size:25rpx;
+    width: 50%;
+  }
+  .summa{
+    background-color: #fff;
+    width: 94%;
+    margin: 20rpx auto;
+    padding: 35rpx 0;
+    border-radius: 10rpx;
+  }
+  .money{
+    background-color: #fff;
+    margin: 25rpx 0;
+    padding: 40rpx 0;
+  }
+  .summa .inline{
+    width:49%;
+  }
+  .summa .inline view{
+    text-align: center;
+    width: 100%;
+  }
+  .titleleft{
+    margin-left:25rpx;
+  }
+  .textblack{
+    color: #121212;
+    font-weight: bold;
+    font-size: 23rpx;
+  }
+  .border{
+    border-left: 1rpx solid #eee;
+    border-right: 1rpx solid #eee;
+  }
+  .boerderRight{
+    border-right: 1rpx solid #eee;
+  }
+  .summaBox{
+    display:flex;
+    flex-direction: row;
+    overflow-y: scroll;
+  }
+  .flexBox{
+    flex:none;
+    width:60%;
+  }
+  .summa .date{
+    color:#858585;
+    text-align:center;
+    width:100%;
+    margin-bottom:20rpx
+  }
+  /*弹窗*/
+  /*mask*/
+  .drawer_screen {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+  }
+  .drawer_box {
+    overflow:hidden;
+    position:fixed;
+    top:50%;
+    left:0;
+    z-index:1001;
+    background:#FAFAFA;
+    margin:-150px 5% 0 5%;
+    padding-bottom: 35rpx;
+    border-radius:12px;
+    width:90%;
+  }
+  .drawer_title{
+    line-height:120rpx;
+    font-size:37rpx;
+    color:#000;
+    text-align:center;
+  }
+  .borderView{
+    border-bottom: 1rpx solid #e1e1e1;
+    margin:0 50rpx 50rpx;
+  }
+  .contentMessage{
+    font-size:29rpx;
+    text-align: left;
+    padding: 0 50rpx;
+    margin-bottom:35rpx;
+  }
+  .contentMessage text{
+    color:#858585;
+    float:right;
+  }
+  .contentMessage label{
+    color:#858585;
+    margin-left: 15rpx;
+  }
+  .contentMessage .radio-group{
+    display: inline-block;
+    float:right;
+  }
+  .info{
+    font-size:26rpx;
+    text-align: center;
+    padding: 0 50rpx;
+    margin-bottom:35rpx;
+    color:#858585;
+  }
+  .punchSuccess .info {
+    text-align: left
+  }
+  .info text{
+    font-size:26rpx;
+    color:#333;
+    margin-left:10rpx;
+  }
+  .cancelBtn{
+    float:left;
+    width:35%;
+    margin-left:10%;
+    line-height:90rpx;
+    border-radius:45rpx;
+    background-color: #f5f5f5;
+    color: #878787;
+    font-size: 26rpx;
+    position:static!important;
+    text-align: center;
+  }
+  .closeBtn{
+    width:80%;
+    margin:0 auto;
+    line-height:90rpx;
+    border-radius:45rpx;
+    background-color: #0ec3bc;
+    font-size:26rpx;
+    position:static!important;
+    color: #fff;
+    text-align: center;
+  }
+  .sureBtn{
+    float:right;
+    width:35%;
+    margin-right:10%;
+    line-height:90rpx;
+    border-radius:45rpx;
+    background-color: #0ec3bc;
+    font-size:26rpx;
+    position:static!important;
+    color: #fff;
+    text-align: center;
+  }
+  .null {
+    text-align: center;
+    font-size: 28rpx;
+    color: #999;
+    width: 100%;
+    margin-top: 25rpx;
+  }
+  .Null {
+    text-align: center;
+    font-size: 28rpx;
+    color: #999;
+    width: 100%;
+    margin-top: 25%;
+  }
+  .punchTxt{
+    display: inline-block;
+    float: right;
+    font-size: 26rpx;
+    color: #333;
+    margin-right: 10rpx;
+  }
+</style>
+
+<template>
+  <view class="wrap">
+    <view class="btnwrap">
+      <view class="refuseGray btn" wx:if="{{!haveTask || currentTask.needPunchType === 'PUNCHOUT'}}">签到打卡</view>
+      <view class="refuse btn" @tap="scanForPunch" wx:if="{{currentTask.needPunchType === 'PUNCHIN'}}">签到打卡</view>
+      <view class="receive btn" @tap="scanForDinner"wx:if="{{currentTask.needPunchType === 'PUNCHOUT'}}">签退打卡</view>
+      <view class="receiveGray btn" wx:if="{{!haveTask || currentTask.needPunchType === 'PUNCHIN'}}" >签退打卡</view>
+    </view>
+    <view  wx:if="{{currentTask.showNull === 0}}" class="Null">暂无任务信息哦 ~~</view>
+    <view  wx:if="{{currentTask.showNull === 1}}">
+    <view class="hotal">
+      <view class="title">当前任务 <text class="light">{{currentTask.status}}</text></view>
+      <image src="{{currentTask.hotelLogo}}" class="head"></image>
+      <view class="inline">
+        <view class="name">{{currentTask.hotelName}}</view>
+        <text class="general">{{currentTask.taskType}}/ {{currentTask.fromDate}} - {{currentTask.toDate}} </text>
+        <view class="general">
+          <image src="../images/map.png" class="map"></image>
+          {{currentTask.hotelAddress}}
+        </view>
+      </view>
+      <view class="weui-cells">
+        <view class="weui-cell weui-cell_access"  >
+          <view class="weui-cell__hd">
+            <text>任务内容</text>
+          </view>
+          <view class="weui-cell__bd text">{{currentTask.taskContent}}</view>
+        </view>
+      </view>
+      <view class="work inline">已工作<text class="tasktime">{{currentTask.taskWorkerHours}}</text><text class="hour">小时</text></view>
+    </view>
+
+    <view class="title titleleft">工作记录</view>
+    <view class="summaBox">
+    <view  wx:if="{{currentTask.workLogs.length === 0}}" class="null">暂无工作记录哦 ~~</view>
+     <block class="item" wx:for="{{currentTask.workLogs}}" wx:for-item="item"  wx:key="rowId">
+      <view class="flexBox">
+        <view class="summa">
+          <view class="date">{{item.punchIn[0]}}</view>
+          <view class="inline border">
+            <view class="btxt">{{item.punchIn[1]}}</view>
+            <view class="text">签到时间</view>
+          </view>
+
+          <view class="inline">
+            <view  wx:if="{{item.punchOut[1] === 'date'}}" class="null"> : </view>
+            <view class="btxt" wx:if="{{item.punchOut[1] !== 'date'}}">{{item.punchOut[1]}}</view>
+            <view class="text">签退时间</view>
+          </view>
+        </view>
+      </view>
+      </block>
+    </view>
+    </view>
+
+    <!--弹窗-->
+    <view class="drawer_screen" wx:if="{{showPunchWin}}">
+      <view class="drawer_box">
+        <view class="drawer_title">考勤打卡</view>
+        <view class="drawer_content">
+          <view class="contentMessage">
+            当前定位
+            <text>{{hotelInfo.name}}</text>
+          </view>
+          <view class="contentMessage">
+            打卡类型
+            <view class="punchTxt">签到打卡</view>
+          </view>
+          <view class="borderView"></view>
+        </view>
+        <view class="cancelBtn" bindtap ="punchCancel" data-statu="close">取消</view>
+        <view class="sureBtn" bindtap ="punchConfirm" data-statu="close">确认</view>
+      </view>
+    </view>
+
+    <!--弹窗-->
+    <view class="drawer_screen" wx:if="{{showDinnerWin}}">
+      <view class="drawer_box">
+        <view class="drawer_title">就餐打卡</view>
+        <view class="drawer_content">
+          <view class="contentMessage">
+            当前定位
+            <text>{{hotelInfo.name}}</text>
+          </view>
+          <view class="contentMessage">
+            打卡类型
+            <view class="punchTxt">签退打卡</view>
+          </view>
+          <view class="borderView"></view>
+        </view>
+        <view class="cancelBtn" bindtap="dinnerCancel" data-statu="close">取消</view>
+        <view class="sureBtn" bindtap="dinnerConfirm" data-statu="close">确认</view>
+      </view>
+    </view>
+
+    <!--弹窗-->
+    <view class="drawer_screen" wx:if="{{punchSuccess}}">
+      <view class="drawer_box">
+        <view class="drawer_title">恭喜您打卡成功</view>
+        <view class="drawer_content punchSuccess">
+          <view class="info">打卡类型: <text>{{currentPunchType}}</text></view>
+          <view class="info">打卡时间：<text>{{currentPunchTime}}</text></view>
+          <view class="borderView"></view>
+        </view>
+        <view class="closeBtn" bindtap="closeSuccessModal" data-statu="close">确定</view>
+      </view>
+    </view>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import {fetchHotelInfo} from '../actions/hotelAction'
+  import {punch} from '../actions/workerAction'
+
+  export default class worker extends wepy.component {
+    props = {
+      currentTask: {
+        type: Object,
+        twoWay: true
+      },
+      haveTask: {
+        type: Boolean
+      }
+    }
+    data ={
+      userType: '',
+      punchType: 'PUNCHIN',
+      showPunchWin: false,
+      showDinnerWin: false,
+      punchSuccess: false,
+      hotelInfo: {name: ''},
+      dinnerItems: [
+        {name: '签退', value: 'PUNCHOUT', checked: 'true'}
+      ],
+      currentWorkHours: '0',
+      currentPunchTime: '',
+      currentPunchType: ''
+    }
+    methods = {
+      punchIn: function() {
+        this.showPunchWin = true
+      },
+      cancelModal: function () {
+        this.showPunchWin = false
+      },
+      punchCancel: function () {
+        this.showPunchWin = false
+      },
+      punchConfirm: function () {
+        var that = this
+        wx.showLoading({title: '打卡中'})
+        this.punchType = 'PUNCHIN'
+        punch(this.currentTask.taskWorkerId, this.punchType).then((res) => {
+          console.log('punch result:', res)
+          if (res.data.success) {
+            that.punchSuccess = true
+            that.showPunchWin = false
+            switch (this.punchType) {
+              case 'PUNCHIN':
+                that.currentPunchType = '签到'
+                break
+            }
+            this.currentPunchTime = this.getNowFormatDate()
+            that.$apply()
+            wx.hideLoading()
+          } else {
+            wx.showModal({
+              title: '提示',
+              content: '打卡失败，请重试！',
+              showCancel: false
+            })
+          }
+        })
+      },
+//      punchConfirm: function () {
+//        var that = this
+//        wx.getLocation({
+//          type: 'wgs84',
+//          success: function(res) {
+//            var curLat = res.latitude
+//            var curLng = res.longitude
+//
+//            var distince = that.getDistance(curLat, curLng, that.hotelInfo.latitude, that.hotelInfo.longitude)
+//            console.log('当前位置距酒店距离：', distince)
+//            if (distince > 500) {
+//              wx.showModal({
+//                title: '提示',
+//                content: '请在酒店指定位置打卡！',
+//                showCancel: false
+//              })
+//            } else {
+//              punch(this.currentTask.taskWorkerId, this.punchType).then((res) => {
+//                console.log('punch result:', res)
+//                if (res.data.success) {
+//                  that.punchSuccess = true
+//                  that.showPunchWin = false
+//                  that.$apply()
+//                } else {
+//                  wx.showModal({
+//                    title: '提示',
+//                    content: '打卡失败，请重试！',
+//                    showCancel: false
+//                  })
+//                }
+//              })
+//            }
+//          }
+//        })
+//      },
+      dinnerCancel: function () {
+        this.showDinnerWin = false
+      },
+      dinnerConfirm: function () {
+        var that = this
+        that.punchType = 'PUNCHOUT'
+        wx.showLoading({title: '打卡中'})
+        punch(that.currentTask.taskWorkerId, that.punchType).then((res) => {
+          console.log('dinner punch result:', res)
+          if (res.data.success) {
+            that.punchSuccess = true
+            that.showDinnerWin = false
+            switch (this.punchType) {
+              case 'PUNCHOUT':
+                that.currentPunchType = '签退'
+                break
+            }
+            this.currentPunchTime = this.getNowFormatDate()
+            that.$apply()
+            wx.hideLoading()
+          } else {
+            wx.showModal({
+              title: '提示',
+              content: '打卡失败，请重试！',
+              showCancel: false
+            })
+          }
+        })
+      },
+//      dinnerConfirm: function () {
+//        var that = this
+//        wx.getLocation({
+//          type: 'wgs84',
+//          success: function(res) {
+//            var curLat = res.latitude
+//            var curLng = res.longitude
+//
+//            var distince = that.getDistance(curLat, curLng, that.hotelInfo.latitude, that.hotelInfo.longitude)
+//            console.log('当前位置距酒店距离：', distince)
+//            if (distince > 500) {
+//              wx.showModal({
+//                title: '提示',
+//                content: '请在酒店指定位置打卡！',
+//                showCancel: false
+//              })
+//            } else {
+//              punch(this.currentTask.taskWorkerId, this.punchType).then((res) => {
+//                console.log('punch result:', res)
+//                if (res.data.success) {
+//                  that.punchSuccess = true
+//                  that.showDinnerWin = false
+//                  that.$apply()
+//                } else {
+//                  wx.showModal({
+//                    title: '提示',
+//                    content: '打卡失败，请重试！',
+//                    showCancel: false
+//                  })
+//                }
+//              })
+//            }
+//          }
+//        })
+//      },
+      scanForPunch: function () {
+        var that = this
+        switch (this.currentTask.status) {
+//          case '未开始':
+//            wx.showModal({
+//              title: '提示',
+//              content: '任务还未开始，请勿打卡！',
+//              showCancel: false
+//            })
+//            break
+          case '已结束':
+            wx.showModal({
+              title: '提示',
+              content: '任务已经结束，请勿打卡！',
+              showCancel: false
+            })
+            break
+          case '未开始':
+          case '进行中':
+            wx.scanCode({
+              onlyFromCamera: true,
+              success: (res) => {
+                var hotelId = res.result
+                if (hotelId !== that.currentTask.hotelId) {
+                  wx.showModal({
+                    title: '提示',
+                    content: '当前任务与您扫描到的酒店不匹配！',
+                    showCancel: false
+                  })
+                } else {
+                  that.getHotelInfo(hotelId, 'work')
+                }
+              }
+            })
+            break
+        }
+      },
+      scanForDinner: function () {
+        var that = this
+        switch (this.currentTask.status) {
+//          case '未开始':
+//            wx.showModal({
+//              title: '提示',
+//              content: '任务还未开始，请勿打卡！',
+//              showCancel: false
+//            })
+//            break
+//          case '已结束':
+//            wx.showModal({
+//              title: '提示',
+//              content: '任务已经结束，请勿打卡！',
+//              showCancel: false
+//            })
+//            break
+          case '未开始':
+          case '已结束':
+          case '进行中':
+            wx.scanCode({
+              onlyFromCamera: true,
+              success: (res) => {
+                var hotelId = res.result
+                if (hotelId !== that.currentTask.hotelId) {
+                  wx.showModal({
+                    title: '提示',
+                    content: '当前任务与您扫描到的酒店不匹配！',
+                    showCancel: false
+                  })
+                } else {
+                  that.getHotelInfo(hotelId, 'dinner')
+                }
+              }
+            })
+            break
+        }
+      },
+      showSuccessModal: function() {
+        this.punchSuccess = true
+      },
+      closeSuccessModal: function () {
+        this.punchSuccess = false
+        this.$emit('workLogUpdate')
+      }
+    }
+    getNowFormatDate() {
+      var date = new Date()
+      var seperator1 = '-'
+      var seperator2 = ':'
+      var month = date.getMonth() + 1
+      var strDate = date.getDate()
+      var strHours = date.getHours()
+      var strMinutes = date.getMinutes()
+      var strSeconds = date.getSeconds()
+      if (month >= 1 && month <= 9) {
+        month = '0' + month
+      }
+      if (strDate >= 0 && strDate <= 9) {
+        strDate = '0' + strDate
+      }
+      if (strHours >= 0 && strHours <= 9) {
+        strHours = '0' + strHours
+      }
+      if (strMinutes >= 0 && strMinutes <= 9) {
+        strMinutes = '0' + strMinutes
+      }
+      if (strSeconds >= 0 && strSeconds <= 9) {
+        strSeconds = '0' + strSeconds
+      }
+      var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate + ' ' + strHours + seperator2 + strMinutes + seperator2 + strSeconds
+      return currentdate
+    }
+    watch = {}
+    getDistance(lat1, lng1, lat2, lng2) {
+      lat1 = lat1 || 0
+      lng1 = lng1 || 0
+      lat2 = lat2 || 0
+      lng2 = lng2 || 0
+
+      var rad1 = lat1 * Math.PI / 180.0
+      var rad2 = lat2 * Math.PI / 180.0
+      var a = rad1 - rad2
+      var b = lng1 * Math.PI / 180.0 - lng2 * Math.PI / 180.0
+      var r = 6378137
+
+      return (r * 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2) + Math.cos(rad1) * Math.cos(rad2) * Math.pow(Math.sin(b / 2), 2)))).toFixed(0)
+    }
+    getHotelInfo(hotelId, puchType) {
+      var that = this
+      fetchHotelInfo(hotelId).then((data) => {
+        that.hotelInfo = data.data.data
+        if (puchType === 'work') {
+          that.showPunchWin = true
+        } else if (puchType === 'dinner') {
+          that.showDinnerWin = true
+        }
+
+        that.$apply()
+        console.log('getHotelInfo', that.hotelInfo)
+      })
+    }
+    onLoad () {}
+  }
+</script>

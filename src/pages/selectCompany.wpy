@@ -1,0 +1,230 @@
+<style lang="less">
+  .wrap{
+    background-color:#fff;
+    padding-top: 5%;
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  page{
+    background-color: #fff;
+  }
+  .radio{
+    display: block;
+    border-bottom:1rpx solid #e1e1e1;
+    font-size: 28rpx;
+    padding:30rpx 10rpx;
+  }
+  radio{
+    float: right;
+  }
+  .Null {
+    text-align: center;
+    font-size: 28rpx;
+    color: #999;
+    width: 100%;
+    margin-top:30%;
+  }
+</style>
+
+<template lang="wxml">
+  <view class="wrap">
+  <radio-group class="radio-group" bindchange="radioChange">
+  <view  wx:if="{{showHrcompanies.length === 0}}" class="Null">抱歉！暂时没有相关的人力公司哦~~</view>
+    <label class="radio" wx:for="{{showHrcompanies}}"  wx:for-item="item"  wx:key="{{item.id}}">
+   {{item.name}} <radio value="{{item.id}}"  />
+    </label>
+  </radio-group>
+  </view>
+</template>
+<script>
+    import wepy from 'wepy'
+    import {getUserType, getCompanyId, getUserId} from '../util/userInfo'
+    import {searchHrcompanies} from '../actions/hrcompaniesAction'
+    import {hotelAddHrcompanies, fetchHrcompanies} from '../actions/hotelAction'
+    import {workersBindHrcompanies, searchWorkerHrs} from '../actions/workerAction'
+    export default class selectCompany extends wepy.page {
+      config = {
+        navigationBarTitleText: '选择人力公司'
+      };
+      data = {
+        showHrcompanies: [],
+        queryObj: {
+          paginator: {
+            page: 1,
+            pageSize: 100
+          },
+          selector: {
+            status: 1
+          }
+        },
+        idSet: {
+          hotelId: '',
+          hrCompanyId: ''
+        },
+        workerIdSet: {
+          workerId: '',
+          hrCompanyId: ''
+        },
+        workerHrs: [],
+        userId: '',
+        allHrcompanies: [],
+        hotelhrcompanies: []
+      };
+      methods = {
+        radioChange: function(e) {
+          var that = this
+          var userType = getUserType()
+          switch (userType) {
+            case 'hotel':
+              that.idSet.hrCompanyId = e.detail.value
+              wx.showLoading({title: '添加中'})
+              hotelAddHrcompanies(this.idSet).then((data) => {
+                console.log('hotelAddHrcompanies result', data)
+                if (data.data.success) {
+                  wx.hideLoading()
+                  wx.showModal({
+                    title: '提示',
+                    content: '添加成功！',
+                    showCancel: false,
+                    success: function(res) {
+                      if (res.confirm) {
+                        wx.redirectTo({
+                          url: 'cooperationCompany?hrCompanyId=' + that.idSet.hrCompanyId
+                        })
+                        that.$apply()
+                      }
+                    }
+                  })
+                } else {
+                  wx.showModal({
+                    title: '提示',
+                    content: '添加失败，请重试！',
+                    showCancel: false
+                  })
+                }
+              })
+              break
+            case 'hr':
+              break
+            case 'worker':
+              that.workerIdSet.hrCompanyId = e.detail.value
+              wx.showLoading({title: '添加中'})
+              workersBindHrcompanies(this.workerIdSet).then((data) => {
+                console.log('data.success', data.success)
+                if (data.data.success) {
+                  wx.hideLoading()
+                  wx.showModal({
+                    title: '提示',
+                    content: '添加成功！',
+                    showCancel: false,
+                    success: function(res) {
+                      if (res.confirm) {
+                        wx.redirectTo({
+                          url: 'workersBindHrs'
+                        })
+                        that.$apply()
+                      }
+                    }
+                  })
+                } else {
+                  wx.showModal({
+                    title: '提示',
+                    content: data.data.message,
+                    showCancel: false
+                  })
+                }
+                console.log('workersBindHrcompanies result', data)
+              })
+              break
+          }
+          console.log('radio发生change事件，携带value值为：', e.detail.value)
+        }
+      };
+      searchHrInfo() {
+        var that = this
+        wx.showLoading({title: '加载中'})
+        searchHrcompanies(this.queryObj).then((data) => {
+          that.allHrcompanies = data.data.data.list
+          console.log('that.allHrcompanies ', that.allHrcompanies)
+          var userType = getUserType()
+          switch (userType) {
+            case 'hotel':
+              var hotelId = getCompanyId()
+              fetchHrcompanies(hotelId).then((data) => {
+                that.hotelhrcompanies = data.data.data
+                for (var i = 0; i < that.allHrcompanies.length; i++) {
+                  var hrcompany = that.allHrcompanies[i]
+                  var hrcompanyId = hrcompany.id
+                  var isExist = false
+                  for (var j = 0; j < that.hotelhrcompanies.length; j++) {
+                    var hotelHr = that.hotelhrcompanies[j]
+                    var hotelHrId = hotelHr.id
+                    if (hotelHrId === hrcompanyId) {
+                      isExist = true
+                      break
+                    }
+                  }
+                  if (!isExist) {
+                    that.showHrcompanies.push(hrcompany)
+                  }
+                  that.$apply()
+                  wx.hideLoading()
+                }
+                console.log('fetchHrcompanies', that.hotelhrcompanies)
+                console.log('type hotel that.showHrcompanies', that.showHrcompanies)
+              })
+              break
+            case 'worker':
+              this.queryObj.selector = {workerId: this.userId}
+              searchWorkerHrs(this.queryObj).then((data) => {
+                that.workerHrs = data.data.data.list
+                console.log('searchWorkerHrs', that.workerHrs)
+                for (var i = 0; i < that.allHrcompanies.length; i++) {
+                  var hrcompany = that.allHrcompanies[i]
+                  var hrcompanyId = hrcompany.id
+                  var isExist = false
+                  for (var j = 0; j < that.workerHrs.length; j++) {
+                    var workerHr = that.workerHrs[j]
+                    var workerHrId = workerHr.id
+                    if (workerHrId === hrcompanyId) {
+                      isExist = true
+                      break
+                    }
+                  }
+                  if (!isExist) {
+                    that.showHrcompanies.push(hrcompany)
+                  }
+                  that.$apply()
+                  wx.hideLoading()
+                }
+                console.log('type worker that.showHrcompanies', that.showHrcompanies)
+              })
+              break
+            case 'hr':
+              break
+          }
+        })
+      }
+      onLoad() {
+        var that = this
+        var userType = getUserType()
+        switch (userType) {
+          case 'hotel':
+            that.idSet.hotelId = getCompanyId()
+            that.searchHrInfo()
+            that.$apply()
+            break
+          case 'worker':
+            that.userId = getUserId()
+            that.workerIdSet.workerId = getUserId()
+            that.searchHrInfo()
+            that.$apply()
+            break
+          case 'hr':
+            break
+        }
+      }
+      onShow() {}
+    }
+</script>

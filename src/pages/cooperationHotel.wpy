@@ -1,0 +1,151 @@
+<style lang="less">
+  .wrap{
+    background-color:#fff;
+    text-align: center;
+  }
+  page{
+    background-color: #fff;
+  }
+  .txt{
+    color:#121212;
+    font-size:32rpx;
+    text-align:left;
+    width:90%;
+    padding: 20rpx 25rpx;
+    background: #f8f8f8;
+    margin: 10% auto 50rpx auto;
+  }
+  .left{
+    margin-top: 20%;
+  }
+  .highlight{
+    color: #0ec3bc;
+  }
+  .general{
+    color: #aaaaaa;
+    margin-right:30rpx;
+    font-size: 26rpx;
+  }
+  .inline{
+    display: inline-block;
+  }
+  .leftIcon{
+    margin-right: 25rpx;
+    vertical-align: middle;
+    width:88rpx;
+    height:88rpx;
+    border-radius: 50%;
+  }
+  .text {
+    color:#121212;
+    font-size:30rpx;
+    text-align:left;
+  }
+  .weui-cell{
+    position:static!important;
+    border-bottom:1rpx solid #e1e1e1;
+    padding:20rpx 5rpx;
+  }
+  .weuiCells{
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+    position:static!important;
+    margin-top:2%;
+    padding-bottom: 120rpx;
+  }
+  .name{
+    margin-bottom: -10rpx;
+  }
+  .add{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    background-color: #0ec3bc;
+    color: #fff;
+    width: 100%;
+    text-align: center;
+    font-size: 30rpx;
+    padding:25rpx 0;
+  }
+
+</style>
+
+<template lang="wxml">
+  <view class="wrap">
+    <view class="weuiCells">
+        <block class="item" wx:for="{{hotels}}" wx:for-item="item"  wx:key="rowId">
+            <view class="weui-cell weui-cell_access">
+              <view class="weui-cell__hd">
+                <block wx:if="{{item.logo !== undefined && item.logo !== ''}}" >
+                  <image src="{{item.logo}}" class="leftIcon"></image>
+                </block>
+                <block wx:if="{{item.logo === undefined || item.logo === ''}}" >
+                  <image src="../images/my/default.png" class="leftIcon"></image>
+                </block>
+              </view>
+              <view class="weui-cell__bd text">
+                <view class="name">{{item.name}}</view>
+                <text class="general">负责人：{{item.leader}}</text>
+                <text class="general">手机号：{{item.leaderMobile}}</text>
+              </view>
+            </view>
+        </block>
+    </view>
+    <view class="add" bindtap="actioncnt">添加合作酒店</view>
+  </view>
+</template>
+<script>
+    import wepy from 'wepy'
+    import {getCompanyId} from '../util/userInfo'
+    import {fetchHotels} from '../actions/hrcompaniesAction'
+    export default class cooperationHotel extends wepy.page {
+      config = {
+        navigationBarTitleText: '合作酒店'
+      };
+      data = {
+        hotels: {},
+        hotelId: 0,
+        hrCompanyId: 0
+      };
+      methods = {
+        actioncnt: function() {
+          wx.showActionSheet({
+            itemList: ['从酒店库选择添加', '手动添加'],
+            itemColor: '#0ec3bc',
+            success: function(res) {
+//              console.log(res.tapIndex)
+              if (res.tapIndex === 0) {
+                wx.navigateTo({
+                  url: 'selectHotel'
+                })
+              } else if (res.tapIndex === 1) {
+                wx.navigateTo({
+                  url: 'addHotel'
+                })
+              }
+            },
+            fail: function(res) {
+              console.log(res.errMsg)
+            }
+          })
+        }
+      };
+      getHotels() {
+        var that = this
+        var hrCompaniesId = getCompanyId()
+        fetchHotels(hrCompaniesId).then((data) => {
+          console.log('data', data)
+          that.hotels = data.data.data.filter(hotel => hotel.status === 1)
+          that.$apply()
+          console.log('getHotels', that.hotels)
+        })
+      }
+      onLoad(option) {
+        this.getHotels()
+      }
+      onShow() {
+        this.getHotels()
+      }
+    }
+</script>

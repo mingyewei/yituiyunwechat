@@ -1,0 +1,252 @@
+<style lang="less">
+  .wrap{
+    text-align: center;
+  }
+  .inline{
+    display: inline-block;
+  }
+
+  .work{
+    text-align:right;
+    flex: 1;
+  }
+  .date, .work{
+    padding: 20rpx 0 10rpx 0;
+    flex: 1;
+  }
+  .title{
+    font-size: 45rpx;
+    color: #fff;
+  }
+  .person{
+    padding:30rpx 13rpx;
+    background-color:#fff;
+    text-align:left;
+    border-bottom:1rpx solid #e1e1e1;
+  }
+  .head{
+    width:90rpx;
+    height:90rpx;
+    border-radius:50%;
+    margin-right:25rpx;
+    vertical-align:top;
+  }
+  .sex{
+    width: 19rpx;
+    height: 26rpx;
+    margin-left: 10rpx;
+  }
+  .sexm{
+    width: 25rpx;
+    height: 25rpx;
+    margin-left: 10rpx;
+  }
+  .general{
+    color: #aaaaaa;
+    font-size:24rpx;
+    text-align: left;
+    margin-bottom: 30rpx;
+    width: 100%;
+  }
+  .gnrl{
+    margin-bottom: 0;
+    margin-right: 20rpx;
+  }
+  .name{
+    color:#121212;
+    font-size:28rpx;
+    text-align:left;
+    line-height:35rpx;
+  }
+  .person checkbox-group{
+    float:right;
+    margin-top:10rpx;
+  }
+  .details{
+    background-color:#fff;
+  }
+  .money{
+    padding-top:30rpx;
+    padding-bottom: 30rpx;
+    color: #0ec1bb;
+    font-size: 24rpx;
+  }
+  .add{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    background-color: #0ec3bc;
+    color: #fff;
+    width: 100%;
+    text-align: center;
+    font-size: 30rpx;
+    padding:25rpx 0;
+  }
+  .sexText{
+    padding-left:13px;
+    color:#0ec1bb;
+  }
+  .noWorks{
+    font-size:45rpx;
+    color:#bbb;
+    text-align:center;
+    padding-top:17%;
+  }
+</style>
+
+<template lang="wxml">
+  <view class="wrap">
+    <view class="money">工钱：{{queryObj.hourlyPay}}元/小时</view>
+    <view class="details">
+      <View class="noWorks" wx:if="{{tasklist.works === 0}}">暂无可选小时工</View>
+      <block class="item" wx:for="{{works}}" wx:for-item="item"  wx:key="{{item.id}}">
+        <view class="person">
+          <image wx:if="{{item.headImage !== ''}}" src="{{item.headImage}}" class="head"></image>
+          <image wx:if="{{item.headImage === ''}}" src="../images/my/head.png" class="head"></image>
+          <view class="inline">
+            <view class="name">
+              <text wx:if="{{item.nickname !== undefined}}">{{item.nickname}}</text>
+              <text wx:if="{{item.nickname === undefined}}">{{item.mobile}}</text>
+              <image wx:if="{{item.sex === 'MALE'}}" src="../images/my/man.png" class="sexm"></image>
+              <image wx:if="{{item.sex === 'FEMALE'}}" src="../images/my/woman.png" class="sexm"></image>
+              <text class='sexText' wx:if="{{item.sex === 'UNKNOW'}}">未知</text>
+            </view>
+            <text class="general gnrl">年龄: {{item.age}}</text>
+            <text class="general gnrl">违约率: {{item.defaultRates}}%</text>
+          </view>
+          <checkbox-group bindchange="checkboxChange({{item.userId}})">
+            <checkbox value="{{item.userId}}"/>
+          </checkbox-group>
+        </view>
+      </block>
+    </view>
+   <view class="add" bindtap="distribute">确定派发</view>
+  </view>
+</template>
+<script>
+    import wepy from 'wepy'
+    import {getCompanyId} from '../util/userInfo'
+    import {fetchWorks, HrDistributeTask, getHrtask} from '../actions/hrcompaniesAction'
+    export default class selectWorker extends wepy.page {
+      config = {
+        navigationBarTitleText: '选择小时工'
+      };
+      data = {
+        queryObj: {
+          hourlyPay: 0,
+          id: '',
+          workerIds: []
+        },
+        resObj: {
+          paginator: {
+            page: 1,
+            pageSize: 100
+          },
+          selector: {
+            hrId: ''
+          }
+        },
+        works: [],
+        distributedSet: []
+      };
+      methods = {
+        checkboxChange: function(workid, e) {
+          console.log('workid：', workid)
+          console.log('checkbox发生change事件，携带value值为：', e.detail.value)
+          if (e.detail.value[0] === workid) {
+            this.queryObj.workerIds.push(e.detail.value[0])
+            this.$apply()
+          } else if (e.detail.value.length === 0) {
+            var index = this.queryObj.workerIds.indexOf(workid)
+            this.queryObj.workerIds.splice(index, 1)
+            this.$apply()
+          }
+        },
+        distribute () {
+          var that = this
+          wx.showLoading({title: '任务派发中'})
+          HrDistributeTask(this.queryObj).then((res) => {
+            wx.hideLoading()
+            console.log('res', res)
+            if (res.data.success === true) {
+              wx.showModal({
+                title: '提示',
+                content: '任务派发成功',
+                confirmText: '查看详情',
+                cancelText: '返回首页',
+                success: function(res) {
+                  if (res.confirm) {
+                    var taskId = that.queryObj.id
+                    wx.redirectTo({
+                      url: 'taskDetails?taskId=' + taskId
+                    })
+                  } else if (res.cancel) {
+                    wx.switchTab({
+                      url: 'home'
+                    })
+                  }
+                }
+              })
+            } else {
+              wx.showModal({
+                title: '提示',
+                content: res.data.message,
+                showCancel: false
+              })
+            }
+          })
+        }
+      };
+      getWorksFun () {
+        var that = this
+        fetchWorks(this.resObj).then((res) => {
+          console.log('res-works', res)
+          if (res.data.success === true) {
+            that.works = res.data.data.list
+            that.$apply()
+            console.log('that.distributedSet', that.distributedSet)
+            console.log('that.works', that.works)
+            let selectWorks = []
+            for (let i = 0; i < that.works.length; i++) {
+              let currentWork = that.works[i].userId
+              let haveWork = false
+              for (let j = 0; j < that.distributedSet.length; j++) {
+                if (that.distributedSet[j].workerId === currentWork) {
+                  haveWork = true
+                }
+              }
+              if (!haveWork) {
+                selectWorks.push(that.works[i])
+              }
+            }
+            that.works = selectWorks
+            this.$apply()
+            console.log('that.works', that.works)
+            wx.hideLoading()
+          }
+        })
+      }
+      getHrTask () {
+        var that = this
+        wx.showLoading({title: '数据加载中'})
+        getHrtask(this.queryObj.id).then((res) => {
+          if (res.data.success === true) {
+            console.log('res', res)
+            that.distributedSet = res.data.data.distributedSet
+            that.$apply()
+            that.getWorksFun()
+          }
+        })
+      }
+      onLoad(option) {
+        this.queryObj.hourlyPay = option.money * 1
+        this.queryObj.id = option.taskId
+        this.resObj.selector.hrId = getCompanyId()
+        this.getHrTask()
+        this.$apply()
+      }
+      onShow() {
+        this.getHrTask()
+      }
+    }
+</script>

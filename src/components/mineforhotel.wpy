@@ -1,0 +1,238 @@
+<style lang="less">
+  .hotelwrap{
+    background-color:#fff;
+    text-align: center;
+  }
+  page{
+    background-color:#fff;
+  }
+  .txt{
+    color:#121212;
+    font-size:32rpx;
+    text-align:left;
+    width:90%;
+    padding: 20rpx 25rpx;
+    background: #f8f8f8;
+    margin: 10% auto 50rpx auto;
+  }
+  .left{
+    margin-top: 20%;
+  }
+  .highlight{
+    color: #0ec3bc;
+  }
+  .general{
+    color: #aaaaaa;
+    margin-right: 10rpx;
+    font-size: 28rpx;
+  }
+  .inline{
+    display: inline-block;
+  }
+  .leftIcon{
+    margin-right: 25rpx;
+    vertical-align: middle;
+    width:40rpx;
+    height:30rpx;
+  }
+  .lefticon{
+    margin-right: 25rpx;
+    vertical-align: middle;
+    width:40rpx;
+    height:40rpx;
+  }
+  .icon {
+    width: 74rpx;
+    height: 74rpx;
+    margin: 0 auto;
+    display: block;
+    margin-top: 28rpx;
+  }
+  .hotelwrap .text {
+    color:#121212;
+    font-size:30rpx;
+    text-align:left;
+  }
+  .name{
+    color:#121212;
+    font-size:30rpx;
+    font-weight: 600;
+    text-align:left;
+  }
+  .hotelwrap .weui-cell{
+    width:90%;
+    margin-left:auto;
+    margin-right:auto;
+    padding:30rpx 10rpx;
+  }
+  .hotelwrap .weui-cells{
+    margin-top:15%;
+  }
+  .green{
+    background-color: #0ec1bb;
+    height: 4rem;
+  }
+  .head{
+    width:110rpx;
+    height:110rpx;
+    border-radius:50%;
+    margin-right:30rpx;
+  }
+  .user{
+    border-radius:20rpx;
+    padding:40rpx 28rpx;
+    position:absolute;
+    top:2%;
+    left:3%;
+    width:87%;
+    background-color:#fff;
+    text-align:left;
+    box-shadow:0 1rpx 20rpx #daf7f3;
+  }
+  .sex{
+    width: 20rpx;
+    height: 20rpx;
+    margin-left: 10rpx;
+  }
+  .logout{
+    color:#ff0004;
+    font-size:29rpx;
+    background-color:#fff;
+    line-height:90rpx;
+    margin-top:20rpx;
+  }
+</style>
+
+<template>
+  <view class="hotelwrap">
+    <view class="green"></view>
+    <view class="user" bindtap="gotoUserData">
+      <image src="{{wxUserInfo.avatarUrl}}" class="head"></image>
+      <view class="leftwrap inline">
+        <view class="name">{{hotelInfo.leader}}   <image src="../images/my/man.png" class="sex"></image>
+        </view>
+        <text class="general">{{hotelInfo.name}}</text>
+      </view>
+    </view>
+    <view class="weui-cells">
+      <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" bindtap="gotoCooperationCompany" >
+        <view class="weui-cell__hd">
+          <image src="../images/my/bind.png" class="leftIcon"></image>
+        </view>
+        <view class="weui-cell__bd text">合作人力公司</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+      </view>
+
+      <view class="weui-cell weui-cell_access" hover-class="weui-cell_active"  bindtap="gotoMesCenter">
+        <view class="weui-cell__hd">
+          <image src="../images/my/msg.png" class="lefticon"></image>
+        </view>
+        <view class="weui-cell__bd text">消息中心</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+      </view>
+
+      <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" bindtap="gotoFeedback" >
+        <view class="weui-cell__hd">
+          <image src="../images/my/feedback.png" class="lefticon"></image>
+        </view>
+        <view class="weui-cell__bd text">意见反馈</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+      </view>
+
+      <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" bindtap="gotoAboutUs">
+        <view class="weui-cell__hd">
+          <image src="../images/my/aboutus.png" class="lefticon"></image>
+        </view>
+        <view class="weui-cell__bd text">关于我们</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+      </view>
+      <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" bindtap="gotoQrCode">
+        <view class="weui-cell__hd">
+          <image src="../images/my/qrCode.png" class="lefticon"></image>
+        </view>
+        <view class="weui-cell__bd text">我的二维码</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+      </view>
+    </view>
+    <view  class="logout" bindtap="logout">退出登录</view>
+
+    <view class="left">
+      <text  class="general">客服电话：010-4568-3255</text>
+    </view>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import {getWxUserInfo} from '../util/userInfo'
+  import {login} from '../util/weChatAuth'
+
+  export default class mineforhotel extends wepy.component {
+    props = {
+      hotelInfo: {
+        type: Object,
+        twoWay: true
+      }
+    }
+    data ={
+      id: {},
+      wxUserInfo: {}
+    }
+    methods = {
+      gotoUserData: function () {
+        wx.navigateTo({
+          url: 'hotelData'
+        })
+      },
+      gotoCooperationCompany: function() {
+        wx.navigateTo({
+          url: 'cooperationCompany'
+        })
+      },
+      gotoMesCenter: function () {
+        wx.navigateTo({
+          url: 'msgCenter'
+        })
+      },
+      gotoFeedback: function() {
+        wx.navigateTo({
+          url: 'feedback'
+        })
+      },
+      gotoAboutUs: function() {
+        wx.navigateTo({
+          url: 'aboutUs'
+        })
+      },
+      gotoQrCode: function() {
+        wx.navigateTo({
+          url: 'hotelQrCode'
+        })
+      },
+      logout: function () {
+        wx.showModal({
+          title: '提示',
+          content: '您将退出当前系统，是否确认？',
+          success: function(res) {
+            if (res.confirm) {
+              wx.clearStorageSync()
+              login((wxUserinfo) => {
+                wx.reLaunch({
+                  url: 'index'
+                })
+              })
+            }
+          }
+        })
+      }
+    }
+    watch = {
+//      hotelInfo (curVal, oldVal) {
+//        this.id = curVal.id
+//      }
+    }
+    onLoad() {
+      this.wxUserInfo = getWxUserInfo()
+      this.$apply()
+    }
+  }
+</script>

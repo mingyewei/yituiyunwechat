@@ -1,0 +1,140 @@
+<style lang="less">
+  .wrap{
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .txt{
+    color: #aaaaaa;
+    font-size:26rpx;
+    text-align:left;
+    margin-bottom: 20rpx;
+    margin-right: 30rpx;
+  }
+  .title{
+    font-size:30rpx;
+    text-align:left;
+    display:block;
+    padding-top: 10rpx;
+    font-weight: bold;
+  }
+  .title text{
+    font-weight: normal;
+    font-size: 24rpx;
+    margin-left: 20rpx;
+  }
+  .text {
+    color:#858585;
+    font-size:25rpx;
+    text-align:right;
+  }
+  .info{
+    background-color:#fff;
+    padding:10rpx 15rpx 10rpx 25rpx;
+    border-radius: 12rpx;
+    margin-top: 20rpx;
+    margin-bottom:40rpx;
+  }
+  .money{
+    background-color: #fff;
+    margin: 25rpx 0;
+    padding: 40rpx 0;
+    border: 1rpx solid #eee;
+  }
+  .inline{
+    display: inline-block;
+  }
+  .money .inline{
+    width: 49%;
+  }
+  .money .inline view{
+    text-align: center;
+    width: 100%;
+  }
+  .textblack{
+    color: #121212;
+    font-weight: bold;
+    font-size: 23rpx;
+  }
+  .boerderRight{
+    border-right: 1rpx solid #eee;
+  }
+  .time{
+    color: #1fbfb7;
+    font-size: 35rpx;
+    font-weight: bold;
+    margin-left: 5rpx;
+    margin-right: 3rpx;
+  }
+  .red{
+    color: #f76280;
+    font-size: 35rpx;
+    font-weight: bold;
+  }
+  .green{
+    color: #1fbfb7;
+  }
+  .noPay{
+    font-size:45rpx;
+    color:#bbb;
+    text-align:center;
+    padding-top:17%;
+  }
+</style>
+
+<template>
+  <view class="wrap">
+    <!--循环体-->
+    <block wx:if="{{workerList.length > 0}}" class="item" wx:for="{{workerList}}" wx:for-item="item"  wx:key="{{item.workerId}}">
+      <view class="infoItem" bindtap="gotoDetail">
+        <view class="info">
+          <view class="title">{{item.workerName}} <text>{{item.mobile}}</text> </view>
+          <text class="txt">总用时：{{item.minutes/60}}小时  </text>
+          <text class="txt">总费用：{{item.shouldPayMoney}}元 </text>
+          <view class="money">
+            <view class="inline boerderRight">
+              <view class="time">{{item.havePayMoney}}</view>
+              <view class="text textblack">已结款（元）</view>
+            </view>
+            <view class="inline">
+              <view class="red">{{item.waitPayMoney}}</view>
+              <view class="text textblack">未结款（元）</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+    <View class="noPay" wx:if="{{workerList.length === 0}}">
+      暂无支付账单
+    </View>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import {getHrtask} from '../actions/hrcompaniesAction'
+  export default class hrcheckoutList extends wepy.page {
+    config = {
+      navigationBarTitleText: '结账详情'
+    };
+    data = {
+      taskid: '',
+      workerList: {}
+    };
+    methods = {};
+    getHrTask () {
+      var that = this
+      console.log('getSingleTask taskid', that.taskid)
+      wx.showLoading({title: '数据加载中'})
+      getHrtask(that.taskid).then((data) => {
+        that.workerList = data.data.data.confirmedSet
+        that.$apply()
+        wx.hideLoading()
+      })
+    }
+    onLoad(option) {
+      this.taskid = option.taskId
+      this.getHrTask()
+    }
+    onShow() {}
+  }
+</script>

@@ -1,0 +1,230 @@
+<style lang="less">
+  .wrap{
+    background-color:#fff;
+    text-align: center;
+  }
+  page{
+    background-color: #fff;
+  }
+  .title{
+    display:block;
+    color:#121212;
+    font-size:35rpx;
+    text-align:center;
+    width:100%;
+    padding-top:12%;
+    padding-bottom:14%;
+    font-weight:bold;
+  }
+  .txt{
+    color:#121212;
+    font-size:30rpx;
+    text-align:left;
+    width:92%;
+    border-radius:0;
+    margin-bottom:52rpx;
+    line-height:90rpx;
+    margin-left:auto;
+    margin-right:auto;
+    border-bottom: 1rpx solid #d5d5d5;
+    padding-bottom: 10rpx;
+    padding-left: 10rpx;
+  }
+.loginBtn{
+  background:#0ec3bc!important;
+  width:94%;
+  font-size:32rpx;
+  margin-top:100rpx;
+  border-radius:60rpx;
+  color: #fff!important;
+}
+.gloomyBtn{
+  background:#ccc!important;
+  width:94%;
+  font-size:32rpx;
+  margin-top:100rpx;
+  border-radius:60rpx;
+  color: #fff!important;
+}
+  .left{
+    float: left;
+    margin-left: 23rpx;
+    font-size: 25rpx;
+    margin-top: 30rpx;
+  }
+  .right{
+    float: right;
+    margin-right: 23rpx;
+    font-size: 25rpx;
+    margin-top: 30rpx;
+  }
+  .highlight{
+    color: #0ec3bc;
+  }
+  .general{
+    color: #aaaaaa;
+    margin-right: 10rpx;
+  }
+  .inline{
+    display: inline-block;
+  }
+  .codeWrap{
+    width: 92%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .codeleft{
+    float: left;
+    width: 60%;
+  }
+  .code{
+    float:right;
+    text-align:center;
+    color:#fff;
+    background-color: #0ec3bc;
+    width:38.5%;
+    line-height:34px;
+  }
+  .codetxt{
+    width: 100%;
+    display: block;
+    font-size:28rpx;
+  }
+  .getCode{
+    background-color: #ccc !important;
+  }
+</style>
+
+<template lang="wxml">
+  <view class="wrap">
+    <text class="title">欢迎登录</text>
+  <input type="text" class="weui-search-bar__input txt" placeholder="请输入手机号码"  placeholder-style="color:#cbcbcb" value="{{mobile}}"/>
+  <view class="codeWrap">
+  <input type="text" class="weui-search-bar__input txt codeleft" placeholder="请输入验证码" placeholder-style="color:#cbcbcb" bindinput="listenerSmsCodeInput" />
+    <view class="code" bindtap="getSmsCode" wx:if="{{wait === 60}}"><text class="codetxt">{{getMsg}}</text></view>
+    <view class="code getCode" wx:if="{{wait < 60}}"><text class="codetxt">{{getMsg}}</text></view>
+  </view>
+  <button  type="default" class="gloomyBtn" wx:if="{{smsCode === '' || clickedBtn === true}}">登录</button>
+  <button  type="default" class="loginBtn" wx:if="{{smsCode !== ''&& clickedBtn === false}}" bindtap = "loginByMobile">登录</button>
+  </view>
+
+</template>
+<script>
+    import wepy from 'wepy'
+    import {getSmsCodeBySmsType, loginByMobile} from '../actions/authAction'
+    export default class login extends wepy.page {
+      config = {
+        navigationBarTitleText: '登录'
+      };
+      data = {
+        mobile: '',
+        smsCode: '',
+        wait: 60,
+        getMsg: '获取验证码',
+        clickedBtn: false
+      };
+      methods = {
+        listenerSmsCodeInput: function (e) {
+          this.smsCode = e.detail.value
+        },
+        getSmsCode: function () {
+          getSmsCodeBySmsType(this.mobile, 'login').then((res) => {
+            console.log('register send sms result:', res)
+            if (res.data.success === true) {
+              this.timeFunction()
+            } else if (res.data.success === false) {
+              let str = res.data.message.substring(this.mobile.length)
+              console.log('str', str)
+              if (str === 'invalid mobile number') {
+                wx.showModal({
+                  title: '提示',
+                  content: '手机号' + this.mobile + '不正确'
+                })
+              } else if (res.data.message === '触发天级流控Permits:10') {
+                wx.showModal({
+                  title: '提示',
+                  content: '您今日发送的验收码已超出限制！',
+                  showCancel: false
+                })
+              } else {
+                wx.showModal({
+                  title: '提示',
+                  content: res.data.message,
+                  showCancel: false
+                })
+              }
+            }
+          })
+        },
+        loginByMobile: function () {
+          var that = this
+          this.clickedBtn = true
+          wx.showLoading({
+            title: '加载中',
+            mask: true
+          })
+          loginByMobile(this.mobile, this.smsCode).then(res => {
+            console.log('logo res', res)
+            wx.hideLoading()
+            if (res.data !== undefined && res.data.success === false) {
+              that.clickedBtn = false
+              that.$apply()
+              wx.showModal({
+                title: '提示',
+                content: res.data.message,
+                showCancel: false
+              })
+            }
+            if (res.userType) {
+              if ((res.userType === 'hotel' || res.userType === 'hr') && !res.company) {
+                wx.navigateTo({
+                  url: 'addCompanyInfo?userType=' + res.userType
+                })
+              } else {
+                wx.switchTab({
+                  url: 'home'
+                })
+              }
+            }
+            console.log('login result:', res)
+          }, error => {
+            that.clickedBtn = false
+            wx.showModal({
+              title: '提示',
+              content: '登录失败，' + error,
+              showCancel: false
+            })
+          })
+        },
+        gotoRegister: function() {
+          wx.navigateTo({
+            url: 'register'
+          })
+        },
+        gotoRetrievepwd: function () {
+          wx.navigateTo({
+            url: 'retrievepwd'
+          })
+        }
+      };
+      timeFunction () {
+        var that = this
+        if (this.wait === 0) {
+          this.getMsg = '获取验证码'
+          this.wait = 60
+        } else {
+          this.getMsg = '重新发送(' + this.wait + 's)'
+          this.wait--
+          setTimeout(function() {
+            that.timeFunction()
+          },
+            1000)
+        }
+        this.$apply()
+      }
+      onLoad(option) {
+        this.mobile = option.mobile
+      }
+      onShow() {}
+    }
+</script>

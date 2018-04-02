@@ -1,0 +1,167 @@
+<style lang="less">
+  .wrap{
+    text-align: center;
+  }
+  .txt{
+    color:#121212;
+    font-size:23rpx;
+    text-align:left;
+    line-height:55rpx;
+  }
+
+.title{
+  font-size:32rpx;
+  text-align:left;
+  margin-bottom: 8rpx;
+  font-weight: bold;
+}
+  .general{
+    color: #aaaaaa;
+    font-size:30rpx;
+    text-align: left;
+    margin-bottom: 25rpx;
+    width: 100%;
+  }
+
+  .light{
+    color: #13bfc1;
+    font-size:34rpx;
+    margin-top:72%;
+    margin-bottom: 40rpx;
+    font-weight: bold;
+  }
+  .light text{
+    font-weight: normal;
+    font-size: 23rpx;
+  }
+  .block{
+    display: block;
+  }
+  .summa{
+    background-color:#fff;
+    width:84%;
+    margin:30rpx auto;
+    padding:60rpx 5%;
+    border-radius:20rpx;
+    display:flex;
+    flex-direction:row;
+  }
+  .text{
+    font-size:26rpx;
+    text-align:left;
+    margin-top:6px;
+    font-weight:600;
+    flex:1;
+    margin-bottom: 35rpx;
+  }
+  .num{
+    color: #1fbfb7;
+    font-size:43rpx;
+    font-weight: bold;
+    text-align: right;
+    flex:1;
+  }
+  .icon{
+    width: 16rpx;
+    height: 16rpx;
+    margin-right: 15rpx;
+  }
+  .serve{
+    background-color: #fff;
+    margin-top: 15rpx;
+    padding: 20rpx 25rpx;
+  }
+  .serve ul li{
+    display: block;
+    text-align: left;
+  }
+  .signin{
+    width:100%;
+    background-color: #f8f8f8;
+    padding: 15rpx 0;
+    display:flex;
+    margin: 30rpx auto;
+  }
+  .signinItem{
+    flex: 1;
+  }
+  .signinItem view{
+    text-align: center;
+  }
+  .total{
+    display: flex;
+  }
+  .totalLeft{
+    text-align: left;
+    flex: 1;
+    margin-left:10rpx;
+  }
+  .totalRight{
+    flex: 1;
+    text-align: right;
+    margin-right: 10rpx;
+  }
+
+</style>
+
+<template lang="wxml">
+  <view class="wrap">
+    <view class="summa">
+      <view class="text">应结总金额</view>
+      <view class="num">60 <text>元</text></view>
+    </view>
+    <!--循环体-->
+    <view class="serve">
+      <view class="title">客服服务</view>
+      <ul>
+        <li>
+          <image src="../images/time.png" class="icon"></image>
+          <text class="general">2018.02.03  9:00-18:00</text>
+        </li>
+        <li>
+          <image src="../images/yellow.png" class="icon"></image>
+          <text class="general">人数： 10 | 定价：20/小时</text>
+        </li>
+        <li>
+          <image src="../images/pink.png" class="icon"></image>
+          <text class="general">酒店1层20个客房的清理打扫工作</text>
+        </li>
+      </ul>
+      <view class="signin">
+        <view class="signinItem">
+          <view class="text">签到时间</view>
+          <view class="general">9:00</view>
+          <view class="general">15:00</view>
+        </view>
+          <view class="signinItem">
+          <view class="text">就餐次数</view>
+          <view class="general">0</view>
+          <view class="general">0</view>
+        </view>
+        <view class="signinItem">
+          <view class="text">签退时间</view>
+          <view class="general">9:00</view>
+          <view class="general">15:00</view>
+        </view>
+      </view>
+      <view class="total">
+       <view class="totalLeft txt">工作时间： <text class="light">2 <text>小时</text></text></view>
+       <view class="totalRight txt">应结金额： <text class="light">40 <text>元</text></text></view>
+      </view>
+    </view>
+
+
+  </view>
+</template>
+<script>
+    import wepy from 'wepy'
+    export default class workRecord extends wepy.page {
+      config = {
+        navigationBarTitleText: '工作记录'
+      };
+      data = {};
+      methods = {};
+      onLoad() {}
+      onShow() {}
+    }
+</script>

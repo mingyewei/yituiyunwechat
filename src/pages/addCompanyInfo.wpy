@@ -1,0 +1,433 @@
+<!--suppress CssInvalidPropertyValue -->
+<style lang="less">
+  .wrap{
+    background-color:#fff;
+    text-align: center;
+    margin-top:35rpx;
+  }
+  page{
+    background-color: #fff;
+  }
+  .title{
+    display:block;
+    color:#121212;
+    font-size:35rpx;
+    text-align:center;
+    width:100%;
+    padding-top:20rpx;
+    padding-bottom:15rpx;
+    font-weight:bold;
+  }
+  .inputText{
+    font-size:32rpx;
+    text-align:left;
+    float:left;
+    margin-bottom:7rpx;
+  }
+  .txt{
+    color:#121212;
+    font-size:30rpx;
+    text-align:left;
+    width:98%;
+    border-radius:0;
+    margin-bottom:52rpx;
+    line-height:90rpx;
+    border-bottom:1rpx solid #d5d5d5;
+    padding-bottom:10rpx;
+    padding-left:2%;
+  }
+  .imageBox{
+    overflow: hidden;
+    line-height: 120rpx;
+    padding: 15rpx 0;
+    width:96%;
+    margin: 0 auto;
+    border-bottom:1rpx solid #d5d5d5;
+    margin-bottom: 15rpx;
+  }
+  .LicenseBox{
+    overflow: hidden;
+    line-height: 60rpx;
+    padding: 15rpx 0;
+    width:96%;
+    margin: 0 auto;
+    border-bottom:1rpx solid #d5d5d5;
+    margin-bottom: 16rpx;
+  }
+  .putLicense{
+    float:right;
+    margin-right:63rpx;
+    color:#121212;
+    font-size:30rpx;
+  }
+  .image{
+    width:120rpx;
+    height:120rpx;
+    border-radius:50%;
+    float:right;
+    margin-right:50rpx;
+  }
+ .loginBtn{
+   background:#0ec3bc !important;
+   width:96%;
+   font-size:32rpx;
+   margin-top:32rpx;
+   border-radius:60rpx;
+   color:#fff !important;
+   margin-bottom:45rpx;
+ }
+  //noinspection ALL
+  .inputBox{
+    height:130rpx;
+    padding:18rpx 0;
+    width: 96%;
+    margin: 0 auto;
+  }
+</style>
+
+<template lang="wxml">
+  <view class="wrap">
+    <view class="imageBox" bindtap="chooseimage(logo)">
+      <text class="inputText" style="margin-left: 1%;">{{inputTitle.logo}}</text>
+      <image class='image' src="{{putInfo.logo}}" wx:if="{{choseLogo}}"></image>
+      <text class="putLicense" wx:if="{{!choseLogo}}">选择图片</text>
+      <view class="weui-cell__ft weui-cell__ft_in-access" style="top:64rpx"></view>
+    </view>
+    <view class="LicenseBox" bindtap="chooseimage(license)">
+      <text class="inputText" style="margin-left: 1%;">营业执照</text>
+      <text class="putLicense">{{putlicense}}</text>
+      <view class="weui-cell__ft weui-cell__ft_in-access" style="top:32rpx"></view>
+    </view>
+    <view class="inputBox">
+      <text class="inputText">{{inputTitle.name}}</text>
+       <input type="text"
+              class="weui-search-bar__input txt"
+              placeholder="请输入{{inputTitle.name}}"
+              placeholder-style="color:#cbcbcb"
+              @input="bindInput(name)"
+              value="{{putInfo.name}}" />
+    </view>
+    <view class="inputBox" bindtap="getLocatiopn">
+      <text class="inputText">{{inputTitle.address}}</text>
+      <input type="text"
+        class="weui-search-bar__input txt"
+        placeholder="请选择酒店地址"
+        placeholder-style="color:#cbcbcb"
+        value="{{putInfo.address}}"
+      />
+    </view>
+    <view class="inputBox">
+      <text class="inputText">{{inputTitle.leader}}</text>
+      <input type="text"
+             class="weui-search-bar__input txt"
+             placeholder="请输入{{inputTitle.leader}}"
+             placeholder-style="color:#cbcbcb"
+             @input="bindInput(leader)"
+             value="{{wxUserInfo.nickName}}"
+  />
+    </view>
+    <view class="inputBox">
+      <text class="inputText">{{inputTitle.leaderMobile}}</text>
+      <input type="text"
+             class="weui-search-bar__input txt"
+             disabled="true"
+             style="color:#999"
+             value="{{userInfo.mobile}}"/>
+    </view>
+  </view>
+    <button  type="default" class="loginBtn" @tap="postInfo">提交</button>
+  </view>
+</template>
+<script>
+    import wepy from 'wepy'
+    import {addHotels, fetchHotelInfo, changeHotel} from '../actions/hotelAction'
+    import {addHrcompanies, fetchHrcompanyInfo, changeHrInfo} from '../actions/hrcompaniesAction'
+    import {getUserInfo, getWxUserInfo, getToken} from '../util/userInfo'
+    import {UrlHost} from '../constants/index'
+
+    export default class addCompanyInfo extends wepy.page {
+      config = {
+        navigationBarTitleText: '添加信息'
+      };
+      data = {
+        inputTitle: {
+          logo: '酒店logo',
+          name: '酒店名称',
+          address: '酒店地址',
+          leader: '酒店负责人',
+          leaderMobile: '酒店负责人电话'
+        },
+        putInfo: {
+          logo: '',
+          businessLicense: '',
+          name: '',
+          address: '',
+          leader: '',
+          leaderMobile: ''
+        },
+        userType: '',
+        userInfo: {},
+        wxUserInfo: {},
+        putlicense: '未上传',
+        choseLogo: false,
+        existCompany: false
+      };
+      methods = {
+        gotoRegister: function() {
+          wx.navigateTo({
+            url: 'register'
+          })
+        },
+        gotoRetrievepwd: function () {
+          wx.navigateTo({
+            url: 'retrievepwd'
+          })
+        },
+        bindInput: function(val, e) {
+          if (val === 'name') {
+            this.putInfo.name = e.detail.value
+          } else if (val === 'address') {
+            this.putInfo.address = e.detail.value
+          } else if (val === 'leader') {
+            this.putInfo.leader = e.detail.value
+          }
+        },
+        postInfo: function () {
+          this.putInfo.leaderMobile = this.userInfo.mobile
+          if (this.putInfo.leader === '') {
+            this.putInfo.leader = this.wxUserInfo.nickName
+          }
+          console.log('putInfo', this.putInfo)
+          if (this.existCompany) { // 先添加公司信息在注册用户，修改公司信息
+            if (this.userType === 'hotel') {
+              changeHotel(this.putInfo, 'reg').then((res) => {
+                console.log(res)
+                if (res.success) {
+                  wx.switchTab({
+                    url: 'home'
+                  })
+                }
+              })
+            } else if (this.userType === 'hr') {
+              changeHrInfo(this.putInfo, 'reg').then((res) => {
+                if (res.data.success) {
+                  wx.switchTab({
+                    url: 'home'
+                  })
+                } else {
+                  wx.showModal({
+                    title: '提示',
+                    content: res.data.message
+                  })
+                }
+              })
+            }
+          } else {
+            if (this.userType === 'hotel') {
+              addHotels(this.putInfo, 'reg').then((res) => {
+                console.log(res)
+                if (res.success) {
+                  wx.switchTab({
+                    url: 'home'
+                  })
+                }
+              })
+            } else if (this.userType === 'hr') {
+              addHrcompanies(this.putInfo, 'reg').then((res) => {
+                if (res.data.success) {
+                  wx.switchTab({
+                    url: 'home'
+                  })
+                } else {
+                  wx.showModal({
+                    title: '提示',
+                    content: res.data.message
+                  })
+                }
+              })
+            }
+          }
+        },
+        chooseimage: function (act) {
+          var that = this
+          wx.showActionSheet({
+            itemList: ['从相册中选择', '拍照'],
+            itemColor: '#0ec3bc',
+            success: function (res) {
+              if (!res.cancel) {
+                if (res.tapIndex === 0) {
+                  that.chooseWxImage('album', act)
+                } else if (res.tapIndex === 1) {
+                  that.chooseWxImage('camera', act)
+                }
+              }
+            }
+          })
+        },
+        getLocatiopn: function () {
+          var that = this
+          wx.chooseLocation({
+            success: function(res) {
+              console.log(res)
+              that.putInfo.address = res.address
+              if (that.userType === 'hotel') {
+                that.putInfo.latitude = res.latitude
+                that.putInfo.longitude = res.longitude
+                that.getLocation = '已选择'
+              }
+              that.$apply()
+            }
+          })
+        }
+      };
+      chooseWxImage (type, act) {
+        var that = this
+        wx.chooseImage({
+          sizeType: ['original', 'compressed'],
+          sourceType: [type],
+          success: function (res) {
+            console.log(res)
+            if (act === 'logo') {
+              that.upload(act, res.tempFilePaths[0], (data) => {
+                that.putInfo.logo = data
+                that.choseLogo = true
+                that.$apply()
+              })
+            } else if (act === 'license') {
+              that.upload(act, res.tempFilePaths[0], (data) => {
+                that.putInfo.businessLicense = data
+                that.putlicense = '已上传'
+                that.$apply()
+              })
+            }
+          }
+        })
+      }
+      setTextFunction () {
+        console.log('userType', this.userType)
+        if (this.userType === 'hr') {
+          this.inputTitle = {
+            logo: '公司logo',
+            name: '公司名称',
+            address: '公司地址',
+            leader: '公司负责人',
+            leaderMobile: '负责人电话'
+          }
+        }
+      }
+      upload (act, path, cb) {
+        wx.showToast({
+          icon: 'loading',
+          title: '正在上传'
+        })
+        wx.uploadFile({
+          url: UrlHost + '/files/' + act,
+          filePath: path,
+          name: 'file',
+          header: { authorization: getToken(), 'Accept': 'application/json', 'Content-Type': 'multipart/form-data' },
+          success: function (res) {
+            console.log(res)
+            if (res.statusCode !== 200) {
+              wx.showModal({
+                title: '提示',
+                content: '上传失败',
+                showCancel: false
+              })
+              return
+            }
+            var data = JSON.parse(res.data)
+            if (cb) {
+              cb(data.data)
+            }
+          },
+          fail: function (e) {
+            console.log(e)
+            wx.showModal({
+              title: '提示',
+              content: '上传失败',
+              showCancel: false
+            })
+          },
+          complete: function () {
+            wx.hideToast()
+          }
+        })
+      }
+      getHotelInfo() {
+        var that = this
+        fetchHotelInfo().then((data) => {
+          var hotelInfo = data.data.data
+          if (hotelInfo.id !== undefined) {
+            that.existCompany = true
+            that.putInfo = hotelInfo
+          }
+//          that.putInfo.logo = hotelInfo.logo
+//          that.putInfo.name = hotelInfo.name
+//          that.putInfo.address = hotelInfo.address
+//          that.putInfo.businessLicense = hotelInfo.businessLicense
+//          that.putInfo.leader = hotelInfo.leader
+//          that.putInfo.leaderMobile = hotelInfo.leaderMobile
+
+          if (hotelInfo.logo) {
+            that.choseLogo = true
+          }
+
+          if (hotelInfo.businessLicense) {
+            that.putlicense = '已上传'
+          }
+
+          that.$apply()
+          console.log('getHotelInfo', that.hotelInfo)
+        })
+      }
+      getHrInfo() {
+        var that = this
+        fetchHrcompanyInfo().then((data) => {
+          console.log('mine.fetchHrcompanyInfo result:', data)
+          var hrInfo = data.data.data
+          if (hrInfo.id !== undefined) {
+            that.existCompany = true
+            that.putInfo = hrInfo
+          }
+//          that.putInfo.logo = hrInfo.logo
+//          that.putInfo.name = hrInfo.name
+//          that.putInfo.address = hrInfo.address
+//          that.putInfo.businessLicense = hrInfo.businessLicense
+//          that.putInfo.leader = hrInfo.leader
+//          that.putInfo.leaderMobile = hrInfo.leaderMobile
+
+          if (hrInfo.logo) {
+            that.choseLogo = true
+          }
+          if (hrInfo.businessLicense) {
+            that.putlicense = '已上传'
+          }
+
+          that.$apply()
+        })
+      }
+      onLoad(option) {
+        console.log('option', option)
+        this.userType = option.userType
+        this.userInfo = getUserInfo()
+        this.wxUserInfo = getWxUserInfo()
+
+        if (this.userInfo && this.userInfo.company) {
+          switch (this.userType) {
+            case 'hotel':
+              this.getHotelInfo()
+              break
+            case 'hr':
+              this.getHrInfo()
+              break
+            case 'worker':
+              break
+          }
+        }
+        this.$apply()
+      }
+      onShow() {
+        this.setTextFunction()
+      }
+    }
+</script>

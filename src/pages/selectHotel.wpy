@@ -1,0 +1,144 @@
+<style lang="less">
+  .wrap{
+    background-color:#fff;
+    padding-top: 5%;
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  page{
+    background-color: #fff;
+  }
+  .radio{
+    display: block;
+    border-bottom:1rpx solid #e1e1e1;
+    font-size: 26rpx;
+    padding: 30rpx 0;
+  }
+  radio{
+    float: right;
+  }
+
+</style>
+
+<template lang="wxml">
+  <view class="wrap">
+
+  <radio-group class="radio-group" bindchange="radioChange">
+  <label class="radio" wx:for="{{items}}" wx:for-item="item"  wx:key="{{item.id}}">
+  {{item.name}} <radio value="{{item.id}}" />
+  </label>
+  </radio-group>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import {getCompanyId} from '../util/userInfo'
+  import {searchHotels} from '../actions/hotelAction'
+  import {hrcompanyAddHotels, fetchHotels} from '../actions/hrcompaniesAction'
+  export default class selectHotel extends wepy.page {
+    config = {
+      navigationBarTitleText: '选择酒店'
+    };
+    data = {
+      items: [],
+      bindingsHotel: [],
+      queryObj: {
+        paginator: {
+          page: 1,
+          pageSize: 1000
+        },
+        selector: {
+          status: 1
+        }
+      },
+      idSet: {
+        hotelId: '',
+        hrCompanyId: ''
+      }
+    };
+    methods = {
+      radioChange: function(e) {
+        wx.showLoading({title: '数据加载中'})
+        this.idSet.hotelId = e.detail.value
+        hrcompanyAddHotels(this.idSet).then((res) => {
+          wx.hideLoading()
+          console.log('res-----------', res)
+          if (res.data.success === true) {
+            wx.showModal({
+              title: '提示',
+              content: '添加成功',
+              confirmText: '确定',
+              showCancel: false,
+              success: function(res) {
+                if (res.confirm) {
+                  wx.navigateBack({
+                    delta: 1
+                  })
+                }
+              }
+            })
+          } else {
+            wx.showModal({
+              title: '提示',
+              content: res.data.message,
+              showCancel: false
+            })
+          }
+        })
+      }
+    };
+    searchHotelsInfo() {
+      var that = this
+      wx.showLoading({title: '数据加载中'})
+      searchHotels(this.queryObj).then((res) => {
+        if (res.data.success === true) {
+          that.items = res.data.data.list
+          that.$apply()
+          console.log('that.bindingsHotel', that.bindingsHotel)
+          console.log('that.items', that.items)
+          let selecthotel = []
+          for (let i = 0; i < that.items.length; i++) {
+            let currenthotel = that.items[i].id
+            let havehotel = false
+            for (let j = 0; j < that.bindingsHotel.length; j++) {
+              if (that.bindingsHotel[j].id === currenthotel) {
+                havehotel = true
+              }
+            }
+            if (!havehotel) {
+              selecthotel.push(that.items[i])
+            }
+          }
+          that.items = selecthotel
+          this.$apply()
+          console.log('that.items', that.items)
+          wx.hideLoading()
+        } else {
+          wx.showModal({
+            title: '提示',
+            content: res.data.message,
+            showCancel: false
+          })
+        }
+      })
+    }
+    getHotels() {
+      var that = this
+      var hrCompaniesId = getCompanyId()
+      fetchHotels(hrCompaniesId).then((res) => {
+        if (res.data.success === true) {
+          that.bindingsHotel = res.data.data
+          that.$apply()
+          that.searchHotelsInfo()
+        }
+      })
+    }
+    onLoad() {
+      this.idSet.hrCompanyId = getCompanyId()
+      this.getHotels()
+      this.$apply()
+    }
+    onShow() {}
+  }
+</script>

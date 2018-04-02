@@ -1,0 +1,120 @@
+<style lang="less">
+  .wrap{
+    background-color:#f1f1f1;
+    text-align: center;
+  }
+  .title{
+    display:block;
+    color:#121212;
+    font-size:37rpx;
+    text-align:center;
+    width:100%;
+    padding-top:17%;
+    padding-bottom:20%;
+    font-weight:bold;
+  }
+  .select{
+    background-color:#fff;
+    color:#121212;
+    font-size:33rpx;
+    text-align:center;
+    width:90%;
+    border-radius:150rpx;
+    margin-bottom:52rpx;
+    line-height:95rpx;
+    margin-left:auto;
+    margin-right:auto;
+  }
+</style>
+
+<template lang="wxml">
+  <view class="wrap">
+  <text class="title">请先选择您的用户角色</text>
+  <view class="select " hover-class="weui-cell_active" bindtap="gotoWorkerRegister"><text>我是小时工</text></view>
+  <view class="select" bindtap="gotoHotelRegister"><text>我是酒店负责人</text></view>
+  <view class="select" bindtap="gotoHrRegister"><text>我是人力公司负责人</text></view>
+  </view>
+
+</template>
+<script>
+  import wepy from 'wepy'
+  export default class index extends wepy.page {
+    config = {
+      navigationBarTitleText: '酒店结账管理',
+      enablePullDownRefresh: true
+    };
+    data = {
+      userType: ''
+    };
+    methods = {
+      gotoWorkerRegister: function () {
+        wx.navigateTo({
+          url: 'register?userType=worker'
+        })
+      },
+      gotoHotelRegister: function () {
+        wx.navigateTo({
+          url: 'register?userType=hotel'
+        })
+      },
+      gotoHrRegister: function () {
+        wx.navigateTo({
+          url: 'register?userType=hr'
+        })
+      }
+    };
+
+    fetchData() {
+      var userInfo = wx.getStorageSync('keyUserInfo')
+      console.log('user info in select.fetchData:', userInfo)
+      if (userInfo) {
+        if (userInfo.userType === 'hotel' || userInfo.userType === 'hr') {
+          if (!userInfo.company) {
+            wx.navigateTo({
+              url: 'addCompanyInfo?userType=' + userInfo.userType
+            })
+          } else {
+            wx.switchTab({
+              url: 'home'
+            })
+          }
+        } else {
+          wx.switchTab({
+            url: 'home'
+          })
+        }
+      } else {
+        var wxUserInfo = wx.getStorageSync('keyWxUserInfo')
+        console.log('keyWxUserInfo in select.fetchData:', wxUserInfo)
+        if (wxUserInfo && wxUserInfo.mobile) {
+          wx.redirectTo({
+            url: 'login?mobile=' + wxUserInfo.mobile
+          })
+        }
+      }
+    }
+    onLoad() {
+      wepy.$instance.addListener(function (isAuthed, wxUserInfo, userInfo) {
+        wx.hideLoading()
+        if (isAuthed && userInfo.id) {
+          wx.switchTab({
+            url: 'home'
+          })
+        }
+      })
+      if (wepy.$instance.globalData.isCheckAuth) {
+        wx.showLoading({
+          title: '身份校验中'
+        })
+      }
+      this.fetchData()
+    }
+    onPullDownRefresh() {
+      console.log('select page begin onPullDownRefresh')
+      this.fetchData()
+      console.log('select page begin stopPullDownRefresh:')
+      wx.stopPullDownRefresh()
+    }
+    onShow() {}
+  }
+</script>

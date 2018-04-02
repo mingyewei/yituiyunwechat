@@ -1,0 +1,103 @@
+<style lang="less">
+  .previewPage{
+    background-color:rgba(0,0,0,1);
+    overflow: hidden;
+  }
+  .swiperBox {
+    width:100%;
+    height: 100%;
+  }
+  .swiper-image {
+    width: 100%;
+  }
+  .currentPage {
+    position:fixed;
+    bottom:5%;
+    right:5%;
+    color:#999;
+    font-size:32rpx;
+    padding:6rpx 10rpx;
+    font-family: "Microsoft YaHei";
+  }
+</style>
+
+<template lang="wxml">
+  <view class="previewPage" style="height:{{scrollHeight}}px;">
+      <swiper indicator-dots="{{indicatorDots}}" class="swiperBox" current="{{currentIndex}}"
+              style="margin-top:{{(scrollHeight - scrollWidth)/2}}px;"
+              autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}"
+              bindchange="bindchange"
+      >
+        <block wx:for="{{allImgUrls}}" wx:key="*this">
+          <swiper-item >
+            <image class="swiper-image" src="{{item}}" mode="widthFix" />
+          </swiper-item>
+        </block>
+      </swiper>
+  </view>
+  <view class="currentPage">{{currentPage}}/{{Index}}</view>
+</template>
+<script>
+  import wepy from 'wepy'
+  export default class PreviewImage extends wepy.page {
+    config = {
+      navigationBarTitleText: ' ',
+      navigationBarBackgroundColor: '#333',
+      navigationBarTextStyle: 'white'
+    };
+    data = {
+      allImgUrls: [],
+      currentImageUrl: [],
+      indicatorDots: false,
+      autoplay: false,
+      interval: 5000,
+      duration: 1000,
+      scrollHeight: '',
+      scrollWidth: '',
+      currentIndex: '',
+      currentPage: '',
+      Index: ''
+    };
+    setCurrentImageIndex (currentImageUrl, allImgUrls) {
+      for (let i = 0; i < allImgUrls.length; i++) {
+        if (allImgUrls[i] === currentImageUrl) {
+          this.currentIndex = i
+          this.currentPage = i + 1
+        }
+      }
+    }
+    methods = {
+      bindchange (event) {
+        this.currentPage = event.detail.current + 1
+      }
+    };
+    events = {}
+    onLoad(option) {
+//      this.currentIndex = ''
+//      this.allImgUrls = []
+//      this.currentImageUrl = []
+      var that = this
+      wx.getSystemInfo({
+        success: function(res) {
+          that.scrollHeight = res.windowHeight
+          that.scrollWidth = res.windowWidth
+        }
+      })
+      this.imageUrl = JSON.parse(option.imageUrl)
+      var currentImageUrl = this.imageUrl.currentImageUrl
+      var allImgUrls = this.imageUrl.allImageUrl
+      this.Index = allImgUrls.length
+      this.setCurrentImageIndex(currentImageUrl, allImgUrls)
+      this.allImgUrls = this.imageUrl.allImageUrl
+      this.currentImageUrl = this.imageUrl.currentImageUrl
+    };
+    onShow() {
+    };
+    onUnload() {
+      console.log('Do something when page close监听页面卸载')
+      this.currentIndex = ''
+      this.allImgUrls = []
+      this.currentImageUrl = []
+    };
+  }
+</script>

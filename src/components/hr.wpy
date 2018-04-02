@@ -1,0 +1,270 @@
+<style lang="less">
+  page{
+    background-color: #f1f1f1;
+  }
+  .hrList{
+    background: #fff;
+    border-radius: 15rpx;
+    margin:20rpx 22rpx;
+    padding:39rpx 30rpx 0;
+    position: relative;
+  }
+  .recruitClass{
+    font-size:33rpx;
+    color:#111111;
+    margin-bottom:30rpx;
+  }
+  .orderNumber{
+    font-size:26rpx;
+    color:#10c4b9;
+    float:right;
+  }
+  .hrList .time,.hrList .personPrice,.hrList .address{
+    font-size:26rpx;
+    color:#898989;
+    padding-bottom:25rpx;
+  }
+  .time icon{
+    margin-right: 20rpx;
+    margin-left: -2rpx
+  }
+  .iconpiont{
+    width:22rpx;
+    height:22rpx;
+    border-radius: 50%;
+    background:#ffa301;
+    margin-right:20rpx;
+    display:inline-block;
+  }
+  .address .iconpiont{
+    background: #fc7e94;
+  }
+  .list .company{
+    font-size:26rpx;
+    color:#888;
+    line-height: 110rpx;
+    border-top: 1rpx solid #e1e1e1;
+  }
+  .without{
+    color:#f9748f;
+    float: right;
+    font-size:26rpx;
+    margin-right: 15rpx;
+  }
+  .dispatch{
+    display:inline-block;
+    float:right;
+    border-radius:30rpx;
+    background-color:#0ec3bc;
+    color:#fff;
+    font-size:24rpx;
+    padding:0 45rpx;
+    line-height:65rpx;
+    margin-top:22rpx;
+  }
+  .gray{
+    background-color: #f5f5f5;
+    color: #858585;
+  }
+  .light{
+    color: #0ec3bc;
+    font-size: 32rpx !important;
+  }
+  /*弹窗*/
+  /*mask*/
+  .drawer_screen {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+  }
+  .drawer_box {
+    overflow:hidden;
+    position:fixed;
+    top:50%;
+    left:0;
+    z-index:1001;
+    background:#FAFAFA;
+    margin:-150px 5% 0 5%;
+    padding-bottom: 35rpx;
+    border-radius:12px;
+    width:90%;
+  }
+  .drawer_title{
+    line-height:120rpx;
+    font-size:37rpx;
+    color:#000;
+    text-align: center;
+  }
+  .borderView{
+    border-bottom: 1rpx solid #e1e1e1;
+    margin:0 50rpx 30rpx;
+  }
+  .save{
+    width:40%;
+    margin:0 auto;
+    line-height:90rpx;
+    border-radius:20rpx;
+    background-color: #0ec3bc;
+    font-size:26rpx;
+    position:static!important;
+    color: #fff;
+    display: inline-block;
+    margin-left: 10rpx;
+  }
+  .close{
+    width:40%;
+    margin:0 auto;
+    line-height:90rpx;
+    border-radius:20rpx;
+    background-color: #fff;
+    font-size:26rpx;
+    position:static!important;
+    color: #666;
+    display: inline-block;
+    border:1rpx solid #eee;
+    margin-right:10rpx;
+  }
+  .inputname{
+    color:#121212;
+    font-size:32rpx;
+    text-align:left;
+    width:70%;
+    margin:0 auto;
+    line-height: 60rpx;
+    margin-bottom: 10rpx;
+    display: inline-block;
+    vertical-align:top;
+    padding-left: 50rpx;
+  }
+  .noTask{
+    font-size:45rpx;
+    color:#bbb;
+    text-align:center;
+    padding-top:17%;
+  }
+  .loaded{
+    font-size:26rpx;
+    color:#bbb;
+    text-align:center;
+    padding-bottom:15rpx;
+  }
+</style>
+
+<template>
+  <!--模板不一样 勿删status-->
+    <block class="item" wx:if="{{tasklist.length > 0}}" wx:for="{{tasklist}}" wx:for-item="item"  wx:key="{{item.id}}">
+      <view class="hrList" >
+        <view class="recruitClass" wx:if="{{item.status === 0}}">{{item.taskTypeText}}
+          <text class="orderNumber" wx:if="{{!item.isFinished}}">新任务，等待派发</text>
+          <text class="without" wx:if="{{item.isFinished}}">任务已结束</text>
+        </view>
+        <view class="recruitClass" wx:if="{{item.status === 1}}">
+          {{item.taskTypeText}}
+          <text class="without" wx:if="{{item.isFinished}}">任务已结束</text>
+          <text class="orderNumber" wx:if="{{!item.isFinished}}">{{item.confirmedWorkers}}人已接单</text>
+          <text class="without" wx:if="{{!item.isFinished && item.refusedWorkers > 0}}">{{item.refusedWorkers}}人拒绝接单</text>
+        </view>
+        <view bindtap="gotoTaskDetails" data-taskid="{{item.id}}">
+          <view class="time"><icon type="waiting" size="12" color="#13c0c4"/>{{item.fromDate}} - {{item.toDate}} </view>
+          <view class="personPrice"><view class="iconpiont"></view>人数: {{item.needWorkers}} | 酒店价: {{item.hotelHourlyPay}}元/小时 | 派发价: {{item.hourlyPay}}元/小时</view>
+          <view class="address"><view class="iconpiont"></view>{{item.taskContent}}</view>
+        </view>
+        <view class="company" wx:if="{{item.status === 0}}">{{item.hotelName}}<view class="dispatch" data-taskid="{{item.id}}" @tap="showNameModal" wx:if="{{!item.isFinished}}">派发</view></view>
+        <view class="company" wx:if="{{item.status === 1}}">{{item.hotelName}}<view class="dispatch" data-taskid="{{item.id}}" data-taskid="{{item.id}}" data-hourlyPay="{{item.hourlyPay}}" @tap="selectWorks" wx:if="{{!item.isFinished}}">已派发</view></view>
+      </view>
+    </block>
+    <View class="noTask" wx:if="{{tasklist.length === 0}}">暂无数据</View>
+    <View class="loaded" wx:if="{{tasklist.length > 0}}">数据加载完毕...</View>
+  <!--弹窗-->
+  <view class="drawer_screen" wx:if="{{inputName}}">
+    <view class="drawer_box">
+      <view class="drawer_title">设定工钱</view>
+      <view class="drawer_content">
+        <input type="digit"
+               class="weui-search-bar__input inputname"
+               placeholder="请输入小时工的定价"
+               placeholder-style="color:#cbcbcb"
+               bindinput="setPayMoney"
+        /> <text class="light">元/小时</text>
+        <view class="borderView"></view>
+      </view>
+      <view style="text-align: center">
+        <view class="close" bindtap="cancel">取 消</view>
+        <view class="save" bindtap="closeNameModal" data-statu="save">保 存</view>
+      </view>
+    </view>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  export default class hr extends wepy.component {
+    props = {
+      tasklist: []
+    }
+    data ={
+      userType: '',
+      inputName: false,
+      payMoney: '',
+      queryObj: {
+        paginator: {
+          page: 1,
+          pageSize: 1000
+        },
+        selector: {
+          hrCompanyId: ''
+        }
+      },
+      distributeTaskId: ''
+    }
+    methods = {
+      gotoTaskDetails: function (event) {
+        var taskId = event.currentTarget.dataset.taskid
+        wx.navigateTo({
+          url: 'taskDetails?taskId=' + taskId
+        })
+      },
+      showNameModal: function(event) {
+        this.distributeTaskId = event.currentTarget.dataset.taskid
+        this.inputName = true
+        this.$apply()
+      },
+      cancel () {
+        this.inputName = false
+      },
+      closeNameModal: function () {
+        if (this.payMoney !== '') {
+          wx.navigateTo({
+            url: 'selectWorker?money=' + this.payMoney + '&taskId=' + this.distributeTaskId
+          })
+        } else if (this.payMoney === '') {
+          wx.showModal({
+            title: '提示',
+            content: '请设置金额',
+            showCancel: false
+          })
+        }
+        this.payMoney = ''
+        this.inputName = false
+      },
+      selectWorks: function (event) {
+        let taskid = event.currentTarget.dataset.taskid
+        let hourlypay = event.currentTarget.dataset.hourlypay
+        wx.navigateTo({
+          url: 'selectWorker?money=' + hourlypay + '&taskId=' + taskid
+        })
+      },
+      setPayMoney: function (e) {
+        var value = e.detail.value
+        this.payMoney = value
+        this.$apply()
+      }
+    }
+    watch = {}
+    onLoad () {}
+  }
+</script>

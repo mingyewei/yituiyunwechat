@@ -1,0 +1,205 @@
+<style lang="less">
+  .wrap{
+    text-align: center;
+    margin-bottom:100rpx;
+  }
+.title{
+  font-size:35rpx;
+  display:block;
+  font-weight: 600;
+  background-color:#fff;
+  padding: 40rpx 0;
+}
+.stitle{
+  font-size:30rpx;
+  display:block;
+  font-weight: 600;
+  background-color:#fff;
+  padding: 20rpx 0 20rpx 20rpx;
+  text-align: left;
+
+}
+
+  .text {
+    color:#858585;
+    font-size:28rpx;
+    text-align:right;
+  }
+  .name{
+    color:#333;
+    font-size:28rpx;
+    text-align:right;
+  }
+  .sex{
+    color:#858585;
+    font-size:28rpx;
+    text-align:center;
+  }
+  .weui-cells{
+    margin-top: 0!important;
+    background-color:#fff;
+    padding:15rpx 10rpx!important;
+    margin-bottom:15rpx;
+  }
+  .lefticon{
+    margin-right: 25rpx;
+    vertical-align: middle;
+    width:45rpx;
+    height:45rpx;
+  }
+  .info{
+    font-size: 22rpx;
+    color: #858585;
+    margin-bottom: 20rpx;
+    text-align: left;
+    margin-top:-20rpx;
+    margin-left:20rpx;
+  }
+  .info text{
+    margin-left: 30rpx;
+  }
+  .add{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    background-color: #f5f5f5;
+    color: #858585;
+    width: 100%;
+    text-align: center;
+    font-size: 30rpx;
+    padding:25rpx 0;
+  }
+</style>
+
+<template lang="wxml">
+  <view class="wrap">
+
+    <view class="title">{{taskInfo.taskTypeText}}</view>
+
+    <view class="weui-cells">
+
+      <view class="weui-cell weui-cell_access"  >
+        <view class="weui-cell__hd">
+          <text>任务时间</text>
+        </view>
+        <view class="weui-cell__bd text">{{taskInfo.fromDate}} - {{taskInfo.toDate}}</view>
+      </view>
+
+      <view class="weui-cell weui-cell_access" >
+        <view class="weui-cell__hd">
+         <text>需要人数</text>
+        </view>
+        <view class="weui-cell__bd text">{{taskInfo.needWorkers}}</view>
+      </view>
+
+      <view class="weui-cell weui-cell_access" >
+        <view class="weui-cell__hd">
+        <text>定价（元/小时）</text>
+        </view>
+        <view class="weui-cell__bd text">{{taskInfo.hourlyPay}}</view>
+      </view>
+
+      <view class="weui-cell weui-cell_access" >
+        <view class="weui-cell__hd">
+        <text>任务内容</text>
+        </view>
+        <view class="weui-cell__bd text">{{taskInfo.taskContent}}</view>
+      </view>
+
+      <view class="weui-cell weui-cell_access" >
+        <view class="weui-cell__hd">
+        <text>酒店名称</text>
+        </view>
+        <view class="weui-cell__bd text">{{taskInfo.hotelName}}</view>
+      </view>
+
+      <view class="weui-cell weui-cell_access" >
+        <view class="weui-cell__hd">
+        <text>酒店地址</text>
+        </view>
+        <view class="weui-cell__bd text">{{taskInfo.address}}</view>
+      </view>
+
+    </view>
+
+  <view class="weui-cells">
+    <view class="stitle">10人已接单</view>
+  <!--循环体-->
+    <view class="weui-cell weui-cell_access" hover-class="weui-cell_active"  >
+      <view class="weui-cell__hd">
+      <image src="../images/my/head.png" class="lefticon"></image>
+      <text class="weui-cell__bd name">梁艺婷</text>
+    </view>
+    <view class="weui-cell__bd sex">女/23岁</view>
+    <view class="weui-cell__ft ">18810932234</view>
+    </view>
+
+  <!--循环体-->
+    <view class="weui-cell weui-cell_access" hover-class="weui-cell_active"  >
+    <view class="weui-cell__hd">
+      <image src="../images/my/head.png" class="lefticon"></image>
+      <text class="weui-cell__bd name">梁艺婷</text>
+    </view>
+    <view class="weui-cell__bd sex">女/23岁</view>
+    <view class="weui-cell__ft ">18810932234</view>
+    </view>
+
+  </view>
+
+
+  <view class="weui-cells">
+  <view class="stitle">3人违约</view>
+  <!--循环体-->
+  <view class="weui-cell weui-cell_access" hover-class="weui-cell_active"  >
+  <view class="weui-cell__hd">
+  <image src="../images/my/head.png" class="lefticon"></image>
+  <text class="weui-cell__bd name">梁艺婷</text>
+  </view>
+  <view class="weui-cell__bd sex">女/23岁</view>
+  <view class="weui-cell__ft ">18810932234</view>
+  </view>
+
+  <!--循环体-->
+  <view class="weui-cell weui-cell_access" hover-class="weui-cell_active"  >
+  <view class="weui-cell__hd">
+  <image src="../images/my/head.png" class="lefticon"></image>
+  <text class="weui-cell__bd name">梁艺婷</text>
+  </view>
+  <view class="weui-cell__bd sex">女/23岁</view>
+  <view class="weui-cell__ft ">18810932234</view>
+  </view>
+
+  </view>
+
+
+  </view>
+  <view class="add">已派发</view>
+</template>
+<script>
+    import wepy from 'wepy'
+    import {getHrtask} from '../actions/hrcompaniesAction'
+    export default class taskDetailsEnd extends wepy.page {
+      config = {
+        navigationBarTitleText: '任务详情'
+      };
+      data = {
+        taskid: '',
+        taskInfo: {}
+      };
+      methods = {};
+      getHrTask () {
+        var that = this
+        console.log('getSingleTask taskid', that.taskid)
+        getHrtask(that.taskid).then((data) => {
+          that.taskInfo = data.data.data
+          that.$apply()
+          console.log('taskInfo', that.taskInfo)
+        })
+      }
+      onLoad(option) {
+        this.taskid = option.taskId
+        this.getHrTask()
+      }
+      onShow() {}
+    }
+</script>

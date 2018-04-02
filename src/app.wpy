@@ -1,0 +1,171 @@
+<style lang='less'>
+@import './style/weui.less';
+@import './style/icon.less';
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+  page{
+    background-color: #f1f1f1;
+  }
+</style>
+
+<script>
+import wepy from 'wepy'
+import 'wepy-async-function'
+import {loginWithUser} from './util/weChatAuth'
+export default class extends wepy.app {
+  config = {
+    pages: [
+      'pages/index',
+      'pages/login', // 登录
+      'pages/register', // 注册
+      'pages/home', // 容器页面 - 首页
+      'pages/checkout', // 容器页面 - 结账
+      'pages/mine', // 容器页面 - 我的
+      'pages/retrievepwd', // 找回密码
+      'pages/changepwd', // 修改密码
+      'pages/aboutUs', // 关于我们
+      'pages/feedback', // 意见反馈
+      'pages/bindCompany', // 绑定公司
+      'pages/userData', // 小时工个人资料
+      'pages/healthRecord', // 消小时工个人资料 - 健康证
+      'pages/msgCenter', // 消息中心
+      'pages/msgDetails', // 消息详情
+      'pages/taskInfo', // 消息中心-任务通知详情
+      'pages/recruitDetails', // 酒店 - 招聘详情
+      'pages/releaseRecruit', //  酒店 - 发布招聘
+      'pages/checkoutDetails', // 酒店 - 结账详情
+      'pages/hotelInSettlement', //  酒店 - 结账 -结账中
+      'pages/hotelEndSettlement', // 酒店 - 结账 - 已结账
+      'pages/hotelNoSettlement', // 酒店 - 结账 - 为结账
+      'pages/hotalAddress', // 酒店地址
+      'pages/hotelData', //  酒店信息
+      'pages/cooperationCompany', // 合作公司
+      'pages/cooperationHotel', // 合作酒店
+      'pages/addCompany', // 添加公司
+      'pages/addHotel', // 添加酒店
+      'pages/selectCompany', // 选择公司
+      'pages/selectHotel', // 选择酒店
+      'pages/selectWorker', // 选择小时工
+      'pages/companyCheckoutDetail', //  人力公司 - 结账明细
+      'pages/taskDetails', // 人力公司 - 任务详情 - 未派发
+      'pages/taskDetailsEnd',  // 人力公司 -  任务详情 - 全部接单
+      'pages/taskDetailsRefuse', // 人力公司 -  任务详情 - 拒绝
+      'pages/workersBindHrs', // 小时工 -  我的  - 已绑定的人力公司
+      'pages/addCompanyInfo', // 添加酒店、人力公司信息
+      'pages/hrcheckoutList', // 人力公司结账信息
+      'pages/hotelQrCode', // 二维码
+      'pages/serviceAgreement' // 协议条款
+    ],
+    window: {
+      backgroundTextStyle: 'light',
+      navigationBarBackgroundColor: '#0ec3bc',
+      navigationBarTitleText: '微工宝',
+      backgroundColor: '#f1f1f1',
+      navigationBarTextStyle: 'white'
+    },
+    tabBar: {
+      color: '#999999',
+      selectedColor: '#0ec3bc',
+      borderStyle: 'white',
+      backgroundColor: '#fff',
+      list: [
+        {
+          pagePath: 'pages/home',
+          iconPath: 'images/home.png',
+          selectedIconPath: 'images/home_HL.png',
+          text: '首页'
+        },
+        {
+          pagePath: 'pages/checkout',
+          iconPath: 'images/hotelCheckout.png',
+          selectedIconPath: 'images/hotelCheckout_HL.png',
+          text: '结账'
+        },
+        {
+          pagePath: 'pages/mine',
+          iconPath: 'images/my.png',
+          selectedIconPath: 'images/my_HL.png',
+          text: '我的'
+        }
+      ]
+    }
+  }
+
+  globalData = {
+    userInfo: null,
+    wxUserInfo: null
+  };
+
+  constructor () {
+    super()
+    this.use('requestfix')
+    this.use('promisify')
+  }
+  onLaunch() {
+   // this.testAsync();
+  }
+  onShow() {
+    try {
+      var userInfo = wx.getStorageSync('keyUserInfo')
+      if (userInfo) {
+        this.globalData.userInfo = userInfo
+      } else {
+        const that = this
+        this.globalData.isCheckAuth = true
+        loginWithUser((isAuthed, wxUserInfo, userInfo) => {
+          if (isAuthed) {
+            that.globalData.wxUserInfo = wxUserInfo
+            that.globalData.userInfo = userInfo
+          }
+          that.globalData.isCheckAuth = false
+          that.setChangedData(isAuthed, wxUserInfo, userInfo)
+        })
+        console.log('用户信息！', userInfo)
+      }
+    } catch (e) {
+      console.log('获取用户异常！', e)
+    }
+  }
+  sleep (s) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve('promise resolved')
+      }, s * 1000)
+    })
+  }
+
+  async testAsync () {
+    const data = await this.sleep(3)
+    console.log(data)
+  }
+
+  getUserInfo(cb) {
+    const that = this
+    if (this.globalData.userInfo) {
+      return this.globalData.userInfo
+    }
+    wepy.getUserInfo({
+      success (res) {
+        that.globalData.userInfo = res.userInfo
+        cb && cb(res.userInfo)
+      }
+    })
+  }
+
+  addListener(callback) {
+    this.callback = callback
+  }
+
+  setChangedData(isAuthed, wxUserInfo, userInfo) {
+    if (this.callback != null) {
+      this.callback(isAuthed, wxUserInfo, userInfo)
+    }
+  }
+}
+</script>

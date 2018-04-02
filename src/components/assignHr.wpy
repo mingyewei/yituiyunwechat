@@ -1,0 +1,72 @@
+<style lang="less">
+
+</style>
+
+<template>
+  <view class='companyInfo'>
+    <view class='companyName'>{{item.hrCompanyName}}</view>
+    <view class='needPerson'>
+    所需人数:
+    <view class='numberBox'>
+      <view class='reduce' bindtap='reduce' data-hrid="{{item.hrCompanyId}}">-</view>
+      <view class='number'>
+        <input
+        type='digit'
+        class='numInput'
+        placeholder='请输入'
+        placeholder-style='color:#9e9e9e'
+        value='{{item.needWorkers}}'
+        bindinput='listenerNeedWorkers'
+        />
+      </view>
+      <view class='increase' bindtap='increase'  >+</view>
+    </view>
+    </view>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  export default class assignHr extends wepy.component {
+    props = {
+      item: {
+        twoWay: true
+      }
+    }
+    data ={
+    }
+    methods = {
+      listenerNeedWorkers: function (e) {
+        this.item.needWorkers = e.detail.value
+      },
+      increase: function () {
+        this.item.needWorkers += 1
+      },
+      reduce: function (event) {
+        var that = this
+        var hrId = event.currentTarget.dataset.hrid
+        if (that.item.needWorkers > 1) {
+          that.item.needWorkers -= 1
+        } else {
+          that.item.needWorkers = 0
+          wx.showModal({
+            title: '提示',
+            content: '人数减至0将移除对应的人力公司！',
+            showCancel: true,
+            success: function(res) {
+              if (res.confirm) {
+                that.$emit('deleteSelectHrCompany', hrId)
+                that.$apply()
+              } else {
+                that.item.needWorkers = 1
+                that.$apply()
+              }
+            }
+          })
+        }
+      }
+    }
+    watch = {}
+    onLoad () {
+    }
+  }
+</script>

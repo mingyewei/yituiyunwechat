@@ -1,0 +1,262 @@
+<style lang="less">
+  .wrap{
+    font-size: 26rpx;
+  }
+  .top{
+    background-color: #fff;
+    padding: 85rpx 28rpx;
+  }
+  .money{
+    color: #0ec1bb;
+    font-size: 60rpx;
+    font-weight: bold;
+  }
+  .money text{
+    margin-left: 10rpx;
+    font-size: 26rpx;
+  }
+  .txtWrap text{
+    color: #121212;
+    font-weight: bold;
+  }
+  .txtWrap view{
+    float: right;
+    color: #858585;
+    margin-right: 20rpx;
+    font-size: 22rpx;
+  }
+  .general{
+    font-size:25rpx;
+    text-align:center;
+    margin-bottom:40rpx;
+    width:100%;
+    color:#aaaaaa;
+    margin-top: 40rpx;
+  }
+  .general text{
+    margin: 0 20rpx;
+  }
+  .user{
+    border-radius:20rpx;
+    padding:35rpx 28rpx 10rpx 28rpx;
+    background-color:#fff;
+    text-align:left;
+    width:87%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .list{
+    background: #fff;
+    border-radius: 15rpx;
+    text-align: left;
+  }
+  .time, .personPrice, .address, .company{
+    font-size:26rpx;
+    color:#898989;
+    padding-bottom:25rpx;
+  }
+  .time icon{
+    margin-right: 20rpx;
+  }
+  .iconpiont{
+    width:22rpx;
+    height:22rpx;
+    border-radius: 50%;
+    background:#ffa301;
+    margin-right:20rpx;
+    display:inline-block;
+  }
+  .address .iconpiont{
+    background: #fc7e94;
+  }
+  .company  .iconpiont{
+    background-color: #649eff;
+  }
+  .total{
+    font-size:24rpx;
+    color:#121212;
+    border-top: 1rpx solid #e1e1e1;
+    display: flex;
+  }
+  .noborder{
+    border-top: none;
+  }
+  .work{
+    text-align:right;
+    flex: 1;
+  }
+  .date, .work{
+    padding: 20rpx 0 10rpx 0;
+    flex: 1;
+  }
+  .green .total{
+    border-top: none;
+  }
+  .totaltime,.totalmoney{
+    flex: 1;
+    font-size: 24rpx;
+    color: #b7e8e5;
+  }
+  .num{
+    font-size: 30rpx;
+    font-weight: bold;
+    margin-left: 10rpx;
+  }
+  .num text{
+    margin-left: 5rpx;
+  }
+  .name{
+    color:#121212;
+    font-size:30rpx;
+    font-weight: bold;
+  }
+  .checkout{
+    font-size: 22rpx;
+    margin-bottom: 30rpx;
+    margin-top: 10rpx;
+  }
+  /*弹窗*/
+  /*mask*/
+  .drawer_screen {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+  }
+  .drawer_box {
+    overflow:hidden;
+    position:fixed;
+    bottom:0;
+    left:0;
+    z-index:1001;
+    background:#FAFAFA;
+    width:100%;
+    border-top-left-radius:20rpx;
+    border-top-right-radius:20rpx;
+  }
+  .drawer_title{
+    line-height:100rpx;
+    font-size:42rpx;
+    color:#000;
+    text-align: center;
+  }
+  .drawer_content{
+    height:650rpx;
+    overflow: scroll;
+  }
+  .contentMessage{
+    height:105rpx;
+    line-height: 105rpx;
+    font-size:28rpx;
+    text-align: left;
+    padding-left: 12rpx;
+    padding-right: 12rpx;
+    margin-left:22rpx;
+    border-bottom: 1rpx solid #e1e1e1;
+  }
+  .contentMessage view{
+    width:44rpx;
+    height:44rpx;
+    border-radius: 50%;
+    border: 1rpx solid #ccc;
+    float: right;
+    margin-top:34rpx;
+  }
+  .sureBtn{
+    line-height:100rpx;
+    background-color: #0ec3bc;
+    font-size:26rpx;
+    border-radius: 0;
+    color: #fff;
+  }
+
+  .radio{
+    display: block;
+    border-bottom:1rpx solid #e1e1e1;
+    font-size: 28rpx;
+  }
+  radio{
+    float: right;
+  }
+</style>
+
+<template lang="wxml">
+  <view class="wrap">
+
+    <view class="top">
+      <view class="txtWrap">
+        <text>已结款金额</text>
+        <view @tap="showModal">全部人力公司</view>
+      </view>
+      <view class="money">520<text>元</text></view>
+    </view>
+    <view class="general "> ——  <text>已结款明细</text>  ——</view>
+    <view class="user">
+      <view class="name">客房服务</view>
+      <view class="checkout">结款公司：北京心想事成人力资源管理服务公司</view>
+      <view class="list">
+        <view class="time"><icon type="waiting" size="12" color="#13c0c4"/>2018.02.03 9:00-18:00</view>
+        <view class="personPrice"><view class="iconpiont"></view>人数: 10 | 定价: 20元/小时</view>
+        <view class="address"><view class="iconpiont"></view>酒店1层20个客房的清扫工作</view>
+        <view class="company"><view class="iconpiont"></view>北京皇冠丽都假日酒店</view>
+      </view>
+      <view class="total">
+        <view class="date">总用时：<text class="num">3<text>元</text></text></view>
+        <view class="work">总费用：<text class="num">60<text>元</text></text></view>
+      </view>
+      <view class="total noborder">
+        <view class="date">已结款数：<text class="num">60<text>元</text></text></view>
+        <view class="work">未结款数：<text class="num">0<text>元</text></text></view>
+      </view>
+    </view>
+    <!--弹窗-->
+    <view class="drawer_screen" wx:if="{{showModalStatus}}">
+      <view class="drawer_box">
+        <view class="drawer_title">人力公司筛选</view>
+        <view class="drawer_content">
+          <radio-group class="radio-group" bindchange="radioChange">
+            <label class="radio contentMessage" wx:for="{{items}}"   wx:for-item="item"  wx:key="{{item.value}}">
+            {{item.value}} <radio value="{{item.name}}" checked="{{item.checked}} " />
+            </label>
+          </radio-group>
+        </view>
+        <button class="sureBtn" bindtap="sureModal" >确定</button>
+      </view>
+    </view>
+  </view>
+</template>
+<script>
+    import wepy from 'wepy'
+    export default class hotelEndSettlement extends wepy.page {
+      config = {
+        navigationBarTitleText: '已结款'
+      };
+      data = {
+        showModalStatus: false,
+        items: [
+          {name: '0', value: '全部人力'},
+          {name: '1', value: '北京心想事成人力资源管理服务公司', checked: 'true'},
+          {name: '2', value: '诚通人力资源有限公司'},
+          {name: '3', value: '北京心想事成人力资源管理服务公司'}
+        ]
+      };
+      methods = {
+        showModal: function() {
+          this.showModalStatus = true
+        },
+        sureModal: function () {
+          this.showModalStatus = false
+        },
+        radioChange: function(e) {
+          console.log('radio发生change事件，携带value值为：', e.detail.value)
+        }
+      };
+      onLoad() {}
+      onShow() {}
+    }
+</script>

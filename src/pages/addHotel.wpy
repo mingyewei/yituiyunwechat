@@ -1,0 +1,189 @@
+<style lang="less">
+  .wrap{
+    background-color:#fff;
+    text-align: center;
+    padding-top:5%;
+  }
+  page{
+    background-color: #fff;
+  }
+  .txt{
+    color:#121212;
+    font-size:30rpx;
+    text-align:left;
+    width:92%;
+    border-radius:0;
+    margin-bottom:52rpx;
+    line-height:95rpx;
+    margin-left:auto;
+    margin-right:auto;
+    border-bottom: 1rpx solid #d5d5d5;
+    padding-bottom: 10rpx;
+    padding-left: 10rpx;
+  }
+.loginBtn{
+  background:#0ec3bc!important;
+  width:94%;
+  font-size:32rpx;
+  margin-top:100rpx;
+  border-radius:60rpx;
+  color: #fff!important;
+}
+  .inline{
+    display: inline-block;
+  }
+.code{
+  float:right;
+  text-align:center;
+  color:#aaa;
+  width:38.5%;
+  border-bottom:1rpx solid #d5d5d5;
+  line-height:57rpx;
+  padding-bottom:20rpx;
+}
+  .left{
+    float: left;
+    width: 60%;
+  }
+.codetxt{
+  border-left: 1rpx solid #d5d5d5;
+  width: 100%;
+  display: block;
+  font-size:30rpx;
+}
+  .codeWrap{
+    width: 92%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+.lable{
+  font-size:28rpx;
+  text-align:left;
+  width:92%;
+  display:block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10rpx;
+  font-weight: bold;
+}
+
+</style>
+
+<template lang="wxml">
+  <view class="wrap">
+  <lable class="lable">酒店名称</lable>
+  <input
+  type="text"
+  class="weui-search-bar__input txt"
+  placeholder="请输入酒店名称"
+  placeholder-style="color:#cbcbcb"
+  value="{{hotelInfo.name}}"
+  bindinput="listenerNameInput"
+  />
+  <lable class="lable">负责人</lable>
+  <input
+  type="text"
+  class="weui-search-bar__input txt"
+  placeholder="请输入酒店负责人名称"
+  placeholder-style="color:#cbcbcb"
+  value="{{hotelInfo.leader}}"
+  bindinput="listenerLeaderInput"
+  />
+  <lable class="lable">负责人电话</lable>
+  <input
+  type="text"
+  class="weui-search-bar__input txt"
+  placeholder="请输入酒店负责人电话"
+  placeholder-style="color:#cbcbcb"
+  value="{{hotelInfo.leaderMobile}}"
+  bindinput="listenerMobileInput"
+  />
+  <button  type="default" class="loginBtn" bindtap="addHotelsInfo">立即添加</button>
+  </view>
+
+</template>
+<script>
+    import wepy from 'wepy'
+    import {getCompanyId} from '../util/userInfo'
+    import {hrcompanyAddHotels} from '../actions/hrcompaniesAction'
+    import {addHotels} from '../actions/hotelAction'
+    export default class addHotel extends wepy.page {
+      config = {
+        navigationBarTitleText: '添加合作酒店'
+      };
+      data = {
+        hotelInfo: {
+          name: '',
+          leader: '',
+          leaderMobile: ''
+        },
+        idSet: {
+          hotelId: '',
+          hrCompanyId: ''
+        }
+      };
+      methods = {
+        addHotelsInfo: function () {
+          var that = this
+          let reg = /^1[0-9]{10}$/
+          let canPost = true
+          console.log('checkMonile', reg.test(this.hotelInfo.leaderMobile))
+          if (this.hotelInfo.name === '') {
+            canPost = false
+            wx.showModal({
+              title: '提示',
+              content: '请填写酒店名称',
+              showCancel: false
+            })
+          } else if (this.hotelInfo.leader === '') {
+            canPost = false
+            wx.showModal({
+              title: '提示',
+              content: '请填写酒店负责人',
+              showCancel: false
+            })
+          } else if (this.hotelInfo.leaderMobile === '') {
+            canPost = false
+            wx.showModal({
+              title: '提示',
+              content: '请填写手机号码',
+              showCancel: false
+            })
+          } else if (!reg.test(this.hotelInfo.leaderMobile)) {
+            canPost = false
+            wx.showModal({
+              title: '提示',
+              content: '手机号码有误',
+              showCancel: false
+            })
+          }
+          if (canPost) {
+            addHotels(this.hotelInfo).then((data) => {
+              that.idSet.hotelId = data.data.id
+              that.$apply()
+              hrcompanyAddHotels(that.idSet).then((data) => {
+                that.$apply()
+                wx.navigateTo({
+                  url: 'cooperationHotel'
+                })
+              })
+            })
+          }
+        },
+        listenerNameInput: function (e) {
+          this.hotelInfo.name = e.detail.value
+        },
+        listenerLeaderInput: function (e) {
+          this.hotelInfo.leader = e.detail.value
+        },
+        listenerMobileInput: function (e) {
+          this.hotelInfo.leaderMobile = e.detail.value
+        }
+      };
+      onLoad() {
+        this.idSet.hrCompanyId = getCompanyId()
+        this.$apply()
+      }
+      onShow() {}
+    }
+</script>

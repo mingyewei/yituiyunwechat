@@ -1,0 +1,86 @@
+<style lang="less">
+  .wrap{
+    text-align: center;
+  }
+  .txt{
+    color:#858585;
+    font-size:26rpx;
+    line-height:50rpx;
+  }
+  .title{
+    font-size:36rpx;
+    text-align:center;
+    font-weight: bold;
+    color: #fff;
+    padding:17% 0;
+    background-color: #0ec3bc;
+  }
+  .time{
+    margin-left: 10rpx;
+    font-size: 26rpx;
+    color: #aaaaaa;
+  }
+  .icon {
+    width: 100%;
+    height: 31rpx;
+  }
+  .light{
+    color: #13bfc1;
+    font-size:28rpx;
+    margin-bottom: 40rpx;
+  }
+  .block{
+    display: block;
+    text-align: center;
+  }
+  .info{
+    font-size:26rpx;
+    color:#a1a1a1;
+  }
+  .upload{
+    width:70%;
+    background-color: #fff;
+    padding:20rpx 0 100rpx 0;
+    text-align: center;
+    margin:90rpx  auto;
+  }
+  .plus{
+    font-size:80rpx;
+    color: #858585;
+    font-weight: 200;
+  }
+  .loginBtn{
+    background:#0ec3bc!important;
+    width:70%;
+    font-size:32rpx;
+    border-radius:60rpx;
+    color: #fff!important;
+    position: static!important;
+    box-shadow:0 10rpx 40rpx #b4e2e2;
+  }
+</style>
+
+<template lang="wxml">
+  <view class="wrap">
+  <view class="title">请上传您的健康证</view>
+  <image class="icon block" src="../images/my/triangle.png" background-size="cover"></image>
+  <view class="upload">
+    <icon type="plus" size="30" color="#000"/>
+    <view class="plus">+</view>
+    <view class="txt">点击上传证件照</view>
+  </view>
+  <button  type="default" class="loginBtn">提交</button>
+  </view>
+</template>
+<script>
+    import wepy from 'wepy'
+    export default class healthRecord extends wepy.page {
+      config = {
+        navigationBarTitleText: '健康证'
+      };
+      data = {};
+      methods = {};
+      onLoad() {}
+      onShow() {}
+    }
+</script>

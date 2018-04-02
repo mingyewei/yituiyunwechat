@@ -1,0 +1,180 @@
+<style lang="less">
+  .wrap{
+    text-align: center;
+    padding-top: 8%;
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .txt{
+    color: #aaaaaa;
+    font-size:28rpx;
+    text-align:left;
+    line-height:48rpx;
+    margin-bottom: 10rpx;
+  }
+
+.title{
+  font-size:32rpx;
+  text-align:left;
+  display:block;
+  margin-bottom: 12rpx;
+  padding-top: 10rpx;
+}
+  .general{
+    font-size:24rpx;
+    text-align:left;
+    margin-bottom:5rpx;
+    width:100%;
+    color:#aaaaaa;
+    border-top:1rpx solid #e1e1e1;
+    padding-top:15rpx;
+  }
+  .icon{
+    margin-right: 10rpx;
+    font-size: 28rpx;
+    color: #aaaaaa;
+    float: right;
+  }
+  .info{
+    background-color:#fff;
+    padding:10rpx 15rpx 10rpx 25rpx;
+    border-radius: 12rpx;
+    margin-top: 20rpx;
+    margin-bottom:40rpx;
+  }
+  .infoItem{
+    text-align: center;
+  }
+  .time{
+    background-color: #cecece;
+    color: #fff;
+    font-size: 20rpx;
+    padding: 5rpx 10rpx;
+    border-radius: 6rpx;
+  }
+  .unread{
+    color: #ff0004;
+  }
+  .title .general{
+    border-top: none;
+  }
+  .null {
+    text-align: center;
+    font-size: 28rpx;
+    color: #999;
+    margin-top: 40%;
+  }
+</style>
+
+<template lang="wxml">
+  <scroll-view scroll-y='true' style="height: {{scrollHeight}}px;" lower-threshold='100' bindscrolltolower="scrollLower">
+  <view class="wrap">
+  <view class="null" wx:if="{{msgList.length === 0}}">暂无消息哦 ~~</view>
+  <block class="item" wx:for="{{msgList}}" wx:for-item="item"  wx:key="{{item.id}}">
+    <view class="infoItem" bindtap="gotoDetail"  data-msgitem="{{item}}">
+      <text class="time">{{item.createTime}}</text>
+      <view class="info">
+        <view class="title"> {{item.messageTitle}}
+          <text class="general" wx:if="{{item.status==1}}">(已读)</text>
+          <text class="general unread" wx:if="{{item.status==0}}">(未读)</text>
+        </view>
+        <view class="txt"> {{item.messageContent}} </view>
+        <view class="general">查看详情<text class="icon"> > </text></view>
+      </view>
+    </view>
+  </block>
+  </view>
+  </scroll-view>
+</template>
+<script>
+    import wepy from 'wepy'
+    import {fetchWorkerMsgList, updateWorkerMsgStatus} from '../actions/workerAction'
+    import {getUserInfo} from '../util/userInfo'
+    import moment from 'moment'
+    export default class msgCenter extends wepy.page {
+      config = {
+        navigationBarTitleText: '消息中心',
+        enablePullDownRefresh: true
+      };
+      data = {
+        scrollHeight: 550,
+        userInfo: {},
+        queryObj: {
+          paginator: {
+            page: 1,
+            pageSize: 5
+          },
+          selector: {
+            workerId: ''
+          }
+        },
+        msgList: [],
+        msgPageResult: {
+          currentPage: 0,
+          totalPage: 0
+        }
+      };
+      methods = {
+        gotoDetail: function(event) {
+          console.log('消息详情', event)
+          var msgItem = event.currentTarget.dataset.msgitem
+          console.log('消息详情msgItem', msgItem)
+          updateWorkerMsgStatus(msgItem.id)
+          if (msgItem.messageCode === 'workTaskMessage') {
+            wx.navigateTo({
+              url: 'taskInfo?msgItem=' + JSON.stringify(msgItem)
+            })
+          } else {
+            wx.navigateTo({
+              url: 'msgDetails'
+            })
+          }
+        },
+        scrollLower: function(e) {
+          if (this.msgPageResult.currentPage < this.msgPageResult.totalPage && this.msgPageResult.totalPage > 0) {
+            this.queryObj.paginator.page = this.queryObj.paginator.page + 1
+            this.fetchMsgList()
+          }
+        }
+      };
+      onPullDownRefresh() {
+        this.queryObj.paginator.page = 1
+        this.msgList = []
+        this.msgPageResult = {
+          currentPage: 0,
+          totalPage: 0
+        }
+        this.fetchMsgList()
+      }
+      onLoad() {
+        wx.getSystemInfo({
+          success: function(res) {
+            this.scrollHeight = res.windowHeight
+            console.log('页面高度', res.windowHeight)
+          }
+        })
+        this.userInfo = getUserInfo()
+        this.queryObj.selector.workerId = this.userInfo.id
+        this.fetchMsgList()
+      }
+      onShow() {
+      }
+      fetchMsgList() {
+        let that = this
+        wx.showLoading({title: '加载中'})
+        console.log('加载中所有消息', this.queryObj)
+        fetchWorkerMsgList(this.queryObj).then(res => {
+          console.log('查找员工的所有消息', res)
+          that.msgPageResult.currentPage = res.data.data.currentPage
+          that.msgPageResult.totalPage = res.data.data.totalPage
+          res.data.data.list.forEach((item, index) => {
+            item.createTime = moment(new Date(item.createTime)).format('YYYY-MM-DD HH:mm')
+            that.msgList.push(item)
+          })
+          that.$apply()
+          wx.hideLoading()
+        })
+      }
+    }
+</script>

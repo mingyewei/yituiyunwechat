@@ -1,0 +1,102 @@
+<style lang="less">
+  .wrap{
+    background-color:#fff;
+    text-align: center;
+    padding-top: 5%;
+  }
+  page{
+    background-color: #fff;
+  }
+  .txt{
+    color:#121212;
+    font-size:30rpx;
+    text-align:left;
+    width:92%;
+    border-radius:0;
+    margin-bottom:52rpx;
+    line-height:95rpx;
+    margin-left:auto;
+    margin-right:auto;
+    border-bottom: 1rpx solid #d5d5d5;
+    padding-bottom: 10rpx;
+    padding-left: 10rpx;
+  }
+.loginBtn{
+  background:#0ec3bc!important;
+  width:94%;
+  font-size:32rpx;
+  margin-top:100rpx;
+  border-radius:60rpx;
+  color: #fff!important;
+}
+  .inline{
+    display: inline-block;
+  }
+.code{
+  float:right;
+  text-align:center;
+  color:#aaa;
+  width:38.5%;
+  border-bottom:1rpx solid #d5d5d5;
+  line-height:57rpx;
+  padding-bottom:20rpx;
+}
+  .left{
+    float: left;
+    width: 60%;
+  }
+.codetxt{
+  border-left: 1rpx solid #d5d5d5;
+  width: 100%;
+  display: block;
+  font-size:30rpx;
+}
+  .codeWrap{
+    width: 92%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+.lable{
+  font-size:28rpx;
+  text-align:left;
+  width:92%;
+  display:block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10rpx;
+  font-weight: bold;
+}
+  .general{
+    color: #aaaaaa;
+    margin-left: 23rpx;
+    font-size: 24rpx;
+    margin-top: -25rpx;
+    text-align: left;
+  }
+</style>
+
+<template lang="wxml">
+  <view class="wrap">
+  <lable class="lable">当前密码</lable>
+  <input type="text" class="weui-search-bar__input txt" placeholder="请输入手机号码" placeholder-style="color:#cbcbcb" />
+  <lable class="lable">新密码</lable>
+  <input password type="text"  class="weui-search-bar__input txt" placeholder="请输入新密码" placeholder-style="color:#cbcbcb"  />
+  <lable class="lable">确认密码</lable>
+  <input password type="text"  class="weui-search-bar__input txt" placeholder="请再次输入新密码" placeholder-style="color:#cbcbcb" />
+  <view class="general">密码由6-20位英文字母、数字或符号组成</view>
+  <button  type="default" class="loginBtn">确认修改</button>
+  </view>
+
+</template>
+<script>
+    import wepy from 'wepy'
+    export default class changepwd extends wepy.page {
+      config = {
+        navigationBarTitleText: '修改密码'
+      };
+      data = {};
+      methods = {};
+      onLoad() {}
+      onShow() {}
+    }
+</script>

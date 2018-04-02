@@ -1,0 +1,376 @@
+<style lang="less">
+  .taskDetailswrap{
+    text-align: center;
+    padding-bottom:100rpx;
+  }
+  .title{
+    font-size:35rpx;
+    display:block;
+    font-weight: 600;
+    background-color:#fff;
+    padding: 40rpx 0;
+  }
+  .stitle{
+    font-size:30rpx;
+    display:block;
+    font-weight: 600;
+    background-color:#fff;
+    padding: 20rpx 0 20rpx 20rpx;
+    text-align: left;
+  }
+
+  .text {
+    color:#858585;
+    font-size:28rpx;
+    text-align:right;
+  }
+  .name{
+    color:#333;
+    font-size:28rpx;
+    text-align:right;
+  }
+  .sex{
+    color:#858585;
+    font-size:28rpx;
+    text-align:center;
+  }
+  .weui-cells{
+    margin-top: 0!important;
+    background-color:#fff;
+    padding:15rpx 10rpx!important;
+    margin-bottom:15rpx;
+  }
+  .lefticon{
+    margin-right: 25rpx;
+    vertical-align: middle;
+    width:45rpx;
+    height:45rpx;
+  }
+  .info{
+    font-size: 22rpx;
+    color: #858585;
+    margin-bottom: 20rpx;
+    text-align: left;
+    margin-top:-20rpx;
+    margin-left:20rpx;
+  }
+  .info text{
+    margin-left: 30rpx;
+  }
+  .add{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    background-color: #0ec3bc;
+    color: #fff;
+    width: 100%;
+    text-align: center;
+    font-size: 30rpx;
+    padding:25rpx 0;
+  }
+  .reason{
+    background-color: #f8f8f8;
+    color: #858585;
+    padding: 10rpx;
+    text-align: left;
+    position: absolute;
+    bottom: 10rpx;
+    width: 93%;
+    left:25rpx;
+  }
+  .refuse  .weui-cell{
+    padding-bottom: 90rpx;
+  }
+  .light{
+    color: #0ec3bc;
+    font-size: 32rpx !important;
+  }
+  .refuseWorks{
+    font-size:26rpx;
+    color:#bbb;
+    text-align:center;
+    padding-bottom:15rpx;
+    border-top:1rpx solid #eee;
+    padding-top:13rpx;
+  }
+  /*弹窗*/
+  /*mask*/
+  .drawer_screen {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+  }
+  .drawer_box {
+    overflow:hidden;
+    position:fixed;
+    top:50%;
+    left:0;
+    z-index:1001;
+    background:#FAFAFA;
+    margin:-150px 5% 0 5%;
+    padding-bottom: 35rpx;
+    border-radius:12px;
+    width:90%;
+  }
+  .drawer_title{
+    line-height:120rpx;
+    font-size:37rpx;
+    color:#000;
+    text-align: center;
+  }
+  .borderView{
+    border-bottom: 1rpx solid #e1e1e1;
+    margin:0 50rpx 30rpx;
+  }
+  .save{
+    width:40%;
+    margin:0 auto;
+    line-height:90rpx;
+    border-radius:20rpx;
+    background-color: #0ec3bc;
+    font-size:26rpx;
+    position:static!important;
+    color: #fff;
+    display: inline-block;
+    margin-left: 10rpx;
+  }
+  .close{
+    width:40%;
+    margin:0 auto;
+    line-height:90rpx;
+    border-radius:20rpx;
+    background-color: #fff;
+    font-size:26rpx;
+    position:static!important;
+    color: #666;
+    display: inline-block;
+    border:1rpx solid #eee;
+    margin-right:10rpx;
+  }
+  .inputname{
+    color:#121212;
+    font-size:32rpx;
+    text-align:left;
+    width:70%;
+    margin:0 auto;
+    line-height: 60rpx;
+    margin-bottom: 10rpx;
+    display: inline-block;
+    vertical-align:top;
+    padding-left: 50rpx;
+  }
+  .imageBox{
+    width: 45%;
+    text-align: left;
+  }
+</style>
+
+<template lang="wxml">
+  <view class="taskDetailswrap">
+
+    <view class="title">{{taskInfo.taskTypeText}}</view>
+
+    <view class="weui-cells">
+
+      <view class="weui-cell weui-cell_access"  >
+        <view class="weui-cell__hd">
+          <text>任务时间</text>
+        </view>
+        <view class="weui-cell__bd text">{{taskInfo.fromDate}} - {{taskInfo.toDate}}</view>
+      </view>
+
+      <view class="weui-cell weui-cell_access" >
+        <view class="weui-cell__hd">
+         <text>需要人数</text>
+        </view>
+        <view class="weui-cell__bd text">{{taskInfo.needWorkers}}</view>
+      </view>
+
+      <view class="weui-cell weui-cell_access" >
+        <view class="weui-cell__hd">
+        <text>酒店价（元/小时）</text>
+        </view>
+        <view class="weui-cell__bd text">{{taskInfo.hotelHourlyPay}}</view>
+      </view>
+
+      <view class="weui-cell weui-cell_access" >
+        <view class="weui-cell__hd">
+          <text>派发价（元/小时）</text>
+        </view>
+        <view class="weui-cell__bd text">{{taskInfo.hourlyPay}}</view>
+      </view>
+
+      <view class="weui-cell weui-cell_access" >
+        <view class="weui-cell__hd">
+        <text>任务内容</text>
+        </view>
+        <view class="weui-cell__bd text">{{taskInfo.taskContent}}</view>
+      </view>
+
+      <view class="weui-cell weui-cell_access" >
+        <view class="weui-cell__hd">
+        <text>酒店名称</text>
+        </view>
+        <view class="weui-cell__bd text">{{taskInfo.hotelName}}</view>
+      </view>
+
+      <view class="weui-cell weui-cell_access" >
+        <view class="weui-cell__hd">
+        <text>酒店地址</text>
+        </view>
+        <view class="weui-cell__bd text">{{taskInfo.address}}</view>
+      </view>
+
+    </view>
+
+    <view class="weui-cells" wx:if="{{taskInfo.status === 1}}">
+      <view class="stitle">{{taskInfo.confirmedWorkers}}人已接单</view>
+      <!--循环体-->
+      <block class="item" wx:for="{{taskInfo.confirmedSet}}" wx:for-item="item"  wx:key="{{item.workerId}}">
+        <view class="weui-cell weui-cell_access" hover-class="weui-cell_active"  >
+          <view class="weui-cell__hd imageBox">
+            <image wx:if="{{item.headImage === undefined || item.headImage === ''}}" src="../images/my/head.png" class="lefticon"></image>
+            <image wx:if="{{item.headImage !== undefined && item.headImage !== ''}}" src="{{item.headImage}}" class="lefticon"></image>
+            <text class="weui-cell__bd name">{{item.workerName}}</text>
+          </view>
+          <view class="weui-cell__bd sex">{{item.gender}}/{{item.age}}</view>
+          <view class="weui-cell__ft ">{{item.mobile}}</view>
+        </view>
+      </block>
+      <view wx:if="{{taskInfo.confirmedSet.length === 0 }}" class="refuseWorks" >暂无接单人员</view>
+    </view>
+
+
+    <view class="weui-cells refuse" wx:if="{{taskInfo.status === 1}}">
+      <view class="stitle">{{taskInfo.refusedWorkers}}人拒绝接单</view>
+      <!--循环体-->
+      <block class="item" wx:for="{{taskInfo.refusedSet}}" wx:for-item="item"  wx:key="{{item.workerId}}">
+        <view class="weui-cell weui-cell_access" hover-class="weui-cell_active"  >
+          <view class="weui-cell__hd imageBox">
+            <image wx:if="{{item.headImage === undefined || item.headImage === ''}}" src="../images/my/head.png" class="lefticon"></image>
+            <image wx:if="{{item.headImage !== undefined && item.headImage !== ''}}" src="{{item.headImage}}" class="lefticon"></image>
+            <text class="weui-cell__bd name">{{item.workerName}}</text>
+          </view>
+          <view class="weui-cell__bd sex">{{item.gender}}/{{item.age}}</view>
+          <view class="weui-cell__ft ">{{item.mobile}}</view>
+          <view class="reason">拒绝理由：{{item.refusedReason}}</view>
+        </view>
+      </block>
+      <view wx:if="{{taskInfo.refusedSet.length === 0 }}" class="refuseWorks" >暂无拒单人员</view>
+    </view>
+    <view class="weui-cells" wx:if="{{taskInfo.status === 1}}">
+      <view class="stitle">已派发人员列表</view>
+      <!--循环体-->
+      <block class="item" wx:for="{{taskInfo.distributedSet}}" wx:for-item="item"  wx:key="{{item.workerId}}">
+        <view class="weui-cell weui-cell_access" hover-class="weui-cell_active"  >
+          <view class="weui-cell__hd imageBox">
+            <image wx:if="{{item.headImage === undefined || item.headImage === ''}}" src="../images/my/head.png" class="lefticon"></image>
+            <image wx:if="{{item.headImage !== undefined && item.headImage !== ''}}" src="{{item.headImage}}" class="lefticon"></image>
+            <text class="weui-cell__bd name">{{item.workerName}}</text>
+          </view>
+          <view class="weui-cell__bd sex">{{item.gender}}/{{item.age}}</view>
+          <view class="weui-cell__ft ">{{item.mobile}}</view>
+        </view>
+      </block>
+    </view>
+    <view class="add" bindtap="distribute" wx:if="{{!taskInfo.isFinished}}">派发</view>
+  </view>
+  <!--弹窗-->
+  <view class="drawer_screen" wx:if="{{showModal}}">
+    <view class="drawer_box">
+      <view class="drawer_title">设定工钱</view>
+      <view class="drawer_content">
+        <input type="digit"
+               class="weui-search-bar__input inputname"
+               placeholder="请输入小时工的定价"
+               placeholder-style="color:#cbcbcb"
+               bindinput="setPayMoney"
+        /> <text class="light">元/小时</text>
+        <view class="borderView"></view>
+      </view>
+      <view style="text-align: center">
+        <view class="close" bindtap="cancel">取 消</view>
+        <view class="save" bindtap="save" data-statu="save">派 发</view>
+      </view>
+    </view>
+  </view>
+</template>
+<script>
+    import wepy from 'wepy'
+    import moment from 'moment'
+    import {getHrtask} from '../actions/hrcompaniesAction'
+    export default class recruitDetails extends wepy.page {
+      config = {
+        navigationBarTitleText: '任务详情'
+      };
+      data = {
+        taskid: '',
+        taskInfo: {},
+        showModal: false,
+        payMoney: ''
+      };
+      methods = {
+        distribute () {
+          var payMoney = this.taskInfo.hourlyPay
+          var distributeTaskId = this.taskInfo.id
+          if (this.taskInfo.status === 0) {
+            this.showModal = true
+          } else {
+            wx.navigateTo({
+              url: 'selectWorker?money=' + payMoney + '&taskId=' + distributeTaskId
+            })
+          }
+        },
+        cancel () {
+          this.showModal = false
+        },
+        setPayMoney: function (e) {
+          var value = e.detail.value
+          this.payMoney = value
+          this.$apply()
+        },
+        save: function () {
+          var distributeTaskId = this.taskInfo.id
+          if (this.payMoney !== '') {
+            wx.navigateTo({
+              url: 'selectWorker?money=' + this.payMoney + '&taskId=' + distributeTaskId
+            })
+          } else if (this.payMoney === '') {
+            wx.showModal({
+              title: '提示',
+              content: '请输入金额',
+              showCancel: false
+            })
+          }
+          this.showModal = false
+        }
+      };
+      getHrTask () {
+        var that = this
+        wx.showLoading({title: '数据加载中'})
+        getHrtask(that.taskid).then((data) => {
+          that.taskInfo = data.data.data
+          that.taskInfo.fromDate = moment(new Date(that.taskInfo.fromDate)).format('YYYY-MM-DD HH:mm')
+          that.taskInfo.toDate = moment(new Date(that.taskInfo.toDate)).format('YYYY-MM-DD HH:mm')
+          if (moment(new Date(that.taskInfo.toDate)).isBefore(new Date())) {
+            that.taskInfo.isFinished = true
+          } else {
+            that.taskInfo.isFinished = false
+          }
+          that.$apply()
+          console.log('taskInfo', that.taskInfo)
+          wx.hideLoading()
+        })
+      }
+      onLoad(option) {
+        this.taskid = option.taskId
+        this.getHrTask()
+      }
+      onShow() {}
+    }
+</script>

@@ -1,0 +1,92 @@
+<style lang="less">
+</style>
+<template lang="wxml">
+  <view class="wrap">
+    <view wx:if="{{userType === 'worker'}}">
+      <mineforworker></mineforworker>
+    </view>
+    <view wx:if="{{userType === 'hotel'}}">
+      <mineforhotel :hotelInfo.sync="hotelInfo"></mineforhotel>
+    </view>
+    <view wx:if="{{userType === 'hr'}}">
+      <mineforhr :hrCompanyInfo.sync="hrInfo"></mineforhr>
+    </view>
+  </view>
+</template>
+<script>
+    import wepy from 'wepy'
+    import {getUserType} from '../util/userInfo'
+    import {fetchHotelInfo} from '../actions/hotelAction'
+    import {fetchHrcompanyInfo} from '../actions/hrcompaniesAction'
+    import mineforworker from '../components/mineforwork'
+    import mineforhotel from '../components/mineforhotel'
+    import mineforhr from '../components/mineforhr'
+    export default class mine extends wepy.page {
+      config = {
+        navigationBarTitleText: '我的'
+      };
+      data = {
+        userType: '',
+        hotelInfo: {},
+        hrInfo: {}
+      };
+      components = {
+        mineforworker: mineforworker,
+        mineforhotel: mineforhotel,
+        mineforhr: mineforhr
+      };
+      methods = {};
+      getHotelInfo() {
+        var that = this
+        fetchHotelInfo().then((data) => {
+          that.hotelInfo = data.data.data
+          that.$apply()
+          console.log('getHotelInfo', that.hotelInfo)
+        })
+      }
+      getHrInfo() {
+        var that = this
+        fetchHrcompanyInfo().then((data) => {
+          console.log('mine.fetchHrcompanyInfo result:', data)
+          that.hrInfo = data.data.data
+          that.$apply()
+        })
+      }
+      watch = {
+//        hotelInfo (curVal, oldVal) {
+//          console.log(`旧值：${oldVal.address}，新值：${curVal.address}`)
+//        }
+      }
+      onLoad() {
+        var userType = getUserType()
+        switch (userType) {
+          case 'hotel':
+            this.getHotelInfo()
+            break
+          case 'hr':
+            this.getHrInfo()
+            break
+          case 'worker':
+            break
+        }
+        this.userType = userType
+        this.$apply()
+      }
+      onShow() {
+        var userType = getUserType()
+        console.log('mine.onShow,userType:', userType)
+        switch (userType) {
+          case 'hotel':
+            this.getHotelInfo()
+            break
+          case 'hr':
+            this.getHrInfo()
+            break
+          case 'worker':
+            break
+        }
+        this.userType = userType
+        this.$apply()
+      }
+    }
+</script>

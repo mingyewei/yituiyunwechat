@@ -1,0 +1,89 @@
+<style lang="less">
+  .wrap{
+    background-color:#fff;
+    text-align: center;
+    padding-top: 15%;
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  page{
+    background-color: #fff;
+  }
+  .txt{
+    color:#121212;
+    font-size:30rpx;
+    text-align:left;
+    line-height:55rpx;
+  }
+
+.title{
+  font-size:36rpx;
+  text-align:left;
+  display:block;
+  margin-bottom: 8rpx;
+  font-weight: bold;
+}
+  .general{
+    color: #aaaaaa;
+    font-size:26rpx;
+    text-align: left;
+    margin-bottom: 30rpx;
+    width: 100%;
+  }
+  .time{
+    margin-left: 10rpx;
+    font-size: 26rpx;
+    color: #aaaaaa;
+  }
+  .icon {
+    width: 150rpx;
+    height: 150rpx;
+    margin: 28rpx auto 20rpx auto;
+  }
+  .light{
+    color: #13bfc1;
+    font-size:28rpx;
+    margin-top:72%;
+    margin-bottom: 40rpx;
+  }
+  .block{
+    display: block;
+    text-align: center;
+  }
+  .info{
+    font-size:26rpx;
+    color:#a1a1a1;
+  }
+
+</style>
+
+<template lang="wxml">
+  <view class="wrap">
+  <image class="icon block" src="../images/aboutUs.png" background-size="cover"></image>
+  <text class="txt block">酒店绩效管理系统</text>
+  <text class="light block" bindtap="serviceAgreement">服务协议及隐私条款</text>
+  <text class="block info">北京易推云网络科技有限公司</text>
+  <text class="block info">Copyright @2018 all rights reseved</text>
+  </view>
+
+
+</template>
+<script>
+    import wepy from 'wepy'
+    export default class aboutUs extends wepy.page {
+      config = {
+        navigationBarTitleText: '关于我们'
+      };
+      data = {};
+      methods = {
+        serviceAgreement (){
+          wx.navigateTo({
+            url: 'serviceAgreement'
+          })
+        }
+      };
+      onLoad() {}
+      onShow() {}
+    }
+</script>

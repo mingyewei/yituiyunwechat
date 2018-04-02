@@ -1,0 +1,192 @@
+<style lang="less">
+  .wrap{
+    text-align: center;
+  }
+.title{
+  font-size:35rpx;
+  display:block;
+  font-weight: 600;
+  background-color:#fff;
+  padding: 40rpx 0;
+}
+.stitle{
+  font-size:30rpx;
+  display:block;
+  font-weight: 600;
+  background-color:#fff;
+  padding: 20rpx 0 20rpx 20rpx;
+  text-align: left;
+}
+  .general{
+    font-size:25rpx;
+    text-align:center;
+    margin-bottom:40rpx;
+    width:100%;
+    color:#aaaaaa;
+    margin-top: 40rpx;
+  }
+  .general text{
+    margin: 0 20rpx;
+  }
+  .text {
+    color:#858585;
+    font-size:28rpx;
+    text-align:right;
+  }
+  .name{
+    color:#333;
+    font-size:28rpx;
+  }
+
+  .weui-cells{
+    margin-top: 0!important;
+    background-color:#fff;
+    padding:15rpx 10rpx!important;
+    position:static!important;
+    margin-bottom:15rpx;
+  }
+  .lefticon{
+    margin-right: 25rpx;
+    vertical-align: middle;
+    width:45rpx;
+    height:45rpx;
+  }
+  .info{
+    color: #858585;
+    margin-bottom: 20rpx;
+    text-align: left;
+    margin-top:-20rpx;
+    margin-left:20rpx;
+  }
+  .info text{
+    margin-left: 30rpx;
+  }
+  .tasktotal{
+    text-align: left;
+    margin-bottom: 15rpx;
+    font-size: 26rpx;
+    margin-left: 17rpx;
+  }
+  .workerinfo{
+    display: flex;
+  }
+  .workerinfo view{
+    flex: 1;
+    text-align: left;
+  }
+  .workerinfo .sex{
+    text-align: center;
+    color:#999999;
+  }
+  .workerinfo .weui-cell__ft{
+    text-align: right;
+    color:#999999;
+  }
+</style>
+
+<template lang="wxml">
+  <view class="wrap">
+
+    <view class="title">{{taskInfo.taskTypeText}}</view>
+
+    <view class="weui-cells">
+
+      <view class="weui-cell weui-cell_access"  >
+        <view class="weui-cell__hd">
+          <text>任务时间</text>
+        </view>
+        <view class="weui-cell__bd text">{{taskInfo.fromDate}} - {{taskInfo.toDate}}</view>
+      </view>
+
+      <view class="weui-cell weui-cell_access" >
+        <view class="weui-cell__hd">
+         <text>需要人数</text>
+        </view>
+        <view class="weui-cell__bd text">{{taskInfo.needWorkers}}</view>
+      </view>
+
+      <view class="weui-cell weui-cell_access" >
+        <view class="weui-cell__hd">
+          <text>定价（元/小时）</text>
+        </view>
+        <view class="weui-cell__bd text">{{taskInfo.hourlyPay}}</view>
+      </view>
+
+      <view class="weui-cell weui-cell_access" >
+        <view class="weui-cell__hd">
+          <text>任务内容</text>
+        </view>
+        <view class="weui-cell__bd text">{{taskInfo.taskContent}}</view>
+      </view>
+
+    </view>
+
+    <view class="general "> ——  <text> 人力公司接单情况</text>  ——</view>
+
+
+  <block class="item" wx:for="{{taskInfo.listTaskHr}}" wx:for-item="item"  wx:key="{{item.id}}">
+  <view class="weui-cells">
+    <view class="stitle">{{item.hrCompanyName}}</view>
+     <view class="info">所需人数：{{item.needWorkers}} </view>
+
+      <view  wx:if="{{item.confirmedWorkers > 0}}">
+        <view class="tasktotal">已接单人数：{{item.confirmedWorkers}}</view>
+        <block class="item" wx:for="{{item.confirmedSet}}" wx:for-item="worker"  wx:key="{{item.id}}">
+          <view class="weui-cell weui-cell_access workerinfo">
+            <view class="name">{{worker.workerName}}</view>
+            <view class="sex">{{worker.gender}}/{{worker.age}}岁</view>
+            <view class="weui-cell__ft">{{worker.mobile}}</view>
+          </view>
+        </block>
+      </view>
+
+      <view  wx:if="{{item.refusedSet.length > 0}}">
+        <view class="tasktotal">已拒绝人数：{{item.refusedWorkers}}</view>
+        <block class="item" wx:for="{{item.refusedSet}}" wx:for-item="worker"  wx:key="{{item.id}}">
+          <view class="weui-cell weui-cell_access workerinfo">
+            <view class="name">{{worker.workerName}}</view>
+            <view class="sex">{{worker.gender}}/{{worker.age}}岁</view>
+            <view class="weui-cell__ft">{{worker.mobile}}</view>
+          </view>
+        </block>
+      </view>
+
+
+  </view>
+</block>
+  </view>
+</template>
+<script>
+    import wepy from 'wepy'
+    import moment from 'moment'
+    import {fetchsingleTask} from '../actions/hotelAction'
+    export default class recruitDetails extends wepy.page {
+      config = {
+        navigationBarTitleText: '招聘详情'
+      };
+      data = {
+        taskid: '',
+        taskInfo: {}
+      };
+      methods = {};
+      getSingleTask() {
+        var that = this
+        console.log('getSingleTask taskid', that.taskInfo.id)
+        wx.showLoading({title: '加载中'})
+        fetchsingleTask(that.taskInfo.id).then((data) => {
+          that.taskInfo = data.data.data
+          that.taskInfo.fromDate = moment(new Date(that.taskInfo.fromDate)).format('YYYY-MM-DD HH:mm')
+          that.taskInfo.toDate = moment(new Date(that.taskInfo.toDate)).format('YYYY-MM-DD HH:mm')
+          that.$apply()
+          console.log('getSingleTask', that.taskInfo)
+          wx.hideLoading()
+        })
+      }
+      onLoad(option) {
+      }
+      onShow() {
+        this.taskInfo = wepy.$instance.globalData.currentTask
+        this.getSingleTask()
+      }
+    }
+</script>

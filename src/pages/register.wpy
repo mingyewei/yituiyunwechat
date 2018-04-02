@@ -1,0 +1,233 @@
+<!--suppress ALL -->
+<style lang="less">
+  .registerwrap{
+    background-color:#fff;
+    text-align: center;
+    margin-top:5%;
+  }
+  page{
+    background-color: #fff;
+  }
+  .title{
+    display:block;
+    color:#121212;
+    font-size:35rpx;
+    text-align:center;
+    width:100%;
+    padding-top:12%;
+    padding-bottom:14%;
+    font-weight:bold;
+  }
+  .txt{
+    color:#121212;
+    font-size:30rpx;
+    text-align:left;
+    width:92%;
+    border-radius:0;
+    margin-bottom:52rpx;
+    line-height:95rpx;
+    margin-left:auto;
+    margin-right:auto;
+    border-bottom: 1rpx solid #d5d5d5;
+    padding-bottom: 10rpx;
+    padding-left: 10rpx;
+  }
+.loginBtn{
+  background:#0ec3bc!important;
+  width:94%;
+  font-size:32rpx;
+  margin-top:100rpx;
+  border-radius:60rpx;
+  color: #fff!important;
+}
+.gloomyBtn{
+  background:#ccc !important;
+  width:94%;
+  font-size:32rpx;
+  margin-top:100rpx;
+  border-radius:60rpx;
+  color: #fff!important;
+}
+  .info{
+    margin-left: 23rpx;
+    font-size: 25rpx;
+    margin-top: 30rpx;
+    text-align: left;
+    clear:both;
+  }
+  .highlight{
+    color: #0ec3bc;
+  }
+  .general{
+    color: #aaaaaa;
+    margin-right: 10rpx;
+  }
+  .inline{
+    display: inline-block;
+  }
+.code{
+  float:right;
+  text-align:center;
+  color:#fff;
+  background-color: #0ec3bc;
+  width:38.5%;
+  line-height:68rpx;
+}
+  .codetxt{
+    width: 100%;
+    display: block;
+    font-size:28rpx;
+  }
+.getCode{
+  float:right;
+  text-align:center;
+  color:#fff;
+  background-color: #ccc;
+  width:38.5%;
+  line-height:68rpx;
+}
+.left{
+  float: left;
+  width: 60%;
+}
+
+  .codeWrap{
+    width: 92%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .infowrap{
+    margin-top: -20rpx;
+  }
+</style>
+
+<template lang="wxml">
+  <view class="registerwrap">
+    <text class="title" wx:if="{{userType === 'worker'}}">您的角色是“小时工”</text>
+    <text class="title" wx:elif="{{userType === 'Hotel'}}">您的角色是“酒店负责人”</text>
+    <text class="title"  wx:elif="{{userType === 'Hr'}}">您的角色是“人力公司负责人”</text>
+  <input type="text" class="weui-search-bar__input txt" placeholder="请输入手机号码" placeholder-style="color:#cbcbcb"  bindinput="listenerMobileInput"/>
+  <view class="codeWrap">
+  <input type="text" class="weui-search-bar__input txt left" placeholder="请输入验证码" placeholder-style="color:#cbcbcb" bindinput='listenerSmsCodeInput'/>
+  <view class="code" bindtap="getSmsCode" wx:if="{{wait === 60}}"><text class="codetxt">{{getMsg}}</text></view>
+  <view class="getCode" wx:if="{{wait < 60}}"><text class="codetxt">{{getMsg}}</text></view>
+  </view>
+  <input password type="text" wx:if="{{userType !== 'worker'}}" class="weui-search-bar__input txt" placeholder="请输入密码" placeholder-style="color:#cbcbcb" bindinput='ListenerPasswordInput' />
+  <view class="info infowrap">
+  <text class="general">我已阅读并接受</text>
+  <view class="highlight inline">《服务协议及隐私条款》</view>
+  </view>
+  <button  type="default" class="gloomyBtn" wx:if="{{smsCode === '' || password === '' || clickedBtn === true}}">完成</button>
+  <button  type="default" class="loginBtn" wx:if="{{smsCode !== '' && password !== ''&& clickedBtn === false}}" @tap="commit">完成</button>
+  <view class="info" @tap="gotoLogin">
+    <text  class="general">已有账号?</text>
+    <view class="highlight inline">直接登录</view>
+  </view>
+  </view>
+
+</template>
+<script>
+    import wepy from 'wepy'
+    import {getSmsCodeBySmsType, registerUser} from '../actions/authAction'
+    export default class register extends wepy.page {
+      config = {
+        navigationBarTitleText: '注册'
+      };
+      data = {
+        mobile: '',
+        smsCode: '',
+        password: '',
+        userType: '',
+        wait: 60,
+        getMsg: '获取验证码',
+        clickedBtn: false
+      };
+      methods = {
+        listenerMobileInput: function (e) {
+          this.mobile = e.detail.value
+          if (this.userType === 'worker') {
+            this.password = e.detail.value
+          }
+        },
+        listenerSmsCodeInput: function (e) {
+          this.smsCode = e.detail.value
+        },
+        ListenerPasswordInput: function (e) {
+          this.password = e.detail.value
+        },
+        getSmsCode: function () {
+          getSmsCodeBySmsType(this.mobile, 'register').then((res) => {
+            console.log('register send sms result:', res)
+            if (res.data.success === true) {
+              this.timeFunction()
+            } else if (res.data.success === false) {
+              let str = res.data.message.substring(this.mobile.length)
+              console.log('str', str)
+              if (str === 'invalid mobile number') {
+                wx.showModal({
+                  title: '提示',
+                  content: '手机号' + this.mobile + '不正确'
+                })
+              }
+            }
+          })
+        },
+        gotoLogin: function () {
+          wx.navigateTo({
+            url: 'login'
+          })
+        },
+        commit: function () {
+          var that = this
+          this.clickedBtn = true
+          wx.showLoading({
+            title: '加载中',
+            mask: true
+          })
+          var wxUserInfo = wx.getStorageSync('keyWxUserInfo')
+          registerUser(wxUserInfo, this.userType, this.mobile, this.smsCode, this.password).then(res => {
+            console.log('res--', res)
+            wx.hideLoading()
+            if (res.id !== undefined) {
+              if (this.userType === 'hr' || this.userType === 'hotel') {
+                wx.navigateTo({
+                  url: 'addCompanyInfo?userType=' + this.userType
+                })
+              } else {
+                wx.switchTab({
+                  url: 'home'
+                })
+              }
+            } else if (res.data.success === false) {
+              that.clickedBtn = false
+              wx.showModal({
+                title: '提示',
+                content: res.data.message,
+                showCancel: false
+              })
+            }
+          })
+        }
+      };
+      timeFunction () {
+        var that = this
+        if (this.wait === 0) {
+          this.getMsg = '获取验证码'
+          this.wait = 60
+        } else {
+          this.getMsg = '重新发送(' + this.wait + 's)'
+          this.wait--
+          setTimeout(function() {
+            that.timeFunction()
+          },
+            1000)
+        }
+        this.$apply()
+      }
+      onLoad(option) {
+        var that = this
+        that.userType = option.userType
+      }
+      onShow() {}
+    }
+</script>

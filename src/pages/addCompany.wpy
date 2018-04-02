@@ -1,0 +1,237 @@
+<style lang="less">
+  .wrap{
+    background-color:#fff;
+    text-align: center;
+    padding-top:5%;
+  }
+  page{
+    background-color: #fff;
+  }
+  .txt{
+    color:#121212;
+    font-size:30rpx;
+    text-align:left;
+    width:92%;
+    border-radius:0;
+    margin-bottom:52rpx;
+    line-height:95rpx;
+    margin-left:auto;
+    margin-right:auto;
+    border-bottom: 1rpx solid #d5d5d5;
+    padding-bottom: 10rpx;
+    padding-left: 10rpx;
+  }
+  .loginBtn{
+    background:#0ec3bc!important;
+    width:94%;
+    margin-top:100rpx;
+    border-radius:60rpx;
+    margin-left:auto;
+    line-height: 84rpx;
+    font-size:30rpx;
+    color:#fff;
+    text-align: center;
+    margin-right: auto;
+  }
+  .gloomyBtn{
+    background:#ccc!important;
+    width:94%;
+    margin-top:100rpx;
+    border-radius:60rpx;
+    margin-left:auto;
+    line-height: 84rpx;
+    font-size:30rpx;
+    color:#fff;
+    text-align: center;
+    margin-right: auto;
+  }
+  .inline{
+    display: inline-block;
+  }
+  .code{
+    float:right;
+    text-align:center;
+    color:#aaa;
+    width:38.5%;
+    border-bottom:1rpx solid #d5d5d5;
+    line-height:57rpx;
+    padding-bottom:20rpx;
+  }
+  .left{
+    float: left;
+    width: 60%;
+  }
+  .codetxt{
+    border-left: 1rpx solid #d5d5d5;
+    width: 100%;
+    display: block;
+    font-size:30rpx;
+  }
+  .codeWrap{
+    width: 92%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .lable{
+    font-size:28rpx;
+    text-align:left;
+    width:92%;
+    display:block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10rpx;
+    font-weight: bold;
+  }
+</style>
+
+<template lang="wxml">
+  <view class="wrap">
+  <lable class="lable">公司名称</lable>
+  <input
+  type="text"
+  class="weui-search-bar__input txt"
+  placeholder="请输入人力公司名称"
+  placeholder-style="color:#cbcbcb"
+  value="{{hrInfo.name}}"
+  bindinput="listenerNameInput"
+  />
+  <lable class="lable" >负责人</lable>
+  <input
+  type="text"
+  class="weui-search-bar__input txt"
+  placeholder="请输入人力公司负责人名称"
+  placeholder-style="color:#cbcbcb"
+  value="{{hrInfo.leader}}"
+  bindinput="listenerLeaderInput"
+  />
+  <lable class="lable">负责人电话</lable>
+  <input
+  type="digit"
+  class="weui-search-bar__input txt"
+  placeholder="请输入人力公司负责人电话"
+  placeholder-style="color:#cbcbcb"
+  value="{{hrInfo.leaderMobile}}"
+  bindinput="listenerMobileInput"
+  />
+  <view class='gloomyBtn' wx:if="{{!addReady}}" >立即添加</view>
+  <view class="loginBtn" wx:if="{{addReady}}" bindtap="addHrcompaniesInfo">立即添加</view>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import {getCompanyId} from '../util/userInfo'
+  import {addHrcompanies} from '../actions/hrcompaniesAction'
+  import {hotelAddHrcompanies} from '../actions/hotelAction'
+  export default class addCompany extends wepy.page {
+    config = {
+      navigationBarTitleText: '添加合作人力公司'
+    };
+    data = {
+      hrInfo: {
+        name: '',
+        leader: ''
+      },
+      idSet: {
+        hotelId: '',
+        hrCompanyId: ''
+      },
+      addReady: false
+    };
+    methods = {
+      addHrcompaniesInfo: function () {
+        if (this.chekckData()) {
+          var that = this
+//          console.log('that.hrInfo', that.hrInfo)
+          addHrcompanies(that.hrInfo).then((data) => {
+            if (data.data.success) {
+              wx.showModal({
+                title: '提示',
+                content: '信息提交成功，请等待审核!',
+                showCancel: false,
+                success: function(res) {
+                  if (res.confirm) {
+                    that.idSet.hrCompanyId = data.data.data.id
+                    that.$apply()
+//                  console.log('addHrcompaniesInfo result', data)
+                    hotelAddHrcompanies(that.idSet).then((data) => {
+//                    console.log('hotelAddHrcompanies result', data)
+                      wx.navigateTo({
+                        url: 'cooperationCompany'
+                      })
+                      that.$apply()
+                    })
+                  }
+                }
+              })
+            } else {
+              wx.showModal({
+                title: '添加失败',
+                content: data.data.message,
+                showCancel: false
+              })
+            }
+          })
+        }
+      },
+      listenerNameInput: function (e) {
+        if (e.detail.value.length > 1) {
+          this.hrInfo.name = e.detail.value
+          this.addReady = true
+        } else {
+          this.addReady = false
+        }
+        this.$apply()
+      },
+      listenerLeaderInput: function (e) {
+        this.hrInfo.leader = e.detail.value
+      },
+      listenerMobileInput: function (e) {
+        this.hrInfo.leaderMobile = e.detail.value
+      }
+    };
+    chekckData() {
+      if (this.hrInfo.name === '') {
+        wx.showModal({
+          title: '提示',
+          content: '人力公司名称不能为空！',
+          showCancel: false
+        })
+        return false
+      }
+
+      if (this.hrInfo.leader === '') {
+        wx.showModal({
+          title: '提示',
+          content: '人力公司负责人不能为空！',
+          showCancel: false
+        })
+        return false
+      }
+
+      if (this.hrInfo.leaderMobile === '') {
+        wx.showModal({
+          title: '提示',
+          content: '负责人电话不能为空！',
+          showCancel: false
+        })
+        return false
+      }
+      let reg = /^1[0-9]{10}$/
+      if (!reg.test(this.hrInfo.leaderMobile)) {
+        wx.showModal({
+          title: '提示',
+          content: '手机号码有误',
+          showCancel: false
+        })
+        return false
+      }
+
+      return true
+    }
+    onLoad() {
+      this.idSet.hotelId = getCompanyId()
+      this.$apply()
+    }
+    onShow() {}
+  }
+</script>

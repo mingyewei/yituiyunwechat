@@ -1,0 +1,60 @@
+<style lang="less">
+  .wrap{
+    background-color:#fff;
+    text-align: center;
+    padding-top: 6%;
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  page{
+    background-color: #fff;
+  }
+  .txt{
+    color:#121212;
+    font-size:28rpx;
+    text-align:left;
+    line-height:55rpx;
+  }
+
+.title{
+  font-size:34rpx;
+  text-align:left;
+  display:block;
+  margin-bottom: 8rpx;
+  font-weight: bold;
+}
+  .general{
+    color: #aaaaaa;
+    font-size:26rpx;
+    text-align: left;
+    margin-bottom: 30rpx;
+    width: 100%;
+  }
+  .time{
+    margin-left: 10rpx;
+    font-size: 26rpx;
+    color: #aaaaaa;
+  }
+</style>
+
+<template lang="wxml">
+  <view class="wrap">
+  <view class="title">注册成功通知</view>
+  <view class="general">2018/02/03 <text class="time">4:32</text></view>
+  <view class="txt">恭喜您于2018年2月3日 18：30成功注册成为酒店结账管理系统的小时工用户！小时工可以 在平台领取人力公司派发的酒店服务工作，并领取相应的酬劳，工作地点均为酒店内部，需要打卡 记录工时，欢迎您的使用，谢谢！</view>
+  </view>
+
+</template>
+<script>
+    import wepy from 'wepy'
+    export default class msgDetails extends wepy.page {
+      config = {
+        navigationBarTitleText: '消息详情'
+      };
+      data = {};
+      methods = {};
+      onLoad() {}
+      onShow() {}
+    }
+</script>

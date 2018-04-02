@@ -1,0 +1,156 @@
+<style lang="less">
+    .page{
+      font-family: "Microsoft YaHei";
+      font-size:28rpx;
+      color:#333;
+    }
+    .invoiceTitle{
+      background-color:#fff;
+      padding:10rpx 30rpx;
+    }
+   .placeholder {
+      color:#999;
+      font-family: "Microsoft YaHei";
+      font-size:28rpx;
+   }
+  .input{
+    color:#333;
+    font-family: "Microsoft YaHei";
+  }
+  .invoiceContent {
+    background-color:#fff;
+    margin-top:30rpx;
+    padding:20rpx 30rpx 0;
+  }
+  .contentTitle{
+    line-height: 60rpx;
+  }
+  .radioLabel {
+    display:block;
+    border-bottom:1px solid #eee;
+    padding:24rpx 0;
+  }
+  .radio {
+    float:right;
+  }
+  .message {
+    display:block;
+    padding:38rpx 0 40rpx;
+    text-align:center;
+    color:#666;
+  }
+  .btn {
+    width:90%;
+    margin-left:5%;
+    color:#fff;
+    background-color:#f39c20;
+    text-align:center;
+    line-height:90rpx;
+    border-radius:0;
+    font-size:32rpx;
+  }
+  .btn::after{
+    content:none;
+  }
+</style>
+
+<template lang="wxml">
+  <view class="page">
+    <view class="invoiceTitle">
+      <text>发票抬头:</text>
+      <input placeholder="在此输入" placeholder-class="placeholder" class="input" bindblur="inputInvoiceTile"/>
+    </view>
+    <view class="invoiceContent">
+      <text class="contentTitle">发票内容:</text>
+      <radio-group class="radio-group" bindchange="radioChange">
+        <label class="radioLabel" wx:for="{{items}}" wx:key="id">
+          <radio class="radio" color="#f39c20"  value="{{item.value}}" checked="{{item.checked}}"/>{{item.value}}
+        </label>
+      </radio-group>
+    </view>
+    <text class="message">开票金额不包括爱意币和优惠券支付的部分</text>
+    <button class="btn" bindtap="onInvoiceSubmit">保存</button>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  export default class Invoice extends wepy.page {
+    config = {
+      navigationBarTitleText: '编辑发票信息'
+    };
+    data = {
+      items: [
+          {value: '不开发票', id: 0, checked: 'true'},
+          {value: '商品', id: 1},
+          {value: '礼品', id: 2},
+          {value: '纺织品', id: 3},
+          {value: '家纺', id: 4}
+      ],
+      invoiceTitle: '',
+      invoiceType: '不开发票',
+      invoiceId: 0
+    };
+    methods = {
+      radioChange(e) {
+        var invoiceType = e.detail.value
+        var oldItems = this.items
+        if (invoiceType !== '不开发票' && this.invoiceTitle.trim() === '') {
+          wx.showModal({
+            title: '温馨提示',
+            showCancel: false,
+            content: '请填写发票抬头！'
+          })
+          this.invoiceType = '不开发票'
+          this.items = oldItems
+          this.setData({
+            items: oldItems
+          })
+        } else {
+          this.invoiceType = e.detail.value
+        }
+      },
+      inputInvoiceTile(e) {
+        this.invoiceTitle = e.detail.value
+      },
+      onInvoiceSubmit() {
+        var invoiceInfo = {}
+        var invoiceTitle = ''
+        if (this.invoiceType !== '不开发票') {
+          invoiceTitle = this.invoiceTitle.trim()
+        }
+        this.items.map((item) => {
+          if (this.invoiceType === item.value) {
+            this.invoiceId = item.id
+          }
+        })
+        invoiceInfo.invoiceTitle = invoiceTitle
+        invoiceInfo.invoiceType = this.invoiceType
+        invoiceInfo.InvoiceId = this.invoiceId
+        console.log('hi invoiceInfo', invoiceInfo)
+        var pages = getCurrentPages()
+        if (pages[pages.length - 2].__route__ === 'pages/checkout') {
+          pages[pages.length - 2].editInvoice(invoiceInfo)
+          wx.navigateBack({
+            delta: 1
+          })
+        }
+      }
+    };
+    events = {}
+    onLoad(option) {
+      var that = this
+      wx.getSystemInfo({
+        success: function(res) {
+          that.scrollHeight = res.windowHeight
+          that.scrollWidth = res.windowWidth
+        }
+      })
+    };
+    onShow() {
+    };
+    onUnload() {
+      this.invoiceTitle = ''
+      this.invoiceType = '不开发票'
+    };
+  }
+</script>

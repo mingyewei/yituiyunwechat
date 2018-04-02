@@ -1,0 +1,29 @@
+<style lang="less">
+
+</style>
+
+<template lang="wxml">
+  <view class="wrap">
+    协议内容
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  export default class selectWorker extends wepy.page {
+    config = {
+      navigationBarTitleText: '服务协议及隐私条款'
+    };
+    data = {
+
+    };
+    methods = {
+
+    };
+    onLoad(option) {
+
+    }
+    onShow() {
+
+    }
+  }
+</script>

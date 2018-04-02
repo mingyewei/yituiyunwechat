@@ -1,0 +1,359 @@
+<style lang="less">
+  .wrap{
+    background-color:#fff;
+    text-align: center;
+    padding-top:5%;
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  page{
+    background-color: #fff;
+  }
+  .txt{
+    color:#121212;
+    font-size:30rpx;
+    text-align:left;
+    line-height:55rpx;
+    margin-bottom:40rpx;
+  }
+.title{
+  font-size:35rpx;
+  text-align:left;
+  display:block;
+  margin-bottom: 8rpx;
+  font-weight: 600;
+}
+  .general{
+    color: #aaaaaa;
+    font-size:26rpx;
+    text-align: left;
+    margin-bottom: 30rpx;
+    width: 100%;
+  }
+  .gnrl{
+    margin-bottom: 0;
+  }
+  .time{
+    margin-left: 10rpx;
+    font-size: 28rpx;
+    color: #aaaaaa;
+  }
+  .head{
+    width:140rpx;
+    height:140rpx;
+    border-radius:50%;
+    margin-right:30rpx;
+    vertical-align:top;
+  }
+  .hotal{
+    padding:34rpx 0;
+    background-color:#fff;
+    text-align:left;
+    border-top: 1rpx solid #e1e1e1;
+  }
+  .map{
+    width: 19rpx;
+    height: 26rpx;
+  }
+  .inline{
+    display: inline-block;
+    width:76%;
+  }
+  .text {
+    color:#858585;
+    font-size:28rpx;
+    text-align:right;
+  }
+  .btn{
+    display:inline-block;
+    width:35%;
+    border-radius:50rpx;
+    color:#fff;
+    text-align:center;
+    font-size:30rpx;
+    line-height:90rpx;
+    margin-top:15%;
+  }
+  .refuse{
+    background-color:#ff6181;
+    box-shadow:0 10rpx 40rpx #ffd4de;
+    margin-left:5%;
+    float: left;
+  }
+  .receive{
+    background-color: #0ec3bc;
+    box-shadow:0 10rpx 40rpx #c2f0ed;
+    margin-right:5%;
+    float: right;
+  }
+  .gray{
+    background-color: #eee;
+    margin-right:5%;
+    float: right;
+    color:"#666"
+  }
+  .already{
+    background-color:#eee;
+    color: #666;
+  }
+
+  .name{
+    color:#121212;
+    font-size:34rpx;
+    text-align:left;
+  }
+  .weui-cell {
+   padding:20rpx 0!important;
+  }
+    .weui-cells{
+  margin-top: 0!important;
+}
+  /*弹窗*/
+  /*mask*/
+  .drawer_screen {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+  }
+  .drawer_box {
+    overflow:hidden;
+    position:fixed;
+    top:50%;
+    left:0;
+    z-index:1001;
+    background:#fff;
+    margin:-150px 5% 0 5%;
+    padding-bottom: 35rpx;
+    border-radius:12px;
+    width:90%;
+  }
+  .drawer_title{
+    line-height:120rpx;
+    font-size:37rpx;
+    color:#000;
+    text-align: center;
+  }
+  .borderView{
+    border-bottom: 1rpx solid #e1e1e1;
+    margin:0 50rpx 50rpx;
+  }
+  .save{
+    width:40%;
+    margin:0 auto;
+    line-height:90rpx;
+    border-radius:20rpx;
+    background-color: #0ec3bc;
+    font-size:26rpx;
+    position:static!important;
+    color: #fff;
+    display: inline-block;
+    margin-left: 10rpx;
+  }
+  .close{
+    width:40%;
+    margin:0 auto;
+    line-height:90rpx;
+    border-radius:20rpx;
+    background-color: #fff;
+    font-size:26rpx;
+    position:static!important;
+    color: #666;
+    display: inline-block;
+    border:1rpx solid #eee;
+    margin-right:10rpx;
+  }
+
+  .inputname{
+    color:#121212;
+    font-size:28rpx;
+    text-align:left;
+    width:80%;
+    margin:0 auto;
+    line-height: 60rpx;
+    margin-bottom: 20rpx;
+  }
+  .textarea{
+    color:#121212;
+    font-size:30rpx;
+    text-align:left;
+    width:80%;
+    padding: 20rpx 25rpx;
+    background: #f8f8f8;
+    margin: 20rpx auto 50rpx auto;
+  }
+</style>
+
+<template lang="wxml">
+  <view class="wrap">
+
+    <view class="title">{{msgItem.messageTitle}}</view>
+    <view class="general">{{msgItem.createTime}} / <text class="time">4:32</text></view>
+    <view class="txt">"{{workerTask.hrCompanyName}}"给您派发了新的工作任务</view>
+
+    <view class="hotal">
+      <image src="../images/my/head.png" class="head"></image>
+      <view class="inline">
+        <view class="name">{{workerTask.hotelName}}</view>
+        <view class="general gnrl">任务类型：<text class="general gnrl">{{workerTask.taskTypeText}}</text></view>
+        <view class="general gnrl">开始时间：{{workerTask.fromDate}}</view>
+        <view class="general gnrl">结束时间：{{workerTask.toDate}}</view>
+        <view class="general gnrl">
+          <image src="../images/map.png" class="map"></image>
+          {{workerTask.hotelAddress}}
+        </view>
+      </view>
+    </view>
+
+    <view class="weui-cells">
+
+      <view class="weui-cell weui-cell_access"  >
+        <view class="weui-cell__hd">
+          <text>任务内容</text>
+        </view>
+        <view class="weui-cell__bd text">{{workerTask.taskContent}}</view>
+      </view>
+
+      <view class="weui-cell weui-cell_access" >
+        <view class="weui-cell__hd">
+         <text>任务费用</text>
+        </view>
+        <view class="weui-cell__bd text">{{workerTask.hourlyPay}}元/小时</view>
+      </view>
+
+    </view>
+
+    <view wx:if="{{workerTask.status==0}}">
+     <view  class="refuse btn" @tap="showNameModal" >拒绝任务</view>
+     <view  class="{{btnSaveState===true ? 'receive':'gray'}}  btn" bindtap="confirmed"  >接受任务</view>
+    </view>
+  <view wx:if="{{workerTask.status==1}}">
+  <view class="already btn" >已接受</view>
+  </view>
+  <view wx:if="{{workerTask.status==2}}">
+  <view class="already btn">已拒绝</view>
+  <view class="txt">理由：{{workerTask.refusedReason}}</view>
+
+  </view>
+
+  <!--弹窗-->
+  <view class="drawer_screen" wx:if="{{showReason}}">
+  <view class="drawer_box">
+  <view class="drawer_title">拒绝任说明</view>
+  <view class="drawer_content">
+  <textarea cols="10" rows="10" class="textarea" bindinput='listenerReason' placeholder="请简要说明您拒绝接受任务的理由" placeholder-style="color:#cbcbcb">
+  </textarea>
+  <view class="borderView"></view>
+  </view>
+
+  <view style="text-align: center">
+  <view class="close"   bindtap="colseModal">取 消</view>
+  <view class="{{btnRefusedState===true ? 'save':'close'}}" bindtap="refusedTask" data-statu="save">保 存</view>
+  </view>
+
+  </view>
+  </view>
+
+  </view>
+
+</template>
+<script>
+    import wepy from 'wepy'
+    import {fetchWorkerTaskById, confirmedTask, refusedTask} from '../actions/workerAction'
+    import moment from 'moment'
+    export default class taskInfo extends wepy.page {
+      config = {
+        navigationBarTitleText: '任务通知'
+      };
+      data = {
+        showReason: false,
+        msgItem: {},
+        workerTask: {},
+        refusedReason: '',
+        btnSaveState: true,
+        btnRefusedState: true
+      };
+      methods = {
+        listenerReason: function (e) {
+          this.refusedReason = e.detail.value
+        },
+        confirmed: function() {
+          let that = this
+          if (this.btnSaveState) {
+            this.btnSaveState = false
+            confirmedTask(this.msgItem.workerId, this.msgItem.workerTaskId).then(res => {
+              console.log('接受任务', res)
+              wx.showModal({
+                title: '提示',
+                content: res.data.message,
+                showCancel: false
+              })
+              if (res.data.success) {
+                this.fetchWorkerTask()
+              }
+              this.btnSaveState = true
+              that.$apply()
+            })
+          }
+        },
+        refusedTask: function() {
+          if (this.refusedReason === '') {
+            wx.showModal({
+              title: '提示',
+              content: '请填写拒绝理由',
+              showCancel: false
+            })
+            return
+          }
+          this.btnRefusedState = false
+          var reqObj = {
+            refusedReason: this.refusedReason,
+            workerId: this.msgItem.workerId,
+            workerTaskId: this.msgItem.workerTaskId
+          }
+          refusedTask(reqObj).then(res => {
+            wx.showModal({
+              title: '提示',
+              content: res.data.message,
+              showCancel: false
+            })
+            if (res.data.success) {
+              this.fetchWorkerTask()
+            }
+            this.btnRefusedState = true
+            this.showReason = false
+          })
+        },
+        showNameModal: function() {
+          this.showReason = true
+        },
+        colseModal: function() {
+          this.showReason = false
+        }
+      };
+      onLoad(options) {
+        this.msgItem = JSON.parse(options.msgItem)
+        this.fetchWorkerTask()
+      }
+      onShow() {}
+      fetchWorkerTask() {
+        let that = this
+        if (typeof (this.msgItem) !== 'undefined' && typeof (this.msgItem.workerTaskId) !== 'undefined') {
+          wx.showLoading({title: '数据加载中'})
+          fetchWorkerTaskById(this.msgItem.workerTaskId).then(res => {
+            console.log('数据加载中接受任务', res)
+            this.workerTask = res.data.data
+            this.workerTask.fromDate = moment(new Date(that.workerTask.fromDate)).format('YYYY-MM-DD HH:mm:ss')
+            this.workerTask.toDate = moment(new Date(that.workerTask.toDate)).format('YYYY-MM-DD HH:mm:ss')
+            that.$apply()
+            wx.hideLoading()
+          })
+        }
+      }
+    }
+</script>

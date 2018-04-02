@@ -1,0 +1,42 @@
+<style lang="less">
+</style>
+
+<template lang="wxml">
+    <view wx:if="{{userType === 'worker'}}">
+      <workercheckout></workercheckout>
+    </view>
+    <view wx:if="{{userType === 'hotel'}}">
+      <hotelcheckout></hotelcheckout>
+    </view>
+    <view wx:if="{{userType === 'hr'}}">
+      <hrcheckout></hrcheckout>
+    </view>
+
+</template>
+<script>
+    import wepy from 'wepy'
+    import {getUserType} from '../util/userInfo'
+    import workercheckout from '../components/workercheckout'
+    import hotelcheckout from '../components/hotelcheckout'
+    import hrcheckout from '../components/hrcheckout'
+    export default class checkout extends wepy.page {
+      config = {
+        navigationBarTitleText: '结账'
+      };
+      data = {
+        userType: ''
+      };
+      components = {
+        workercheckout: workercheckout,
+        hotelcheckout: hotelcheckout,
+        hrcheckout: hrcheckout
+      };
+      methods = {};
+      onLoad() {
+        var userType = getUserType()
+        this.userType = userType
+        this.$apply()
+      }
+      onShow() {}
+    }
+</script>

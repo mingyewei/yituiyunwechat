@@ -1,0 +1,465 @@
+<style lang="less">
+  .wrap{
+    text-align: center;
+  }
+  .txt{
+    color:#121212;
+    font-size:32rpx;
+    text-align:left;
+    width:90%;
+    padding: 20rpx 25rpx;
+    background: #f8f8f8;
+    margin: 10% auto 50rpx auto;
+  }
+  .left{
+    margin-top: 20%;
+  }
+  .highlight{
+    color: #0ec3bc;
+  }
+  .general{
+    color: #aaaaaa;
+    margin-right: 10rpx;
+    font-size: 28rpx;
+  }
+  .inline{
+    display: inline-block;
+  }
+  .leftIcon{
+    margin-right: 25rpx;
+    vertical-align: middle;
+    width:45rpx;
+    height:33rpx;
+  }
+  .lefticon{
+    margin-right: 25rpx;
+    vertical-align: middle;
+    width:45rpx;
+    height:45rpx;
+  }
+  .icon {
+    width: 74rpx;
+    height: 74rpx;
+    margin: 0 auto;
+    display: block;
+    margin-top: 28rpx;
+  }
+  .text {
+    color:#808080;
+    font-size:28rpx;
+    text-align:right;
+    margin-right: 10rpx;
+  }
+  .name{
+    color:#121212;
+    font-size:30rpx;
+    font-weight: 600;
+    text-align:left;
+  }
+  .weui-cell{
+    position:static!important;
+    border-bottom:1rpx solid #e1e1e1;
+    width:90%;
+    margin-left:auto;
+    margin-right:auto;
+    padding:22rpx 10rpx;
+    background-color:#fff;
+  }
+  .weui-cells{
+    position:static!important;
+    padding-top:5%;
+    margin-top: 0!important;
+  }
+  .head{
+    width:110rpx;
+    height:110rpx;
+    border-radius:50%;
+  }
+  .weui-cell__hd text{
+    font-size:30rpx
+  }
+  /*弹窗*/
+  /*mask*/
+  .drawer_screen {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+  }
+  .drawer_box {
+    overflow:hidden;
+    position:fixed;
+    top:50%;
+    left:0;
+    z-index:1001;
+    background:#FAFAFA;
+    margin:-150px 5% 0 5%;
+    padding-bottom: 35rpx;
+    border-radius:12px;
+    width:90%;
+  }
+  .drawer_title{
+    line-height:120rpx;
+    font-size:37rpx;
+    color:#000;
+    text-align: center;
+  }
+  .borderView{
+    border-bottom: 1rpx solid #e1e1e1;
+    margin:0 50rpx 30rpx;
+  }
+  .save{
+    width:40%;
+    margin:0 auto;
+    line-height:90rpx;
+    border-radius:20rpx;
+    background-color: #0ec3bc;
+    font-size:26rpx;
+    position:static!important;
+    color: #fff;
+    display: inline-block;
+    margin-left: 10rpx;
+  }
+  .close{
+    width:40%;
+    margin:0 auto;
+    line-height:90rpx;
+    border-radius:20rpx;
+    background-color: #fff;
+    font-size:26rpx;
+    position:static!important;
+    color: #666;
+    display: inline-block;
+    border:1rpx solid #eee;
+    margin-right:10rpx;
+  }
+  .inputname{
+    color:#121212;
+    font-size:32rpx;
+    text-align:left;
+    width:70%;
+    margin:0 auto;
+    line-height: 60rpx;
+    margin-bottom: 20rpx;
+    display: inline-block;
+    vertical-align:top;
+    padding-left: 50rpx;
+  }
+
+</style>
+
+<template lang="wxml">
+  <view class="wrap">
+  <view class="weui-cells">
+
+    <view class="weui-cell weui-cell_access" hover-class="weui-cell_active"  bindtap="chooseimage(logo)">
+      <view class="weui-cell__hd">
+        <text>{{textTitle.logo}}</text>
+      </view>
+      <view class="weui-cell__bd text" wx:if="{{companyInfo.logo !== ''}}">
+        <image src="{{companyInfo.logo}}" class="head"></image>
+      </view>
+      <view class="weui-cell__bd text" wx:if="{{companyInfo.logo === ''}}">未上传</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+    </view>
+
+  <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" bindtap="changeMessage('name')">
+    <view class="weui-cell__hd">
+     <text>{{textTitle.name}}</text>
+    </view>
+    <view class="weui-cell__bd text">{{companyInfo.name}}</view>
+    <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+  </view>
+
+  <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" bindtap="changeAddress">
+    <view class="weui-cell__hd">
+        <text>{{textTitle.address}}</text>
+    </view>
+    <view class="weui-cell__bd text">{{companyInfo.address}}</view>
+    <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+  </view>
+
+  <view class="weui-cell weui-cell_access" hover-class="weui-cell_active"  bindtap="chooseimage(license)">
+    <view class="weui-cell__hd">
+      <text>{{textTitle.license}}</text>
+    </view>
+    <view class="weui-cell__bd text" wx:if="{{companyInfo.businessLicense === ''}}">未上传</view>
+    <view class="weui-cell__bd text" wx:if="{{companyInfo.businessLicense !== ''}}">已上传</view>
+    <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+    </view>
+
+  <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" bindtap="changeMessage('leader')" >
+  <view class="weui-cell__hd">
+  <text>负责人</text>
+  </view>
+  <view class="weui-cell__bd text">{{companyInfo.leader}}</view>
+  <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+  </view>
+
+  <view class="weui-cell weui-cell_access" hover-class="weui-cell_active"  >
+  <view class="weui-cell__hd">
+  <text>负责人手机号</text>
+  </view>
+  <view class="weui-cell__bd text">{{companyInfo.leaderMobile}}</view>
+  </view>
+
+  <view class="weui-cell weui-cell_access" hover-class="weui-cell_active"  >
+  <view class="weui-cell__hd">
+  <text>{{textTitle.status}}</text>
+  </view>
+  <view class="weui-cell__bd text" wx:if="{{companyInfo.status === 0}}">未审核</view>
+  <view class="weui-cell__bd text" wx:if="{{companyInfo.status === 1}}">已审核</view>
+  <view class="weui-cell__bd text" wx:if="{{companyInfo.status === 2}}">已冻结</view>
+  <view class="weui-cell__bd text" wx:if="{{companyInfo.status === 3}}">已注销</view>
+  </view>
+
+  </view>
+  </view>
+  <!--modal-->
+  <view class="drawer_screen" wx:if="{{inputName}}">
+    <view class="drawer_box">
+      <view class="drawer_title">{{changeInfoTitle}}</view>
+      <view class="drawer_content">
+        <input type="text"
+               class="weui-search-bar__input inputname"
+               placeholder="请输入{{changeInfoTitle}}"
+               placeholder-style="color:#cbcbcb"
+               bindinput="setChangeInfo"
+        />
+        <view class="borderView"></view>
+      </view>
+      <view style="text-align: center">
+        <view class="close" bindtap="cancel">取 消</view>
+        <view class="save" bindtap="putCompanyInfo">保 存</view>
+      </view>
+    </view>
+  </view>
+
+</template>
+<script>
+    import wepy from 'wepy'
+    import {getUserType, getToken} from '../util/userInfo'
+    import {fetchHotelInfo, changeHotel} from '../actions/hotelAction'
+    import {fetchHrcompanyInfo, changeHrInfo} from '../actions/hrcompaniesAction'
+    import {UrlHost} from '../constants/index'
+    export default class hotelData extends wepy.page {
+      config = {
+        navigationBarTitleText: '酒店资料'
+      };
+      data = {
+        inputName: false,
+        changeInfoTitle: '',
+        companyInfo: {},
+        userType: '',
+        textTitle: {
+          logo: '酒店logo',
+          name: '酒店名称',
+          address: '酒店地址',
+          license: '酒店营业执照',
+          status: '酒店状态'
+        }
+      };
+      methods = {
+        setChangeInfo: function (e) {
+          var value = e.detail.value
+          if (this.changeInfoTitle === '修改公司名称') {
+            this.companyInfo.name = value
+          } else if (this.changeInfoTitle === '修改负责人姓名') {
+            this.companyInfo.leader = value
+          }
+          this.$apply()
+        },
+        changeAddress: function () {
+          var that = this
+          wx.chooseLocation({
+            success: function(res) {
+              that.companyInfo.address = res.address
+              that.$apply()
+              that.putCompanyInfo()
+            }
+          })
+        },
+        changeMessage: function (act) {
+          if (act === 'name') {
+            this.changeInfoTitle = '修改公司名称'
+          } else if (act === 'leader') {
+            this.changeInfoTitle = '修改负责人姓名'
+          }
+          this.inputName = true
+          this.$apply()
+        },
+        chooseimage: function (act) {
+          if (act === 'license' && this.companyInfo.status === 1 && this.companyInfo.businessLicense !== '') {
+            console.log('this.companyInfo.businessLicense', this.companyInfo.businessLicense)
+            var imageArr = [this.companyInfo.businessLicense]
+            wx.previewImage({
+              urls: imageArr
+            })
+          } else {
+            var that = this
+            wx.showActionSheet({
+              itemList: ['从相册中选择', '拍照'],
+              itemColor: '#0ec3bc',
+              success: function (res) {
+                if (!res.cancel) {
+                  if (res.tapIndex === 0) {
+                    that.chooseWxImage('album', act)
+                  } else if (res.tapIndex === 1) {
+                    that.chooseWxImage('camera', act)
+                  }
+                }
+              }
+            })
+          }
+        }
+      };
+      chooseWxImage (type, act) {
+        var that = this
+        wx.chooseImage({
+          sizeType: ['original', 'compressed'],
+          sourceType: [type],
+          success: function (res) {
+            console.log(res)
+            if (act === 'logo') {
+              that.upload(act, res.tempFilePaths[0], (data) => {
+                that.companyInfo.logo = data
+                that.$apply()
+                wx.hideToast()
+                that.putCompanyInfo()
+              })
+            } else if (act === 'license') {
+              that.upload(act, res.tempFilePaths[0], (data) => {
+                that.companyInfo.businessLicense = data
+                that.$apply()
+                wx.hideToast()
+                that.putCompanyInfo()
+              })
+            }
+          }
+        })
+      }
+      upload (act, path, cb) {
+        wx.showToast({
+          icon: 'loading',
+          title: '正在上传'
+        })
+        wx.uploadFile({
+          url: UrlHost + '/files/' + act,
+          filePath: path,
+          name: 'file',
+          header: { authorization: getToken(), 'Accept': 'application/json', 'Content-Type': 'multipart/form-data' },
+          success: function (res) {
+            console.log(res)
+            if (res.statusCode !== 200) {
+              wx.showModal({
+                title: '提示',
+                content: '上传失败',
+                showCancel: false
+              })
+              return
+            }
+            var data = JSON.parse(res.data)
+            if (cb) {
+              cb(data.data)
+            }
+          },
+          fail: function (e) {
+            console.log(e)
+            wx.showModal({
+              title: '提示',
+              content: '上传失败',
+              showCancel: false
+            })
+          }
+        })
+      }
+      setHrCompanyInfo () {
+        wx.setNavigationBarTitle({
+          title: '企业资料'
+        })
+        this.textTitle = {
+          logo: '企业logo',
+          name: '企业名称',
+          address: '企业地址',
+          license: '企业营业执照',
+          status: '企业状态'
+        }
+      }
+      cancel () {
+        this.inputName = false
+      }
+      putCompanyInfo () {
+        this.inputName = false
+        var that = this
+        if (this.userType === 'hr') {
+          changeHrInfo(this.companyInfo).then((res) => {
+            console.log('res', res)
+            if (res.data.success === true) {
+              that.companyInfo = res.data.data
+              that.$apply()
+              wx.showToast({
+                title: '成功',
+                icon: 'success',
+                duration: 1000
+              })
+            } else {
+              wx.showModal({
+                title: '提示',
+                content: res.data.message,
+                showCancel: false
+              })
+            }
+          })
+        } else if (this.userType === 'hotel') {
+          changeHotel(this.companyInfo).then((res) => {
+            if (res.success === true) {
+              that.companyInfo = res.data
+              that.$apply()
+              wx.showToast({
+                title: '成功',
+                icon: 'success',
+                duration: 1000
+              })
+            } else {
+              wx.showModal({
+                title: '提示',
+                content: res.message,
+                showCancel: false
+              })
+            }
+          })
+        }
+      }
+      onLoad() {
+        var userType = getUserType()
+        this.userType = userType
+        var that = this
+        wx.showToast({
+          icon: 'loading'
+        })
+        if (this.userType === 'hr') {
+          this.setHrCompanyInfo()
+          fetchHrcompanyInfo().then((res) => {
+            if (res.data.success === true) {
+              wx.hideToast()
+              that.companyInfo = res.data.data
+              that.$apply()
+            }
+          })
+        } else if (this.userType === 'hotel') {
+          fetchHotelInfo().then((res) => {
+            if (res.data.success === true) {
+              wx.hideToast()
+              that.companyInfo = res.data.data
+              that.$apply()
+            }
+          })
+        }
+      }
+      onShow() {}
+    }
+</script>

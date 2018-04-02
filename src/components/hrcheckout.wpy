@@ -1,0 +1,375 @@
+<style lang="less">
+  .hotelwrap{
+    text-align: center;
+  }
+  .default{
+    text-align:center;
+    flex:1;
+    color:#878787;
+    font-size:28rpx;
+    line-height: 100rpx;
+  }
+  .summa{
+    background-color:#fff;
+    width:84%;
+    margin:30rpx auto;
+    padding:60rpx 5%;
+    border-radius:20rpx;
+    display:flex;
+    flex-direction:row;
+  }
+  .inline{
+    display: inline-block;
+  }
+  .hotelwrap .text{
+    font-size:26rpx;
+    text-align:left;
+    margin-top:6px;
+    font-weight:600;
+    flex:1;
+  }
+  .num{
+    color: #1fbfb7;
+    font-size:43rpx;
+    font-weight: bold;
+    text-align: right;
+    flex:1;
+  }
+  .num text{
+    font-size:25rpx;
+  }
+  .person{
+    padding:30rpx 13rpx;
+    background-color:#fff;
+    text-align:left;
+    border-bottom:1rpx solid #e1e1e1;
+  }
+  .head{
+    width:90rpx;
+    height:90rpx;
+    border-radius:50%;
+    margin-right:25rpx;
+    vertical-align:top;
+  }
+  .sex{
+    width: 19rpx;
+    height: 26rpx;
+    margin-left: 10rpx;
+  }
+  .sexm{
+    width: 25rpx;
+    height: 25rpx;
+    margin-left: 10rpx;
+  }
+  .general{
+    color: #aaaaaa;
+    font-size:24rpx;
+    text-align: left;
+    margin-bottom: 30rpx;
+    width: 100%;
+  }
+  .gnrl{
+    margin-bottom: 0;
+  }
+  .name{
+    color:#121212;
+    font-size:28rpx;
+    text-align:left;
+    line-height:35rpx;
+  }
+  .swiper-tab {
+    width: 100%;
+    line-height: 80rpx;
+    background-color:white;
+    position: fixed;
+    top:0;
+    left:0;
+    z-index: 999;
+  }
+  .swiper-tab-list {
+    font-size: 30rpx;
+    display: inline-block;
+    width: 25%;
+    color: #777;
+    border-bottom: 0rpx;
+  }
+  .on {
+    color: #0ec3bc;
+    border-bottom: 2rpx solid #0ec3bc;
+  }
+
+  .swiper-box {
+    display: block;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+  }
+  swiper{
+    height: 1000rpx!important;
+  }
+  .hotelwrap .list{
+    background: #fff;
+    border-radius: 15rpx;
+    margin:20rpx 22rpx;
+    padding:39rpx 30rpx 10rpx 30rpx;
+    position: relative;
+    text-align: left;
+  }
+  .recruitClass{
+    font-size:33rpx;
+    color:#111111;
+    margin-bottom:30rpx;
+  }
+  .orderNumber{
+    font-size:26rpx;
+    float:right;
+    color: #a5a5a5;
+  }
+  .green{
+    color:#10c4b9;
+  }
+  .red{
+    color: #e91a2a;
+  }
+  .time, .personPrice, .address, .taskContent{
+    font-size:24rpx;
+    color:#898989;
+    padding-bottom:25rpx;
+  }
+  .time icon{
+    margin-right: 20rpx;
+  }
+  .iconpiont{
+    width:22rpx;
+    height:22rpx;
+    border-radius: 50%;
+    background:#ffa301;
+    margin-right:20rpx;
+    display:inline-block;
+  }
+  .address .iconpiont{
+    background: #fc7e94;
+  }
+  .taskContent .iconpiont{
+    background:#10c4b9;
+  }
+  .without{
+    color:#ff0305;
+    float: right;
+    font-size:26rpx;
+  }
+  .release{
+    width:130rpx;
+    height:130rpx;
+    position: absolute;
+    right:2rpx;
+    top:100rpx;
+  }
+  .hotelwrap .swiper-tab-list{
+    width: 25%;
+  }
+  .money{
+    background-color: #fff;
+    margin:20rpx 0;
+    border: 1rpx solid #eee;
+    padding-top: 20rpx;
+  }
+  .money .text {
+    margin-bottom: 25rpx;
+  }
+  .inline{
+    display: inline-block;
+  }
+  .money .inline{
+    width: 49%;
+  }
+  .money .inline view{
+    text-align: center;
+    width: 100%;
+  }
+  .money .textblack{
+    color: #121212;
+    font-weight: bold;
+    font-size: 23rpx;
+  }
+  .boerderRight{
+    border-right: 1rpx solid #eee;
+  }
+  .money .time{
+    color: #1fbfb7;
+    font-size: 35rpx;
+    font-weight: bold;
+    margin-left: 5rpx;
+    margin-right: 3rpx;
+    padding: 0;
+  }
+  .money .red{
+    color: #f76280;
+    font-size: 35rpx;
+    font-weight: bold;
+  }
+  .shouldPay{
+    font-size: 28rpx;
+    overflow: hidden;
+    padding:5rpx 0;
+  }
+  .workTime{
+    float:left
+  }
+  .payMoney{
+    float:right
+  }
+  .workTime text, .payMoney text{
+    color:#1fbfb7
+  }
+  .workTime text:nth-child(1), .payMoney text:nth-child(1) {
+    font-size: 37rpx;
+    font-weight:600;
+    padding:0 8rpx;
+  }
+  .noTasks{
+    font-size:32rpx;
+    color:#bbb;
+    text-align:center;
+    padding-top:15%;
+  }
+</style>
+
+<template>
+  <view class="hotelwrap">
+
+    <view class="swiper-tab">
+      <view class="swiper-tab-list {{currentTab==='0' ? 'on' : ''}}" data-current="0" bindtap="tabNav">全部</view>
+      <view class="swiper-tab-list {{currentTab==='1' ? 'on' : ''}}" data-current="1" bindtap="tabNav">未结算</view>
+      <view class="swiper-tab-list {{currentTab==='2' ? 'on' : ''}}" data-current="2" bindtap="tabNav">结算中</view>
+      <view class="swiper-tab-list {{currentTab==='3' ? 'on' : ''}}" data-current="3" bindtap="tabNav">已结算</view>
+    </view>
+    <view duration="500"  style="margin-top:100rpx">
+      <view>
+        <view wx:if="{{tasklist.length > 0}}">
+          <block class="item" wx:for="{{tasklist}}" wx:for-item="item"  wx:key="{{item.id}}">
+            <view class="list" bindtap="gotoTaskDetails"  data-taskid="{{item.id}}">
+              <view class="recruitClass">{{item.taskTypeText}}
+                <text class="orderNumber">设定工钱: {{item.hourlyPay}} 元 / 小时</text>
+              </view>
+              <view>
+                <view class="time"><icon type="waiting" size="12" color="#13c0c4"/>{{item.fromDate}} - {{item.toDate}}</view>
+                <view class="personPrice"><view class="iconpiont"></view>人数: {{item.needWorkers}}   <text style="padding: 0 10rpx">|</text>  定价: {{item.hotelHourlyPay}} 元 / 小时</view>
+                <view class="address"><view class="iconpiont"></view>{{item.hotelName}}</view>
+                <view class="taskContent"><view class="iconpiont"></view>{{item.taskContent}}</view>
+                <view class="address"><view class="iconpiont"></view>
+                  {{item.confirmedWorkers}}人已接单 <text style="padding: 0 10rpx">|</text> {{item.refusedWorkers}}人拒绝接单
+                </view>
+                <view class="money">
+                  <view class="inline boerderRight">
+                    <view class="time">{{item.workersHavePay}}</view>
+                    <view class="text textblack">已结款（元）</view>
+                  </view>
+                  <view class="inline">
+                    <view class="red">{{item.workersWaitPay}}</view>
+                    <view class="text textblack">未结款（元）</view>
+                  </view>
+                </view>
+                <view class="shouldPay">
+                  <view class="workTime">工作时间: <text>{{item.workHours}}</text><text>小时</text></view>
+                  <view class="payMoney">应结金额: <text>{{item.workersShouldPay}}</text><text>元</text></view>
+                </view>
+              </view>
+            </view>
+          </block>
+        </view>
+        <view class='noTasks' wx:if="{{tasklist.length === 0}}">暂无数据</view>
+      </view>
+    </view>
+
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import moment from 'moment'
+  import {searchHrTasks} from '../actions/hrcompaniesAction'
+  import {getCompanyId, getUserType} from '../util/userInfo'
+  export default class hr extends wepy.component {
+    props = {}
+    data ={
+      currentTab: '0',
+      tasklist: [],
+      distributeTaskList: [],
+      noSettlement: [],
+      inSettlement: [],
+      endSettlement: [],
+      userType: '',
+      queryObj: {
+        paginator: {
+          page: 1,
+          pageSize: 1000
+        },
+        selector: {
+          hrCompanyId: '',
+          status: 1
+        }
+      }
+    }
+    methods = {
+      gotoTaskDetails: function (event) {
+        var taskId = event.currentTarget.dataset.taskid
+        console.log('taskId', taskId)
+        wx.navigateTo({
+          url: 'hrcheckoutList?taskId=' + taskId
+        })
+      },
+      tabNav: function (e) {
+        if (this.data.currentTab === e.target.dataset.current) {
+          return false
+        } else {
+          this.currentTab = e.target.dataset.current
+          this.$apply()
+          this.getHrTasks()
+        }
+      }
+    }
+    getHrTasks() {
+      var that = this
+      wx.showLoading({title: '数据加载中'})
+      switch (this.currentTab) {
+        case '0':
+          this.queryObj.selector.payStatus = 0
+          that.$apply()
+          break
+        case '1':
+          this.queryObj.selector.payStatus = 1
+          that.$apply()
+          break
+        case '2':
+          this.queryObj.selector.payStatus = 2
+          that.$apply()
+          break
+        case '3':
+          this.queryObj.selector.payStatus = 3
+          that.$apply()
+          break
+      }
+      searchHrTasks(this.queryObj).then((data) => {
+        that.tasklist = data.data.data.list
+        for (var i = 0; i < that.tasklist.length; i++) {
+          that.tasklist[i].fromDate = moment(new Date(that.tasklist[i].fromDate)).format('YYYY-MM-DD HH:mm')
+          that.tasklist[i].toDate = moment(new Date(that.tasklist[i].toDate)).format('YYYY-MM-DD HH:mm')
+          that.tasklist[i].workHours = (that.tasklist[i].minutes / 60).toFixed(2)
+        }
+        that.$apply()
+        console.log('tasklist', that.tasklist)
+        wx.hideLoading()
+      })
+    }
+    watch = {}
+    onLoad () {
+      this.userType = getUserType()
+      if (this.userType === 'hr') {
+        this.queryObj.selector.hrCompanyId = getCompanyId()
+        this.$apply()
+        this.getHrTasks()
+        this.$apply()
+      }
+    }
+  }
+</script>

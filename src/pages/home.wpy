@@ -1,0 +1,174 @@
+<style lang="less">
+</style>
+
+<template lang="wxml">
+  <view class="wrap">
+    <view wx:if="{{userType === 'worker'}}">
+      <worker :currentTask.sync="workerCurrentTask" :haveTask.sync="workerHaveTask"></worker>
+    </view>
+    <view wx:if="{{userType === 'hotel'}}">
+      <recruitList :tasklist.sync="hotelTasklist"></recruitList>
+    </view>
+    <view wx:if="{{userType === 'hr'}}">
+      <hr :tasklist.sync="HrTasklist"></hr>
+    </view>
+  </view>
+</template>
+<script>
+    import wepy from 'wepy'
+    import moment from 'moment'
+    import worker from '../components/worker'
+    import recruitList from '../components/recruitList'
+    import hr from '../components/hr'
+    import {getCurrentTask} from '../actions/workerAction'
+    import {searchHotelTasks} from '../actions/hotelAction'
+    import {getCompanyId} from '../util/userInfo'
+    import {searchHrTasks} from '../actions/hrcompaniesAction'
+
+    export default class home extends wepy.page {
+      config = {
+        navigationBarTitleText: '首页',
+        enablePullDownRefresh: true
+      };
+      data = {
+        workerHaveTask: false,
+        userType: '',
+        hotelId: '',
+        workerCurrentTask: {},
+        hotelTasklist: {},
+        HrTasklist: {},
+        hotelQueryObj: {
+          paginator: {
+            page: 1,
+            pageSize: 1000
+          },
+          selector: {
+            hotelId: ''
+          }
+        },
+        hrQueryObj: {
+          paginator: {
+            page: 1,
+            pageSize: 1000
+          },
+          selector: {
+            hrCompanyId: ''
+          }
+        }
+      };
+      components = {
+        worker: worker,
+        recruitList: recruitList,
+        hr: hr
+      };
+      methods = {};
+      events = {
+        'workLogUpdate': () => {
+          this.fetchData()
+        }
+      };
+      fetchData(cb) {
+        var userInfo = wx.getStorageSync('keyUserInfo')
+        this.userType = userInfo.userType
+        var that = this
+        switch (this.userType) {
+          case 'worker':
+            getCurrentTask().then((res) => {
+              if (res.data.success) {
+                that.workerHaveTask = true
+                that.workerCurrentTask = res.data.data
+                if (typeof that.workerCurrentTask.taskType === 'undefined') {
+                  that.workerHaveTask = false
+                  that.$apply()
+                } else {
+                  that.workerHaveTask = true
+                  that.$apply()
+                }
+                if (typeof that.workerCurrentTask.fromDate === 'undefined' || that.workerCurrentTask.fromDate === 'Invalid date') {
+                  that.workerCurrentTask.showNull = 0
+                } else {
+                  that.workerCurrentTask.showNull = 1
+                  that.workerCurrentTask.fromDate = moment(new Date(that.workerCurrentTask.fromDate)).format('YYYY-MM-DD HH:mm')
+                  that.workerCurrentTask.toDate = moment(new Date(that.workerCurrentTask.toDate)).format('YYYY-MM-DD HH:mm')
+                }
+                if (typeof that.workerCurrentTask.workLogs !== 'undefined') {
+                  that.workerCurrentTask.workLogs.forEach((item) => {
+                    item.punchIn = moment(new Date(item.punchIn)).format('YYYY-MM-DD HH:mm')
+                    item.punchIn = item.punchIn.split(' ')
+                    item.punchOut = moment(new Date(item.punchOut)).format('YYYY-MM-DD HH:mm')
+                    item.punchOut = item.punchOut.split(' ')
+                    console.log('punchIn1111', moment(new Date(that.workerCurrentTask.fromDate)).format('X'))
+                  })
+                }
+                var currentTime = moment(new Date()).format('YYYY-MM-DD HH:mm')
+                if (that.workerCurrentTask.fromDate > currentTime) {
+                  that.workerCurrentTask.status = '未开始'
+                } else {
+                  if (that.workerCurrentTask.toDate < currentTime) {
+                    that.workerCurrentTask.status = '已结束'
+                  } else {
+                    that.workerCurrentTask.status = '进行中'
+                  }
+                }
+                that.$apply()
+              } else {
+                that.workerHaveTask = false
+                that.$apply()
+              }
+              console.log('onPullDownRefresh getCurrentTask result :', res)
+              if (cb) { cb() }
+            })
+            break
+          case 'hr':
+            this.hrQueryObj.selector.hrCompanyId = getCompanyId()
+            searchHrTasks(this.hrQueryObj).then((data) => {
+              that.HrTasklist = data.data.data.list
+              for (var i = 0; i < that.HrTasklist.length; i++) {
+                that.HrTasklist[i].fromDate = moment(new Date(that.HrTasklist[i].fromDate)).format('YYYY-MM-DD HH:mm')
+                that.HrTasklist[i].toDate = moment(new Date(that.HrTasklist[i].toDate)).format('YYYY-MM-DD HH:mm')
+                var currentTime = moment(new Date()).format('YYYY-MM-DD HH:mm')
+                if (that.HrTasklist[i].toDate < currentTime) {
+                  that.HrTasklist[i].isFinished = true
+                } else {
+                  that.HrTasklist[i].isFinished = false
+                }
+              }
+              that.$apply()
+              console.log('this.HrTasklist', that.HrTasklist)
+              if (cb) { cb() }
+            })
+            break
+          case 'hotel':
+            this.hotelQueryObj.selector.hotelId = getCompanyId()
+            searchHotelTasks(this.hotelQueryObj).then((res) => {
+              that.hotelTasklist = res.data.data.list
+              for (var i = 0; i < that.hotelTasklist.length; i++) {
+                that.hotelTasklist[i].fromDate = moment(new Date(that.hotelTasklist[i].fromDate)).format('YYYY-MM-DD HH:mm')
+                that.hotelTasklist[i].toDate = moment(new Date(that.hotelTasklist[i].toDate)).format('YYYY-MM-DD HH:mm')
+                var currentTime = moment(new Date()).format('YYYY-MM-DD HH:mm')
+                if (that.hotelTasklist[i].toDate < currentTime) {
+                  that.hotelTasklist[i].isFinished = true
+                } else {
+                  that.hotelTasklist[i].isFinished = false
+                }
+              }
+              that.$apply()
+              console.log('this.hotelTasklist', that.hotelTasklist)
+              if (cb) { cb() }
+            })
+        }
+        this.$apply()
+      }
+      onPullDownRefresh() {
+        console.log('-----page home onPullDownRefresh')
+        this.fetchData(() => { wx.stopPullDownRefresh() })
+      }
+      onLoad() {
+        console.log('-----page home onLoad')
+      }
+      onShow() {
+        console.log('-----page home onShow')
+        this.fetchData()
+      }
+    }
+</script>

@@ -1,0 +1,573 @@
+<!--suppress ALL -->
+<style lang='less'>
+  page{
+    background-color: #f1f1f1;
+  }
+  .task{
+    background-color: #fff;
+    padding: 15rpx 23rpx;
+  }
+  .taskSelect{
+    background-color: #fff;
+    padding: 7rpx 23rpx 0;
+  }
+  .borderView{
+    border-bottom: 1rpx solid #f1f1f1;
+    line-height: 110rpx;
+  }
+  .borderView text{
+    color: #cacaca;
+    font-size:30rpx;
+    padding:30rpx 0;
+  }
+  .text {
+    color:#9e9e9e;
+    font-size:28rpx;
+    text-align:right;
+    margin-right: 10rpx;
+  }
+  .txt{
+    color:#121212;
+    font-size:30rpx;
+    text-align:left;
+    width:92%;
+    padding: 20rpx 4%;
+    background: #f8f8f8;
+    margin: 0 auto 20rpx auto;
+  }
+  .weui-cells{
+    margin-top: 20rpx;
+  }
+  .weui-cell{
+    padding: 24rpx!important;
+  }
+  .selectedCompany{
+    background-color: #fff;
+    padding: 0 23rpx;
+    margin-top:20rpx;
+  }
+  .selected{
+    font-size: 30rpx;
+    padding: 37rpx 0;
+    color: #111;
+    border-bottom: 1rpx solid #e1e1e1;
+  }
+  .selectNum{
+    float:right;
+    font-size:25rpx;
+    color:#88ddd8;
+    margin-right: 40rpx;
+  }
+  .selected icon{
+    float:right;
+    top:21rpx;
+  }
+  .companyInfo{
+    padding-top:37rpx;
+    padding-bottom:40rpx;
+    border-bottom: 1rpx solid #e1e1e1;
+  }
+  .companyName{
+    font-size:26rpx;
+    line-height: 26rpx;
+    padding-bottom: 23rpx;
+  }
+  .needPerson{
+    font-size:26rpx;
+    color:#848484;
+    line-height: 54rpx;
+  }
+  .numberBox{
+    float:right;
+    border: 1rpx solid #cfcfcf;
+    border-radius: 8rpx;
+    width:190rpx;
+    height: 52rpx;
+    line-height: 50rpx;
+  }
+  .reduce, .increase{
+    width:50rpx;
+    height: 100%;
+    color: #0ec3bc;
+    font-weight: 600;
+    display: inline-block;
+    text-align: center;
+  }
+  .number{
+    color:#111;
+    display: inline-block;
+    text-align: center;
+    width:86rpx;
+  }
+  .reduce{
+    border-right: 1rpx solid #cfcfcf;
+  }
+  .increase{
+    border-left: 1rpx solid #cfcfcf;
+  }
+  .btn{
+    width:90%;
+    margin-left:5%;
+    background-color: #0ec3bc;
+    line-height: 84rpx;
+    font-size:30rpx;
+    color:#fff;
+    text-align: center;
+    margin-top:60rpx;
+    margin-bottom: 70rpx;
+    border-radius: 42rpx;
+  }
+  .gloomyBtn{
+    width:90%;
+    margin-left:5%;
+    background-color: #ccc;
+    line-height: 84rpx;
+    font-size:30rpx;
+    color:#fff;
+    text-align: center;
+    margin-top:60rpx;
+    margin-bottom: 70rpx;
+    border-radius: 42rpx;
+  }
+  .picker{
+    display:inline-block;
+    color:#666;
+    font-size:30rpx;
+    width:37%;
+    float:right;
+    text-align:right;
+  }
+  .numInput{
+    display: inline-block;
+    overflow:inherit;
+  }
+  /*弹窗*/
+  /*mask*/
+  .drawer_screen {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+  }
+  .drawer_box {
+    overflow:hidden;
+    position:fixed;
+    bottom:0;
+    left:0;
+    z-index:1001;
+    background:#FAFAFA;
+    width:100%;
+    border-top-left-radius:20rpx;
+    border-top-right-radius:20rpx;
+  }
+  .drawer_title{
+    line-height:100rpx;
+    font-size:42rpx;
+    color:#000;
+    text-align: center;
+  }
+  .drawer_content{
+    height:650rpx;
+    overflow: scroll;
+  }
+  .contentMessage{
+    height:105rpx;
+    line-height: 105rpx;
+    font-size:28rpx;
+    text-align: left;
+    padding-left: 12rpx;
+    padding-right: 12rpx;
+    margin-left:22rpx;
+    border-bottom: 1rpx solid #e1e1e1;
+  }
+  .contentMessage view{
+    width:44rpx;
+    height:44rpx;
+    border-radius: 50%;
+    border: 1rpx solid #ccc;
+    float: right;
+    margin-top:34rpx;
+  }
+  .sureBtn{
+    line-height:100rpx;
+    background-color: #0ec3bc;
+    font-size:26rpx;
+    border-radius: 0;
+    color: #fff;
+  }
+  .checkbox{
+    display: block;
+    border-bottom:1rpx solid #e1e1e1;
+    font-size: 28rpx;
+    padding:25rpx 10px;
+  }
+  checkbox{
+    float: right;
+  }
+
+
+
+
+</style>
+
+<template lang='wxml'>
+  <view class='wrap'>
+    <view class='taskSelect'>
+      <view class='borderView'>
+        <text>请点击选择任务类型</text>
+          <picker
+            bindchange='bindPickerChange'
+            value='{{code}}'
+            range='{{taskTypeList}}'
+            class='picker'
+            >
+            {{taskTypeList[code]}} <icon class='weui-cell__ft weui-cell__ft_in-access'/>
+          </picker>
+      </view>
+    </view>
+
+    <view class='task'>
+      <textarea
+        cols='30'
+        rows='10'
+        class='txt'
+        placeholder='请简要描述任务内容'
+        value='{{recruit.taskContent}}'
+        bindinput='listenerTaskContentChange'
+        />
+    </view>
+
+    <view class='weui-cells'>
+
+      <view class='weui-cell weui-cell_access' hover-class='weui-cell_active'>
+        <view class='weui-cell__hd'>
+         <text>任务开始时间</text>
+        </view>
+        <view class='weui-cell__bd text'>
+          <picker mode='date' value='{{fromDate}}' start='{{recruit.fromDate}}' bindchange='bindFromDateChange'>{{fromDate}}</picker>
+
+        </view>
+        <view class='weui-cell__ft weui-cell__ft_in-access'> <picker mode="time" value="{{fromTime}}" start="{{recruit.fromTime}}" end="24:00" bindchange="bindFromTimeChange">{{fromTime}}</picker></view>
+      </view>
+
+      <view class='weui-cell weui-cell_access' hover-class='weui-cell_active'>
+        <view class='weui-cell__hd'>
+          <text>任务结束时间</text>
+        </view>
+        <view class='weui-cell__bd text'>
+
+          <picker mode='date' value='{{toDate}}' start='{{recruit.toDate}}'  bindchange='bindtoDateChange'>{{toDate}}</picker>
+      </view>
+      <view class='weui-cell__ft weui-cell__ft_in-access'>  <picker mode="time" value="{{toTime}}" start="{{recruit.toTime}}" end="24:00" bindchange="bindToTimeChange">{{toTime}}</picker></view>
+      </view>
+
+      <view class='weui-cell weui-cell_access' hover-class='weui-cell_active'>
+        <view class='weui-cell__hd'>
+         <text>定价（元/ 小时）</text>
+        </view>
+        <view class='weui-cell__bd '>
+          <input
+            type='digit'
+            placeholder='请输入'
+            class='text'
+            placeholder-style='color:#9e9e9e'
+            value='{{recruit.hourlyPay}}'
+            bindinput='listenerHourlyPay'
+            />
+        </view>
+        <view class='weui-cell__ft weui-cell__ft_in-access'></view>
+      </view>
+    </view>
+  </view>
+  <view class='selectedCompany'>
+     <view class='selected'>
+       指定人力公司
+       <icon class='weui-cell__ft weui-cell__ft_in-access'/>
+       <text class='selectNum' bindtap='showModal'>已选{{selectHrCompanies.length}}家</text>
+     </view>
+
+  <repeat for="{{selectHrCompanies}}" key="_id" index="index" item="item">
+    <assignHr :item="item"></assignHr>
+  </repeat>
+
+   </view>
+
+
+  <button class='gloomyBtn' wx:if="{{!releaseReady}}" >发布</button>
+  <button class='btn' wx:if="{{releaseReady}}" bindtap='release'>发布</button>
+
+      <!--弹窗-->
+      <view class='drawer_screen' wx:if='{{showModalStatus}}'>
+        <view class='drawer_box'>
+          <view class='drawer_title'>人力公司筛选</view>
+            <view class='drawer_content'>
+            <checkbox-group bindchange='checkboxChange'>
+            <label class='checkbox' wx:for='{{hrcompanies}}'  wx:for-item='item'  wx:key='rowId'>
+             {{item.name}} <checkbox value='{{item.id}}'  />
+            </label>
+            </checkbox-group>
+        </view>
+        <button class='sureBtn' bindtap='sureModal' >确定</button>
+        </view>
+      </view>
+
+
+</template>
+<script>
+    import wepy from 'wepy'
+    import moment from 'moment'
+    import {getCompanyId} from '../util/userInfo'
+    import {fetchTaskType, fetchHrcompanies, releaseTasks} from '../actions/hotelAction'
+    import assignHr from '../components/assignHr'
+    export default class recruitDetail extends wepy.page {
+      config = {
+        navigationBarTitleText: '发布招聘'
+      };
+      data = {
+        releaseReady: false,
+        showModalStatus: false,
+        hrcompanies: [],
+        selectHrCompanies: [],
+        taskTypeList: [],
+        allTaskTypes: [],
+        workers: 0,
+        code: 0,
+        recruit: {
+          fromDate: '',
+          hotelId: 0,
+          hourlyPay: '',
+          hrCompanySet: [],
+          taskContent: '',
+          taskTypeCode: '',
+          taskTypeText: '',
+          toDate: ''
+        },
+        fromTime: '',
+        toTime: '',
+        fromDate: '',
+        toDate: ''
+      };
+      components = {
+        assignHr: assignHr
+      };
+      methods = {
+        bindPickerChange: function(e) {
+          this.code = e.detail.value
+          var taskTypeName = this.taskTypeList[e.detail.value]
+          var taskType = this.allTaskTypes.find(item => item.text === taskTypeName)
+          this.recruit.taskTypeCode = taskType.code
+          this.recruit.taskTypeText = taskType.text
+        },
+        listenerTaskContentChange: function (e) {
+          if (e.detail.value.length > 2) {
+            this.recruit.taskContent = e.detail.value
+            this.releaseReady = true
+          } else {
+            this.releaseReady = false
+          }
+          this.$apply()
+        },
+        listenerHourlyPay: function (e) {
+          this.recruit.hourlyPay = e.detail.value
+        },
+        showModal: function() {
+          this.showModalStatus = true
+        },
+        sureModal: function () {
+          this.showModalStatus = false
+        },
+        checkboxChange: function(e) {
+          var that = this
+          var selectedCompanyIds = e.detail.value
+          var selectedCompanies = []
+          selectedCompanyIds.forEach((selectedCompanyId) => {
+//            console.log('current companyId：', selectedCompanyId)
+            var curCompany = that.hrcompanies.find(company => company.id === selectedCompanyId)
+            selectedCompanies.push({
+              hrCompanyId: curCompany.id,
+              hrCompanyName: curCompany.name,
+              needWorkers: 1
+            })
+          })
+          if (that.selectHrCompanies.length === 0) {
+            that.selectHrCompanies = selectedCompanies
+          } else {
+            let filterHrCompany = []
+            for (let i = 0; i < selectedCompanies.length; i++) {
+              let currenthr = selectedCompanies[i].hrCompanyId
+              let havehotel = false
+              for (let j = 0; j < that.selectHrCompanies.length; j++) {
+                if (that.selectHrCompanies[j].hrCompanyId === currenthr) {
+                  havehotel = true
+                }
+              }
+              if (!havehotel) {
+                filterHrCompany.push(selectedCompanies[i])
+              }
+            }
+            that.selectHrCompanies = that.selectHrCompanies.concat(filterHrCompany)
+          }
+          that.$apply()
+//          console.log('checkbox this.selectHrCompanies：', this.selectHrCompanies)
+        },
+        release: function () {
+          this.recruit.hrCompanySet = this.selectHrCompanies
+          if (this.chekckData()) {
+//          console.log('this.recruit.toDate', this.recruit.toDate)
+            var recruit = this.recruit
+            console.log('recruit', recruit)
+            releaseTasks(recruit).then((res) => {
+              var releasedTask = res.data
+              if (res.success) {
+                wx.showModal({
+                  title: '任务发布成功',
+                  content: res.message,
+                  showCancel: false,
+                  success: function(res) {
+                    if (res.confirm) {
+                      wepy.$instance.globalData.currentTask = releasedTask
+                      wx.redirectTo({
+                        url: 'recruitDetails?taskId=' + releasedTask.id
+                      })
+                    }
+                  }
+                })
+              } else {
+                wx.showModal({
+                  title: '任务发布失败',
+                  content: res.message,
+                  showCancel: false
+                })
+              }
+//              var info = data
+//              console.log('info', info)
+//              wx.switchTab({
+//                url: 'home'
+//              })
+//              this.$apply()
+            })
+          }
+        },
+        bindFromDateChange: function (e) {
+          console.log('fromDate携带值为', e.detail.value)
+          this.fromDate = e.detail.value
+          if (moment(this.toDate).isBefore(moment(this.fromDate))) {
+            this.toDate = this.fromDate
+            this.recruit.toDate = moment(this.toDate + ' ' + this.toTime)
+          }
+          this.recruit.fromDate = moment(this.fromDate + ' ' + this.fromTime)
+          this.$apply()
+        },
+        bindtoDateChange: function (e) {
+//          console.log('toDate携带值为', e.detail.value)
+          this.toDate = e.detail.value
+          if (moment(this.fromDate).isAfter(moment(this.toDate))) {
+            this.fromDate = this.toDate
+            this.recruit.fromDate = moment(this.fromDate + ' ' + this.fromTime)
+          }
+          this.recruit.toDate = moment(this.toDate + ' ' + this.toTime)
+        },
+        bindFromTimeChange: function(e) {
+          console.log('picker发送选择改变，携带值为', e.detail.value)
+          this.fromTime = e.detail.value
+          this.recruit.fromDate = moment(this.fromDate + ' ' + this.fromTime)
+        },
+        bindToTimeChange: function(e) {
+          console.log('picker发送选择改变，携带值为', e.detail.value)
+          this.toTime = e.detail.value
+          this.recruit.toDate = moment(this.toDate + ' ' + this.toTime)
+        }
+      };
+      events = {
+        'deleteSelectHrCompany': (hrCompany, $event) => {
+          var that = this
+          var curCompany = that.selectHrCompanies.find(company => company.hrCompanyId === hrCompany)
+          var index = that.selectHrCompanies.indexOf(curCompany)
+          that.selectHrCompanies.splice(index, 1)
+          that.$apply()
+        }
+      }
+      getHrcompanies() {
+        var that = this
+        fetchHrcompanies(this.recruit.hotelId).then((data) => {
+          that.hrcompanies = data.data.data.filter(hr => hr.status === 1)
+          that.$apply()
+          console.log('showModal that.hrcompanies', this.hrcompanies)
+        })
+      }
+      getTaskType() {
+        var that = this
+        fetchTaskType().then((data) => {
+          that.allTaskTypes = data.data.data
+          for (var i = 0; i < that.allTaskTypes.length; i++) {
+            var item = that.allTaskTypes[i]
+            that.taskTypeList.push(item.text)
+          }
+          if (that.allTaskTypes.length > 0) {
+            that.recruit.taskTypeCode = that.allTaskTypes[0].code
+            that.recruit.taskTypeText = that.allTaskTypes[0].text
+          }
+          that.$apply()
+        })
+      }
+      chekckData() {
+        if (moment(new Date(this.recruit.fromDate)).isBefore(new Date())) {
+          wx.showModal({
+            title: '提示',
+            content: '任务开始日期不能早于现在！',
+            showCancel: false
+          })
+          return false
+        }
+
+        if (this.recruit.hourlyPay <= 0) {
+          wx.showModal({
+            title: '提示',
+            content: '请设定任务价格！',
+            showCancel: false
+          })
+          return false
+        }
+
+        if (this.recruit.hrCompanySet.length <= 0) {
+          wx.showModal({
+            title: '提示',
+            content: '请至少选择一家人力公司！',
+            showCancel: false
+          })
+          return false
+        } else {
+          this.recruit.hrCompanySet.forEach(hr => {
+            console.log('hr info:', hr)
+          })
+        }
+        return true
+      }
+      watch = {
+        recruit (newValue, oldValue) {
+          console.log(`fromDate value: ${moment(oldValue.fromDate).format('YYYY-MM-DD HH:mm')} -> ${moment(newValue.fromDate).format('YYYY-MM-DD HH:mm')}`)
+        }
+      }
+      onLoad() {
+        this.recruit.hotelId = getCompanyId()
+        console.log('this.recruit.hotelId', this.recruit.hotelId)
+        this.fromDate = moment().format('YYYY-MM-DD')
+        this.fromTime = moment().add(10, 'm').format('HH:mm')
+        this.recruit.fromDate = moment(this.fromDate + ' ' + this.fromTime)
+
+        this.toDate = moment().format('YYYY-MM-DD')
+        this.toTime = moment().add(4, 'hours').format('HH:mm')
+        this.recruit.toDate = moment(this.toDate + ' ' + this.toTime)
+
+        this.$apply()
+        this.getTaskType()
+        this.getHrcompanies()
+      }
+      onShow() {
+      }
+    }
+</script>

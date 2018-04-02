@@ -1,0 +1,431 @@
+<style lang="less">
+  .hotelwrap{
+    text-align: center;
+  }
+  .hotelwrap .item{
+    margin-top:50px;
+    margin-bottom:8px;
+  }
+  .default{
+    text-align:center;
+    flex:1;
+    color:#878787;
+    font-size:28rpx;
+    line-height: 100rpx;
+  }
+  .summa{
+    background-color:#fff;
+    width:84%;
+    margin:30rpx auto;
+    padding:60rpx 5%;
+    border-radius:20rpx;
+    display:flex;
+    flex-direction:row;
+  }
+  .inline{
+    display: inline-block;
+  }
+  .hotelwrap .text{
+    font-size:26rpx;
+    text-align:left;
+    margin-top:6px;
+    font-weight:600;
+    flex:1;
+  }
+  .num{
+    color: #1fbfb7;
+    font-size:43rpx;
+    font-weight: bold;
+    text-align: right;
+    flex:1;
+  }
+  .num text{
+    font-size:25rpx;
+  }
+  .person{
+    padding:30rpx 13rpx;
+    background-color:#fff;
+    text-align:left;
+    border-bottom:1rpx solid #e1e1e1;
+  }
+  .head{
+    width:90rpx;
+    height:90rpx;
+    border-radius:50%;
+    margin-right:25rpx;
+    vertical-align:top;
+  }
+  .sex{
+    width: 19rpx;
+    height: 26rpx;
+    margin-left: 10rpx;
+  }
+  .sexm{
+    width: 25rpx;
+    height: 25rpx;
+    margin-left: 10rpx;
+  }
+  .general{
+    color: #aaaaaa;
+    font-size:24rpx;
+    text-align: left;
+    margin-bottom: 30rpx;
+    width: 100%;
+  }
+  .gnrl{
+    margin-bottom: 0;
+  }
+  .name{
+    color:#121212;
+    font-size:28rpx;
+    text-align:left;
+    line-height:35rpx;
+  }
+  .swiper-tab {
+    width: 100%;
+    line-height: 80rpx;
+    background-color:white;
+  }
+  .swiper-tab-list {
+    font-size: 30rpx;
+    display: inline-block;
+    width: 25%;
+    color: #777;
+    border-bottom: 0rpx;
+  }
+  .on {
+    color: #0ec3bc;
+    border-bottom: 2rpx solid #0ec3bc;
+  }
+
+  .swiper-box {
+    display: block;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+  }
+  swiper{
+    height: 1000rpx!important;
+  }
+  .hotelwrap .list{
+    background: #fff;
+    border-radius: 15rpx;
+    margin:20rpx 22rpx;
+    padding:39rpx 30rpx 10rpx 30rpx;
+    position: relative;
+    text-align: left;
+  }
+  .recruitClass{
+    font-size:33rpx;
+    color:#111111;
+    margin-bottom:30rpx;
+  }
+  .orderNumber{
+    font-size:26rpx;
+    float:right;
+    color: #a5a5a5;
+  }
+  .green{
+    color:#10c4b9;
+  }
+  .red{
+    color: #e91a2a;
+  }
+  .time, .personPrice, .address{
+    font-size:26rpx;
+    color:#898989;
+    padding-bottom:25rpx;
+  }
+  .time icon{
+    margin-right: 20rpx;
+  }
+  .iconpiont{
+    width:22rpx;
+    height:22rpx;
+    border-radius: 50%;
+    background:#ffa301;
+    margin-right:20rpx;
+    display:inline-block;
+  }
+  .address .iconpiont{
+    background: #fc7e94;
+  }
+
+  .without{
+    color:#ff0305;
+    float: right;
+    font-size:26rpx;
+  }
+  .release{
+    width:130rpx;
+    height:130rpx;
+    position: absolute;
+    right:2rpx;
+    top:100rpx;
+  }
+  .hotelwrap .swiper-tab-list{
+    width: 25%;
+  }
+  .money{
+    background-color: #fff;
+    margin:20rpx 0;
+    border: 1rpx solid #eee;
+    padding-top: 20rpx;
+  }
+  .money .text {
+    margin-bottom: 25rpx;
+  }
+  .inline{
+    display: inline-block;
+  }
+  .money .inline{
+    width: 49%;
+  }
+  .money .inline view{
+    text-align: center;
+    width: 100%;
+  }
+  .money .textblack{
+    color: #121212;
+    font-weight: bold;
+    font-size: 23rpx;
+  }
+  .boerderRight{
+    border-right: 1rpx solid #eee;
+  }
+  .money .time{
+    color: #1fbfb7;
+    font-size: 35rpx;
+    font-weight: bold;
+    margin-left: 5rpx;
+    margin-right: 3rpx;
+    padding: 0;
+  }
+  .money .red{
+    color: #f76280;
+    font-size: 35rpx;
+    font-weight: bold;
+  }
+</style>
+
+<template>
+  <view class="hotelwrap">
+
+    <view class="swiper-tab">
+      <view class="swiper-tab-list {{currentTab === '0' ? 'on' : ''}}" data-current="0" bindtap="tabNav">全部</view>
+      <view class="swiper-tab-list {{currentTab === '1' ? 'on' : ''}}" data-current="1" bindtap="tabNav">未结算</view>
+      <view class="swiper-tab-list {{currentTab === '2' ? 'on' : ''}}" data-current="2" bindtap="tabNav">结算中</view>
+      <view class="swiper-tab-list {{currentTab === '3' ? 'on' : ''}}" data-current="3" bindtap="tabNav">已结算</view>
+    </view>
+
+    <view>
+      <view wx:if="{{currentTab === '0'}}">
+        <view class="item">
+
+          <block  wx:for="{{hotelTasklist}}" wx:for-item="item"  wx:key="{{item.id}}">
+
+            <view class="list" bindtap="gotoDetail"  data-taskid="{{item.id}}">
+              <view class="recruitClass">{{item.taskTypeText}}
+                <text class="orderNumber red" wx:if="{{item.payStatus === '未结算'}}">{{item.payStatus}}</text>
+                <text class="orderNumber green" wx:if="{{item.payStatus === '结算中'}}">{{item.payStatus}}</text>
+                <text class="orderNumber" wx:if="{{item.payStatus === '已结算'}}">{{item.payStatus}}</text>
+              </view>
+              <view>
+                <view class="time"><icon type="waiting" size="12" color="#13c0c4"/>{{item.fromDate}} - {{item.toDate}}</view>
+                <view class="personPrice"><view class="iconpiont"></view>人数: {{item.needWorkers}} | 定价: {{item.hourlyPay}}元/小时</view>
+                <view class="address"><view class="iconpiont"></view>应付款：{{item.shouldPayMoney}}元</view>
+                <view class="money">
+                  <view class="inline boerderRight">
+                    <view class="time">{{item.havePayMoney}}</view>
+                    <view class="text textblack">已结款（元）</view>
+                  </view>
+                  <view class="inline">
+                    <view class="red">{{item.waitPayMoney}}</view>
+                    <view class="text textblack">未结款（元）</view>
+                  </view>
+                </view>
+              </view>
+            </view>
+
+          </block>
+
+        </view>
+      </view>
+
+      <view wx:if="{{currentTab === '1'}}">
+        <view class="item">
+
+          <block  wx:for="{{hotelTasklist}}" wx:for-item="item"  wx:key="{{item.id}}">
+
+            <view class="list" bindtap="gotoDetail"  data-taskid="{{item.id}}">
+              <view class="recruitClass">{{item.taskTypeText}}
+                <text class="orderNumber red">{{item.payStatus}}</text>
+              </view>
+              <view>
+                <view class="time"><icon type="waiting" size="12" color="#13c0c4"/>{{item.fromDate}} - {{item.toDate}}</view>
+                <view class="personPrice"><view class="iconpiont"></view>人数: {{item.needWorkers}} | 定价: {{item.hourlyPay}}元/小时</view>
+                <view class="address"><view class="iconpiont"></view>应付款：{{item.shouldPayMoney}}元</view>
+                <view class="money">
+                  <view class="inline boerderRight">
+                    <view class="time">{{item.havePayMoney}}</view>
+                    <view class="text textblack">已结款（元）</view>
+                  </view>
+                  <view class="inline">
+                    <view class="red">{{item.waitPayMoney}}</view>
+                    <view class="text textblack">未结款（元）</view>
+                  </view>
+                </view>
+              </view>
+            </view>
+
+          </block>
+
+        </view>
+      </view>
+
+      <view wx:if="{{currentTab === '2'}}">
+        <view class="item">
+
+          <block  wx:for="{{hotelTasklist}}" wx:for-item="item"  wx:key="{{item.id}}">
+
+            <view class="list" bindtap="gotoDetail"  data-taskid="{{item.id}}">
+              <view class="recruitClass">{{item.taskTypeText}}
+                <text class="orderNumber green">{{item.payStatus}}</text>
+              </view>
+              <view>
+                <view class="time"><icon type="waiting" size="12" color="#13c0c4"/>{{item.fromDate}} - {{item.toDate}}</view>
+                <view class="personPrice"><view class="iconpiont"></view>人数: {{item.needWorkers}} | 定价: {{item.hourlyPay}}元/小时</view>
+                <view class="address"><view class="iconpiont"></view>应付款：{{item.shouldPayMoney}}元</view>
+                <view class="money">
+                  <view class="inline boerderRight">
+                    <view class="time">{{item.havePayMoney}}</view>
+                    <view class="text textblack">已结款（元）</view>
+                  </view>
+                  <view class="inline">
+                    <view class="red">{{item.waitPayMoney}}</view>
+                    <view class="text textblack">未结款（元）</view>
+                  </view>
+                </view>
+              </view>
+            </view>
+
+          </block>
+
+        </view>
+      </view>
+
+      <view wx:if="{{currentTab === '3'}}">
+        <view class="item">
+          <block  wx:for="{{hotelTasklist}}" wx:for-item="item"  wx:key="{{item.id}}">
+
+            <view class="list" bindtap="gotoDetail"  data-taskid="{{item.id}}">
+              <view class="recruitClass">{{item.taskTypeText}}
+                <text class="orderNumber green" wx:if="{{item.payStatus === '结算中'}}">{{item.payStatus}}</text>
+                <text class="orderNumber" wx:if="{{item.payStatus === '已结算'}}">{{item.payStatus}}</text>
+              </view>
+              <view>
+                <view class="time"><icon type="waiting" size="12" color="#13c0c4"/>{{item.fromDate}} - {{item.toDate}}</view>
+                <view class="personPrice"><view class="iconpiont"></view>人数: {{item.needWorkers}} | 定价: {{item.hourlyPay}}元/小时</view>
+                <view class="address"><view class="iconpiont"></view>应付款：{{item.shouldPayMoney}}元</view>
+                <view class="money">
+                  <view class="inline boerderRight">
+                    <view class="time">{{item.havePayMoney}}</view>
+                    <view class="text textblack">已结款（元）</view>
+                  </view>
+                  <view class="inline">
+                    <view class="red">{{item.waitPayMoney}}</view>
+                    <view class="text textblack">未结款（元）</view>
+                  </view>
+                </view>
+              </view>
+            </view>
+
+          </block>
+        </view>
+      </view>
+    </view>
+
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import moment from 'moment'
+  import {searchHotelTasks} from '../actions/hotelAction'
+  import {getCompanyId} from '../util/userInfo'
+  export default class hotelcheckout extends wepy.component {
+    props = {}
+    data ={
+      hotelQueryObj: {
+        paginator: {
+          page: 1,
+          pageSize: 100
+        },
+        selector: {}
+      },
+      hotelTasklist: [],
+      isShow: true,
+      currentTab: '0',
+      hotelId: ''
+    }
+    methods = {
+      gotoDetail: function(event) {
+        var taskId = event.currentTarget.dataset.taskid
+        console.log('taskId', taskId)
+        wx.navigateTo({
+          url: 'checkoutDetails?taskId=' + taskId
+        })
+      },
+      tabNav: function (e) {
+        if (this.currentTab === e.target.dataset.current) {
+          return false
+        } else {
+          this.currentTab = e.target.dataset.current
+          this.getHotelTasks()
+        }
+      }
+    }
+    getHotelTasks() {
+      var that = this
+      wx.showLoading({title: '加载中'})
+      if (this.currentTab === '0') {
+        this.hotelQueryObj.selector = {hotelId: this.hotelId, payStatus: 0}
+        that.$apply()
+      } else if (this.currentTab === '1') {
+        this.hotelQueryObj.selector = {hotelId: this.hotelId, payStatus: 1}
+        that.$apply()
+      } else if (this.currentTab === '2') {
+        this.hotelQueryObj.selector = {hotelId: this.hotelId, payStatus: 2}
+        that.$apply()
+      } else if (this.currentTab === '3') {
+        this.hotelQueryObj.selector = {hotelId: this.hotelId, payStatus: 3}
+        that.$apply()
+      }
+      searchHotelTasks(this.hotelQueryObj).then((res) => {
+        that.hotelTasklist = res.data.data.list
+        for (var i = 0; i < that.hotelTasklist.length; i++) {
+          that.hotelTasklist[i].fromDate = moment(new Date(that.hotelTasklist[i].fromDate)).format('YYYY-MM-DD HH:mm')
+          that.hotelTasklist[i].toDate = moment(new Date(that.hotelTasklist[i].toDate)).format('YYYY-MM-DD HH:mm')
+        }
+        that.$apply()
+        console.log('hotelTasklist', that.hotelTasklist)
+        wx.hideLoading()
+      })
+    }
+    watch = {}
+    onLoad () {
+      var userInfo = wx.getStorageSync('keyUserInfo')
+      this.userType = userInfo.userType
+      switch (this.userType) {
+        case 'worker':
+          break
+        case 'hr':
+          break
+        case 'hotel':
+          this.hotelId = getCompanyId()
+          console.log('this.hotelId', this.hotelId)
+          this.getHotelTasks()
+          break
+      }
+    }
+  }
+</script>

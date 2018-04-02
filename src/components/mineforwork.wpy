@@ -1,0 +1,288 @@
+<style lang="less">
+  .workwrap{
+    text-align: center;
+  }
+  page{
+    background-color: #fff;
+  }
+  .txt{
+    color:#121212;
+    font-size:32rpx;
+    text-align:left;
+    width:90%;
+    padding: 20rpx 25rpx;
+    background: #f8f8f8;
+    margin: 10% auto 50rpx auto;
+  }
+  .left{
+    margin-top: 20%;
+  }
+  .highlight{
+    color: #0ec3bc;
+  }
+  .general{
+    color: #aaaaaa;
+    margin-right: 10rpx;
+    font-size: 28rpx;
+    text-align: center;
+  }
+  .inline{
+    display: inline-block;
+  }
+  .leftIcon{
+    margin-right: 25rpx;
+    vertical-align: middle;
+    width:40rpx;
+    height:30rpx;
+  }
+  .lefticon{
+    margin-right: 25rpx;
+    vertical-align: middle;
+    width:40rpx;
+    height:40rpx;
+  }
+  .icon {
+    width: 74rpx;
+    height: 74rpx;
+    margin: 0 auto;
+    display: block;
+    margin-top: 28rpx;
+  }
+  .text {
+    color:#121212;
+    font-size:30rpx;
+    text-align:left;
+  }
+  .name{
+    color:#121212;
+    font-size:30rpx;
+    font-weight: 600;
+    text-align:left;
+  }
+  .workwrap .weui-cell{
+    border-bottom:none;
+    width:90%;
+    margin-left:auto;
+    margin-right:auto;
+    padding:30rpx 10rpx;
+  }
+  .weui-cells{
+    margin-top:27%;
+  }
+  .green{
+    background-color: #0ec1bb;
+    height: 4rem;
+  }
+  .head{
+    width:110rpx;
+    height:110rpx;
+    border-radius:50%;
+    margin-right:30rpx;
+  }
+  .user{
+    border-radius:20rpx;
+    padding:40rpx 28rpx;
+    position:absolute;
+    top:2%;
+    left:3%;
+    width:87%;
+    background-color:#fff;
+    text-align:left;
+    box-shadow:0 1rpx 25rpx #dcf6f5;
+  }
+  .sex{
+    width: 20rpx;
+    height: 20rpx;
+    margin-left: 10rpx;
+  }
+  .woman{
+    width:18rpx;
+    height: 24rpx;
+    margin-left: 10rpx;
+  }
+  .money{
+    margin-top: 20rpx;
+  }
+  .money .inline{
+    width: 49%;
+  }
+  .money .inline view{
+    text-align: center;
+    width: 100%;
+  }
+  .red{
+    color: #f76280;
+    font-size: 35rpx;
+    font-weight: bold;
+  }
+  .green{
+    color: #1fbfb7;
+  }
+  .boerderRight{
+    border-right: 1rpx solid #eee;
+  }
+  .gnl{
+    font-size: 24rpx;
+  }
+  .time{
+    color: #1fbfb7;
+    font-weight: bold;
+  }
+  .logout{
+    color:#ff0004;
+    font-size:29rpx;
+    background-color:#fff;
+    line-height:90rpx;
+    margin-top:20rpx;
+  }
+</style>
+
+<template>
+  <view class="workwrap">
+    <view class="green"></view>
+    <view class="user">
+      <view bindtap="gotoUserData">
+        <image src="{{wxUserInfo.avatarUrl}}" class="head"></image>
+        <view class="leftwrap inline">
+
+          <view class="name">{{meInfo.nickname}}
+            <image src="../images/my/man.png" class="sex"  wx:if="{{meInfo.sex === 'MALE'}}">></image>
+            <image src="../images/my/woman.png" class="woman"  wx:if="{{meInfo.sex === 'FEMALE'}}">></image>
+          </view>
+          <text class="general">{{meInfo.mobile}}</text>
+        </view>
+      </view>
+      <view class="money" bindtap="gotoCheckout">
+        <view class="inline boerderRight">
+          <view class="time">{{amount.settledAmount}}</view>
+          <view class="general gnl">已结款（元）</view>
+        </view>
+        <view class="inline">
+          <view class="red">{{amount.unsettledAmount}}</view>
+          <view class="general gnl">未结款（元）</view>
+        </view>
+      </view>
+
+    </view>
+    <view class="weui-cells">
+      <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" bindtap="gotoBindCompany" >
+        <view class="weui-cell__hd">
+          <image src="../images/my/bind.png" class="leftIcon"></image>
+        </view>
+        <view class="weui-cell__bd text">公司绑定</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+      </view>
+
+      <view class="weui-cell weui-cell_access" hover-class="weui-cell_active"  bindtap="gotoMesCenter">
+        <view class="weui-cell__hd">
+          <image src="../images/my/msg.png" class="lefticon"></image>
+        </view>
+        <view class="weui-cell__bd text">消息中心</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+      </view>
+
+      <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" bindtap="gotoFeedback" >
+        <view class="weui-cell__hd">
+          <image src="../images/my/feedback.png" class="lefticon"></image>
+        </view>
+        <view class="weui-cell__bd text">意见反馈</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+      </view>
+
+      <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" bindtap="gotoAboutUs">
+        <view class="weui-cell__hd">
+          <image src="../images/my/aboutus.png" class="lefticon"></image>
+        </view>
+        <view class="weui-cell__bd text">关于我们</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+      </view>
+    </view>
+
+    <view class="left">
+      <view  class="general">客服电话：010-4568-3255</view>
+    </view>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import {getMe, getBalance} from '../actions/workerAction'
+  import {getWxUserInfo, getUserType} from '../util/userInfo'
+  export default class mineforwork extends wepy.component {
+    props = {}
+    data ={
+      wxUserInfo: {},
+      meInfo: {},
+      amount: {}
+    }
+    methods = {
+      gotoUserData: function () {
+        wx.navigateTo({
+          url: 'userData'
+        })
+      },
+      gotoCheckout: function () {
+        wx.switchTab({
+          url: 'checkout'
+        })
+      },
+      gotoBindCompany: function() {
+        wx.navigateTo({
+          url: 'workersBindHrs'
+        })
+      },
+      gotoMesCenter: function () {
+        wx.navigateTo({
+          url: 'msgCenter'
+        })
+      },
+      gotoFeedback: function() {
+        wx.navigateTo({
+          url: 'feedback'
+        })
+      },
+      gotoAboutUs: function() {
+        wx.navigateTo({
+          url: 'aboutUs'
+        })
+      }
+    }
+    getMeInfo() {
+      var that = this
+      wx.showLoading({title: '加载中'})
+      getMe().then((data) => {
+        that.meInfo = data.data.data
+        wepy.$instance.globalData.meInfo = that.meInfo
+        that.$apply()
+        wx.hideLoading()
+        console.log('this.meInfo', that.meInfo)
+      })
+    }
+    getBalance() {
+      var that = this
+      getBalance().then((data) => {
+        that.amount = data.data.data
+        that.$apply()
+        console.log('getBalance', that.amount)
+      })
+    }
+    watch = {}
+    onLoad () {
+      var that = this
+      var userType = getUserType()
+      that.wxUserInfo = getWxUserInfo()
+      console.log('this.wxUserInfo', this.wxUserInfo)
+      switch (userType) {
+        case 'hotel':
+          break
+        case 'worker':
+          this.getBalance()
+          that.$apply()
+          break
+        case 'hr':
+          break
+      }
+      that.getMeInfo()
+      that.$apply()
+    }
+  }
+</script>

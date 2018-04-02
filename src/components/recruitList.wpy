@@ -1,0 +1,128 @@
+<style lang="less">
+  page{
+    background-color: #f1f1f1;
+  }
+  .releaseList{
+    background: #fff;
+    border-radius: 15rpx;
+    margin:20rpx 22rpx;
+    padding:39rpx 30rpx 0;
+    position: relative;
+  }
+  .recruitClass{
+    font-size:33rpx;
+    color:#111111;
+    margin-bottom:30rpx;
+  }
+  .time icon{
+    margin-right: 20rpx;
+    vertical-align:text-bottom
+  }
+  .iconpiont{
+    width:22rpx;
+    height:22rpx;
+    border-radius: 50%;
+    background:#ffa301;
+    margin-right:20rpx;
+    display:inline-block;
+  }
+  .address .iconpiont{
+    background: #fc7e94;
+  }
+  .company{
+    font-size:23rpx;
+    color:#888;
+    line-height: 80rpx;
+    border-top: 1rpx solid #e1e1e1;
+  }
+  .without{
+    color:#faa709;
+    float: right;
+    font-size:26rpx;
+  }
+  .overtime{
+    color:#f9748f;
+    float: right;
+    font-size:26rpx;
+  }
+  .orderNumber{
+    font-size:26rpx;
+    color:#10c4b9;
+    float:right;
+  }
+  .release{
+    width:130rpx;
+    height:130rpx;
+    position: fixed;
+    right:5%;
+    top:80%;
+    z-index:999;
+    box-shadow:0 0 40rpx #fab8c6;
+    border-radius:50%;
+  }
+  .releaseList .time, .releaseList .personPrice,.releaseList .address{
+    font-size:26rpx!important;
+    color:#898989;
+    padding-bottom:25rpx;
+    font-weight: normal;
+  }
+
+</style>
+<template>
+  <image class="release" src="../images/manpower/release.png" mode="scaleToFill"  bindtap="gotoReleaseRecruit"></image>
+
+  <block class="item" wx:for="{{tasklist}}" wx:for-item="item"  wx:key="{{item.id}}">
+  <view class="releaseList" bindtap="gotoRecruitDetails({{item}})" data-taskid="{{item.id}}">
+    <view class="recruitClass">{{item.taskTypeText}}
+      <text class="overtime" wx:if="{{item.isFinished}}">派单已超时</text>
+      <text class="without" wx:if="{{item.confirmedWorkers === 0 && !item.isFinished}}">暂无人接单</text>
+      <text class="orderNumber" wx:if="{{item.confirmedWorkers > 0 && !item.isFinished}}">{{item.confirmedWorkers}}人已接单</text>
+    </view>
+    <view>
+      <view class="time"><icon type="waiting" size="12" color="#13c0c4"/>{{item.fromDate}} - {{item.toDate}}</view>
+      <view class="personPrice"><view class="iconpiont"></view>人数: {{item.needWorkers}} | 定价: {{item.hourlyPay}}元/小时</view>
+      <view class="address"><view class="iconpiont"></view>{{item.taskContent}}</view>
+    </view>
+  </view>
+  </block>
+
+
+</template>
+<script>
+  import wepy from 'wepy'
+
+  export default class recruitList extends wepy.component {
+    props = {
+      tasklist: []
+    }
+    data = {
+      userType: '',
+      hotelId: '',
+      queryObj: {
+        paginator: {
+          page: 1,
+          pageSize: 10
+        },
+        selector: {}
+      }
+    }
+    events = {}
+    methods = {
+      gotoRecruitDetails: function (task) {
+        var taskId = task.id
+        wepy.$instance.globalData.currentTask = task
+        console.log('taskId', taskId)
+        wx.navigateTo({
+          url: 'recruitDetails?taskId=' + taskId
+        })
+      },
+      gotoReleaseRecruit: function () {
+        wx.navigateTo({
+          url: 'releaseRecruit'
+        })
+      }
+    }
+    onLoad () {}
+    onShow() {}
+  }
+</script>

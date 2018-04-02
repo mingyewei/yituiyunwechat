@@ -1,0 +1,204 @@
+<style lang="less">
+  .wrap{
+    text-align: center;
+    margin-bottom:100rpx;
+  }
+.title{
+  font-size:35rpx;
+  display:block;
+  font-weight: 600;
+  background-color:#fff;
+  padding: 40rpx 0;
+}
+.stitle{
+  font-size:30rpx;
+  display:block;
+  font-weight: 600;
+  background-color:#fff;
+  padding: 20rpx 0 20rpx 20rpx;
+  text-align: left;
+
+}
+
+  .text {
+    color:#858585;
+    font-size:28rpx;
+    text-align:right;
+  }
+  .name{
+    color:#333;
+    font-size:28rpx;
+    text-align:right;
+  }
+  .sex{
+    color:#858585;
+    font-size:28rpx;
+    text-align:center;
+  }
+  .weui-cells{
+    margin-top: 0!important;
+    background-color:#fff;
+    padding:15rpx 10rpx!important;
+    margin-bottom:15rpx;
+  }
+  .lefticon{
+    margin-right: 25rpx;
+    vertical-align: middle;
+    width:45rpx;
+    height:45rpx;
+  }
+  .info{
+    font-size: 22rpx;
+    color: #858585;
+    margin-bottom: 20rpx;
+    text-align: left;
+    margin-top:-20rpx;
+    margin-left:20rpx;
+  }
+  .info text{
+    margin-left: 30rpx;
+  }
+  .add{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    background-color: #f5f5f5;
+    color: #858585;
+    width: 100%;
+    text-align: center;
+    font-size: 30rpx;
+    padding:25rpx 0;
+  }
+  .reason{
+    background-color: #f8f8f8;
+    color: #858585;
+    padding: 10rpx;
+    text-align: left;
+    position: absolute;
+    bottom: 10rpx;
+    width: 93%;
+    left:25rpx;
+  }
+ .refuse  .weui-cell{
+    padding-bottom: 90rpx;
+  }
+</style>
+
+<template lang="wxml">
+  <view class="wrap">
+
+    <view class="title">客房服务</view>
+
+    <view class="weui-cells">
+
+      <view class="weui-cell weui-cell_access"  >
+        <view class="weui-cell__hd">
+          <text>任务时间</text>
+        </view>
+        <view class="weui-cell__bd text">2018.02 9:00-18:00</view>
+      </view>
+
+      <view class="weui-cell weui-cell_access" >
+        <view class="weui-cell__hd">
+         <text>需要人数</text>
+        </view>
+        <view class="weui-cell__bd text">10</view>
+      </view>
+
+      <view class="weui-cell weui-cell_access" >
+        <view class="weui-cell__hd">
+        <text>定价（元/小时）</text>
+        </view>
+        <view class="weui-cell__bd text">20</view>
+      </view>
+
+      <view class="weui-cell weui-cell_access" >
+        <view class="weui-cell__hd">
+        <text>任务内容</text>
+        </view>
+        <view class="weui-cell__bd text">酒店1层20个客房的清理打扫工作</view>
+      </view>
+
+      <view class="weui-cell weui-cell_access" >
+        <view class="weui-cell__hd">
+        <text>酒店名称</text>
+        </view>
+        <view class="weui-cell__bd text">北京丽都皇冠假日酒店</view>
+      </view>
+
+      <view class="weui-cell weui-cell_access" >
+        <view class="weui-cell__hd">
+        <text>酒店地址</text>
+        </view>
+        <view class="weui-cell__bd text">北京市将台路6号</view>
+      </view>
+
+    </view>
+
+  <view class="weui-cells ">
+    <view class="stitle">10人已接单</view>
+  <!--循环体-->
+    <view class="weui-cell weui-cell_access" hover-class="weui-cell_active"  >
+      <view class="weui-cell__hd">
+      <image src="../images/my/head.png" class="lefticon"></image>
+      <text class="weui-cell__bd name">梁艺婷</text>
+    </view>
+    <view class="weui-cell__bd sex">女/23岁</view>
+    <view class="weui-cell__ft ">18810932234</view>
+    </view>
+
+  <!--循环体-->
+    <view class="weui-cell weui-cell_access" hover-class="weui-cell_active"  >
+    <view class="weui-cell__hd">
+      <image src="../images/my/head.png" class="lefticon"></image>
+      <text class="weui-cell__bd name">梁艺婷</text>
+    </view>
+    <view class="weui-cell__bd sex">女/23岁</view>
+    <view class="weui-cell__ft ">18810932234</view>
+    </view>
+
+  </view>
+
+
+  <view class="weui-cells refuse">
+  <view class="stitle">2人拒绝接单</view>
+  <!--循环体-->
+  <view class="weui-cell weui-cell_access" hover-class="weui-cell_active"  >
+    <view class="weui-cell__hd">
+    <image src="../images/my/head.png" class="lefticon"></image>
+    <text class="weui-cell__bd name">梁艺婷</text>
+    </view>
+    <view class="weui-cell__bd sex">女/23岁</view>
+    <view class="weui-cell__ft ">18810932234</view>
+    <view class="reason">拒绝理由：临时有事，时间冲突，不能去工作</view>
+  </view>
+
+  <!--循环体-->
+  <view class="weui-cell weui-cell_access" hover-class="weui-cell_active"  >
+  <view class="weui-cell__hd">
+  <image src="../images/my/head.png" class="lefticon"></image>
+  <text class="weui-cell__bd name">梁艺婷</text>
+  </view>
+  <view class="weui-cell__bd sex">女/23岁</view>
+  <view class="weui-cell__ft ">18810932234</view>
+  <view class="reason">拒绝理由：临时有事，时间冲突，不能去工作</view>
+  </view>
+
+  </view>
+
+
+  </view>
+  <view class="add">已派发</view>
+</template>
+<script>
+    import wepy from 'wepy'
+    export default class taskDetailsEnd extends wepy.page {
+      config = {
+        navigationBarTitleText: '任务详情'
+      };
+      data = {};
+      methods = {};
+      onLoad() {}
+      onShow() {}
+    }
+</script>

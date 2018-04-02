@@ -1,0 +1,163 @@
+<style lang="less">
+  .bindHrwrap{
+    background-color:#fff;
+    text-align: center;
+    padding-bottom:100rpx;
+  }
+  page{
+    background-color: #fff;
+  }
+  .txt{
+    color:#121212;
+    font-size:32rpx;
+    text-align:left;
+    width:90%;
+    padding: 20rpx 25rpx;
+    background: #f8f8f8;
+    margin: 10% auto 50rpx auto;
+  }
+  .left{
+    margin-top: 20%;
+  }
+  .highlight{
+    color: #0ec3bc;
+  }
+  .general{
+    color: #aaaaaa;
+    margin-right:30rpx;
+    font-size: 26rpx;
+  }
+  .inline{
+    display: inline-block;
+  }
+  .leftIcon{
+    margin-right: 25rpx;
+    vertical-align: middle;
+    width:88rpx;
+    height:88rpx;
+    border-radius: 50%;
+  }
+  .text {
+    color:#121212;
+    font-size:30rpx;
+    text-align:left;
+  }
+  .weui-cell{
+    padding:20rpx 5rpx;
+  }
+  .weui-cells{
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:2%;
+  }
+  .name{
+    margin-bottom: -10rpx;
+  }
+  .add{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    background-color: #0ec3bc;
+    color: #fff;
+    width: 100%;
+    text-align: center;
+    font-size: 30rpx;
+    padding:25rpx 0;
+  }
+  .Null {
+    text-align: center;
+    font-size: 28rpx;
+    color: #999;
+    width: 100%;
+    margin-top:30%;
+    padding: 30rpx 0;
+  }
+</style>
+
+<template lang="wxml">
+  <view class="bindHrwrap">
+    <view class="weui-cells">
+  <view  wx:if="{{hrcompanies.length === 0}}" class="Null">还未绑定哦, 快去添加几个吧~~</view>
+  <block class="item" wx:for="{{hrcompanies}}" wx:for-item="item"  wx:key="rowId">
+      <view class="weui-cell weui-cell_access">
+        <view class="weui-cell__hd">
+          <block wx:if="{{item.logo !== undefined && item.logo !== ''}}" >
+            <image src="{{item.logo}}" class="leftIcon"></image>
+          </block>
+          <block wx:if="{{item.logo === undefined || item.logo === ''}}" >
+              <image src="../images/my/default.png" class="leftIcon"></image>
+          </block>
+        </view>
+        <view class="weui-cell__bd text">
+          <view class="name">{{item.name}}</view>
+          <text class="general">负责人：{{item.leader}}</text>
+          <text class="general">手机号：{{item.leaderMobile}}</text>
+        </view>
+      </view>
+  </block>
+
+
+    </view>
+
+    <view class="add" bindtap="actioncnt">添加合作人力公司</view>
+  </view>
+</template>
+<script>
+    import wepy from 'wepy'
+    import {searchWorkerHrs} from '../actions/workerAction'
+    import {getUserId} from '../util/userInfo'
+
+    export default class workersBindHrs extends wepy.page {
+      config = {
+        navigationBarTitleText: '已绑定的人力公司'
+      };
+      data = {
+        queryObj: {
+          paginator: {
+            page: 1,
+            pageSize: 100
+          },
+          selector: {}
+        },
+        hrcompanies: {},
+        userId: ''
+      };
+      methods = {
+        actioncnt: function() {
+          wx.showActionSheet({
+            itemList: ['从人力公司库选择添加'],
+            itemColor: '#0ec3bc',
+            success: function(res) {
+              if (res.tapIndex === 0) {
+                wx.navigateTo({
+                  url: 'selectCompany'
+                })
+              }
+            }
+          })
+        }
+      };
+//      else if (res.tapIndex === 1) {
+//      wx.navigateTo({url: 'bindCompany'})
+//    }
+      getHrcompanies() {
+        var that = this
+        wx.showLoading({title: '加载中'})
+        this.queryObj.selector = {workerId: this.userId}
+        searchWorkerHrs(this.queryObj).then((data) => {
+          that.hrcompanies = data.data.data.list
+          that.$apply()
+          wx.hideLoading()
+          console.log('getHrcompanies', that.hrcompanies)
+        })
+      }
+      onLoad() {
+        this.userId = getUserId()
+        this.$apply()
+      }
+      onShow() {
+        this.getHrcompanies()
+      }
+    }
+</script>
