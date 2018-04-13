@@ -1,189 +1,222 @@
 <style lang="less">
-  .btnwrap{
+  .btnwrap {
     background-color: #fff;
     margin-bottom: 20rpx;
     height: 5rem;
   }
-  .txt{
-    color:#121212;
-    font-size:30rpx;
-    text-align:left;
-    line-height:55rpx;
-    margin-bottom:40rpx;
+
+  .txt {
+    color: #121212;
+    font-size: 30rpx;
+    text-align: left;
+    line-height: 55rpx;
+    margin-bottom: 40rpx;
   }
-  .btxt{
-    color:#121212;
-    font-size:35rpx;
-    line-height:65rpx;
+
+  .btxt {
+    color: #121212;
+    font-size: 35rpx;
+    line-height: 65rpx;
     font-weight: bold;
   }
-  .title{
-    font-size:30rpx;
-    text-align:left;
-    display:block;
+
+  .title {
+    font-size: 30rpx;
+    text-align: left;
+    display: block;
     margin-bottom: 15rpx;
     font-weight: 600;
     margin-left: 10rpx;
   }
-  .general{
+
+  .general {
     color: #aaaaaa;
-    font-size:24rpx;
+    font-size: 24rpx;
     text-align: left;
     margin-bottom: 30rpx;
     width: 100%;
   }
+
   /*.time{*/
-    /*margin-left: 10rpx;*/
-    /*font-size: 28rpx;*/
-    /*color: #aaaaaa;*/
+  /*margin-left: 10rpx;*/
+  /*font-size: 28rpx;*/
+  /*color: #aaaaaa;*/
   /*}*/
-  .head{
-    width:130rpx;
-    height:130rpx;
-    border-radius:50%;
-    margin-right:25rpx;
-    vertical-align:top;
+  .head {
+    width: 130rpx;
+    height: 130rpx;
+    border-radius: 50%;
+    margin-right: 25rpx;
+    vertical-align: top;
   }
-  .hotal{
-    padding:30rpx 15rpx 5rpx 15rpx;
-    background-color:#fff;
-    text-align:left;
+
+  .hotal {
+    padding: 30rpx 15rpx 5rpx 15rpx;
+    background-color: #fff;
+    text-align: left;
     border-top: 1rpx solid #e1e1e1;
     clear: both;
     margin-bottom: 30rpx;
   }
-  .map{
+
+  .map {
     width: 19rpx;
     height: 26rpx;
   }
-  .inline{
+
+  .inline {
     display: inline-block;
   }
+
   .text {
-    color:#858585;
-    font-size:25rpx;
-    text-align:right;
+    color: #858585;
+    font-size: 25rpx;
+    text-align: right;
   }
-  .btn{
-    display:inline-block;
-    width:35%;
-    border-radius:50rpx;
-    color:#fff;
-    text-align:center;
-    font-size:30rpx;
-    line-height:90rpx;
-    margin-top:6.5%;
+
+  .btn {
+    display: inline-block;
+    width: 35%;
+    border-radius: 50rpx;
+    color: #fff;
+    text-align: center;
+    font-size: 30rpx;
+    line-height: 90rpx;
+    margin-top: 6.5%;
   }
-  .refuse{
-    background-color:#1ea0eb;
-    box-shadow:0 10rpx 40rpx #c2e5f9;
-    margin-left:6%;
+
+  .refuse {
+    background-color: #1ea0eb;
+    box-shadow: 0 10rpx 40rpx #c2e5f9;
+    margin-left: 6%;
     float: left;
   }
-  .refuseGray{
-    background-color:#ccc;
-    margin-left:6%;
-    float: left;
-  }
-  .receiveGray{
+
+  .refuseGray {
     background-color: #ccc;
-    margin-right:6%;
+    margin-left: 6%;
+    float: left;
+  }
+
+  .receiveGray {
+    background-color: #ccc;
+    margin-right: 6%;
     float: right;
   }
-  .receive{
+
+  .receive {
     background-color: #ff6181;
-    box-shadow:0 10rpx 40rpx #ffd6de;
-    margin-right:6%;
+    box-shadow: 0 10rpx 40rpx #ffd6de;
+    margin-right: 6%;
     float: right;
   }
-  .name{
-    color:#121212;
-    font-size:30rpx;
-    text-align:left;
-    line-height:35rpx;
+
+  .name {
+    color: #121212;
+    font-size: 30rpx;
+    text-align: left;
+    line-height: 35rpx;
   }
+
   .weui-cell {
-    padding:20rpx 0!important;
+    padding: 20rpx 0 !important;
   }
-  .light{
+
+  .light {
     color: #1fbfb7;
     float: right;
     margin-right: 20rpx;
     font-size: 26rpx;
     font-weight: normal;
   }
-  .hour{
+
+  .hour {
     color: #1fbfb7;
     font-size: 24rpx;
   }
-  .tasktime{
+
+  .tasktime {
     color: #1fbfb7;
     font-size: 35rpx;
     font-weight: bold;
     margin-left: 5rpx;
     margin-right: 3rpx;
   }
-  .work{
+
+  .work {
     color: #454545;
-    font-size: 24rpx;
-    padding: 20rpx 0;
-    text-align:center;
-    width:100%;
+    font-size: 24 rpx;
+    padding: 20 rpx 0;
+    text-align: center;
+    width: 100%;
   }
-  .date{
-    color:#121212;
-    font-size:25rpx;
+
+  .date {
+    color: #121212;
+    font-size: 25rpx;
     width: 50%;
   }
-  .summa{
+
+  .summa {
     background-color: #fff;
     width: 94%;
     margin: 20rpx auto;
     padding: 35rpx 0;
     border-radius: 10rpx;
   }
-  .money{
+
+  .money {
     background-color: #fff;
     margin: 25rpx 0;
     padding: 40rpx 0;
   }
-  .summa .inline{
-    width:49%;
+
+  .summa .inline {
+    width: 49%;
   }
-  .summa .inline view{
+
+  .summa .inline view {
     text-align: center;
     width: 100%;
   }
-  .titleleft{
-    margin-left:25rpx;
+
+  .titleleft {
+    margin-left: 25rpx;
   }
-  .textblack{
+
+  .textblack {
     color: #121212;
     font-weight: bold;
     font-size: 23rpx;
   }
-  .border{
+
+  .border {
     border-left: 1rpx solid #eee;
     border-right: 1rpx solid #eee;
   }
-  .boerderRight{
+
+  .boerderRight {
     border-right: 1rpx solid #eee;
   }
-  .summaBox{
-    display:flex;
+
+  .summaBox {
+    display: flex;
     flex-direction: row;
     overflow-y: scroll;
   }
-  .flexBox{
-    flex:none;
-    width:60%;
+
+  .flexBox {
+    flex: none;
+    width: 60%;
   }
-  .summa .date{
-    color:#858585;
-    text-align:center;
-    width:100%;
-    margin-bottom:20rpx
+
+  .summa .date {
+    color: #858585;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 20rpx
   }
+
   /*弹窗*/
   /*mask*/
   .drawer_screen {
@@ -196,96 +229,110 @@
     background: rgba(0, 0, 0, 0.5);
     overflow: hidden;
   }
+
   .drawer_box {
-    overflow:hidden;
-    position:fixed;
-    top:50%;
-    left:0;
-    z-index:1001;
-    background:#FAFAFA;
-    margin:-150px 5% 0 5%;
+    overflow: hidden;
+    position: fixed;
+    top: 50%;
+    left: 0;
+    z-index: 1001;
+    background: #FAFAFA;
+    margin: -150px 5% 0 5%;
     padding-bottom: 35rpx;
-    border-radius:12px;
-    width:90%;
+    border-radius: 12px;
+    width: 90%;
   }
-  .drawer_title{
-    line-height:120rpx;
-    font-size:37rpx;
-    color:#000;
-    text-align:center;
+
+  .drawer_title {
+    line-height: 120 rpx;
+    font-size: 37 rpx;
+    color: #000;
+    text-align: center;
   }
-  .borderView{
+
+  .borderView {
     border-bottom: 1rpx solid #e1e1e1;
-    margin:0 50rpx 50rpx;
+    margin: 0 50 rpx 50rpx;
   }
-  .contentMessage{
-    font-size:29rpx;
+
+  .contentMessage {
+    font-size: 29rpx;
     text-align: left;
     padding: 0 50rpx;
-    margin-bottom:35rpx;
+    margin-bottom: 35rpx;
   }
-  .contentMessage text{
-    color:#858585;
-    float:right;
+
+  .contentMessage text {
+    color: #858585;
+    float: right;
   }
-  .contentMessage label{
-    color:#858585;
+
+  .contentMessage label {
+    color: #858585;
     margin-left: 15rpx;
   }
-  .contentMessage .radio-group{
+
+  .contentMessage .radio-group {
     display: inline-block;
-    float:right;
+    float: right;
   }
-  .info{
-    font-size:26rpx;
+
+  .info {
+    font-size: 26rpx;
     text-align: center;
     padding: 0 50rpx;
-    margin-bottom:35rpx;
-    color:#858585;
+    margin-bottom: 35rpx;
+    color: #858585;
   }
+
   .punchSuccess .info {
     text-align: left
   }
-  .info text{
-    font-size:26rpx;
-    color:#333;
-    margin-left:10rpx;
+
+  .info text {
+    font-size: 26rpx;
+    color: #333;
+    margin-left: 10rpx;
   }
-  .cancelBtn{
-    float:left;
-    width:35%;
-    margin-left:10%;
-    line-height:90rpx;
-    border-radius:45rpx;
+
+  .cancelBtn {
+    float: left;
+    width: 35%;
+    margin-left: 10%;
+    line-height: 90rpx;
+    border-radius: 45rpx;
     background-color: #f5f5f5;
     color: #878787;
+    font-size: 26 rpx;
+    position: static !important;
+    text-align: center;
+  }
+
+  .closeBtn {
+    width: 80%;
+    margin: 0 auto;
+    line-height: 90rpx;
+    border-radius: 45rpx;
+    background-color: #0ec3bc;
     font-size: 26rpx;
-    position:static!important;
-    text-align: center;
-  }
-  .closeBtn{
-    width:80%;
-    margin:0 auto;
-    line-height:90rpx;
-    border-radius:45rpx;
-    background-color: #0ec3bc;
-    font-size:26rpx;
-    position:static!important;
+    position: static !important;
     color: #fff;
     text-align: center;
   }
-  .sureBtn{
-    float:right;
-    width:35%;
-    margin-right:10%;
-    line-height:90rpx;
-    border-radius:45rpx;
+
+  .sureBtn {
+    float: right;
+    width: 35%;
+    margin-right: 10%;
+    line-height: 90rpx;
+    border-radius: 45rpx;
     background-color: #0ec3bc;
-    font-size:26rpx;
-    position:static!important;
+    font-size: 26rpx;
+    position: static !important;
     color: #fff;
     text-align: center;
   }
+
   .null {
     text-align: center;
     font-size: 28rpx;
@@ -293,6 +340,7 @@
     width: 100%;
     margin-top: 25rpx;
   }
+
   .Null {
     text-align: center;
     font-size: 28rpx;
@@ -300,7 +348,8 @@
     width: 100%;
     margin-top: 25%;
   }
-  .punchTxt{
+
+  .punchTxt {
     display: inline-block;
     float: right;
     font-size: 26rpx;
@@ -314,54 +363,59 @@
     <view class="btnwrap">
       <view class="refuseGray btn" wx:if="{{!haveTask || currentTask.needPunchType === 'PUNCHOUT'}}">签到打卡</view>
       <view class="refuse btn" @tap="scanForPunch" wx:if="{{currentTask.needPunchType === 'PUNCHIN'}}">签到打卡</view>
-      <view class="receive btn" @tap="scanForDinner"wx:if="{{currentTask.needPunchType === 'PUNCHOUT'}}">签退打卡</view>
-      <view class="receiveGray btn" wx:if="{{!haveTask || currentTask.needPunchType === 'PUNCHIN'}}" >签退打卡</view>
+      <view class="receive btn" @tap="scanForDinner" wx:if="{{currentTask.needPunchType === 'PUNCHOUT'}}">签退打卡</view>
+      <view class="receiveGray btn" wx:if="{{!haveTask || currentTask.needPunchType === 'PUNCHIN'}}">签退打卡</view>
     </view>
-    <view  wx:if="{{currentTask.showNull === 0}}" class="Null">暂无任务信息哦 ~~</view>
-    <view  wx:if="{{currentTask.showNull === 1}}">
-    <view class="hotal">
-      <view class="title">当前任务 <text class="light">{{currentTask.status}}</text></view>
-      <image src="{{currentTask.hotelLogo}}" class="head"></image>
-      <view class="inline">
-        <view class="name">{{currentTask.hotelName}}</view>
-        <text class="general">{{currentTask.taskType}}/ {{currentTask.fromDate}} - {{currentTask.toDate}} </text>
-        <view class="general">
-          <image src="../images/map.png" class="map"></image>
-          {{currentTask.hotelAddress}}
+    <view wx:if="{{currentTask.showNull === 0}}" class="Null">暂无任务信息哦 ~~</view>
+    <view wx:if="{{currentTask.showNull === 1}}">
+      <view class="hotal">
+        <view class="title">当前任务
+          <text class="light">{{currentTask.status}}</text>
         </view>
-      </view>
-      <view class="weui-cells">
-        <view class="weui-cell weui-cell_access"  >
-          <view class="weui-cell__hd">
-            <text>任务内容</text>
+        <image src="{{currentTask.hotelLogo}}" class="head"></image>
+        <view class="inline">
+          <view class="name">{{currentTask.hotelName}}</view>
+          <text class="general">{{currentTask.taskType}}/ {{currentTask.fromDate}} - {{currentTask.toDate}}</text>
+          <view class="general">
+            <image src="../images/map.png" class="map"></image>
+            {{currentTask.hotelAddress}}
           </view>
-          <view class="weui-cell__bd text">{{currentTask.taskContent}}</view>
+        </view>
+        <view class="weui-cells">
+          <view class="weui-cell weui-cell_access">
+            <view class="weui-cell__hd">
+              <text>任务内容</text>
+            </view>
+            <view class="weui-cell__bd text">{{currentTask.taskContent}}</view>
+          </view>
+        </view>
+        <view class="work inline">已工作
+          <text class="tasktime">{{currentTask.taskWorkerHours}}</text>
+          <text class="hour">小时</text>
         </view>
       </view>
-      <view class="work inline">已工作<text class="tasktime">{{currentTask.taskWorkerHours}}</text><text class="hour">小时</text></view>
-    </view>
 
-    <view class="title titleleft">工作记录</view>
-    <view class="summaBox">
-    <view  wx:if="{{currentTask.workLogs.length === 0}}" class="null">暂无工作记录哦 ~~</view>
-     <block class="item" wx:for="{{currentTask.workLogs}}" wx:for-item="item"  wx:key="rowId">
-      <view class="flexBox">
-        <view class="summa">
-          <view class="date">{{item.punchIn[0]}}</view>
-          <view class="inline border">
-            <view class="btxt">{{item.punchIn[1]}}</view>
-            <view class="text">签到时间</view>
-          </view>
+      <view class="title titleleft">工作记录</view>
+      <view class="summaBox">
+        <view wx:if="{{currentTask.workLogs.length === 0}}" class="null">暂无工作记录哦 ~~</view>
+        <block class="item" wx:for="{{currentTask.workLogs}}" wx:for-item="item" wx:key="rowId">
+          <view class="flexBox">
+            <view class="summa">
+              <view class="date">{{item.punchIn[0]}}</view>
+              <view class="inline border">
+                <view class="btxt">{{item.punchIn[1]}}</view>
+                <view class="text">签到时间</view>
+              </view>
 
-          <view class="inline">
-            <view  wx:if="{{item.punchOut[1] === 'date'}}" class="null"> : </view>
-            <view class="btxt" wx:if="{{item.punchOut[1] !== 'date'}}">{{item.punchOut[1]}}</view>
-            <view class="text">签退时间</view>
+              <view class="inline">
+                <view wx:if="{{item.punchOut[1] === 'date'}}" class="null"> :</view>
+                <view class="btxt" wx:if="{{item.punchOut[1] !== 'date'}}">{{item.punchOut[1]}}</view>
+                <view class="text">签退时间</view>
+              </view>
+            </view>
           </view>
-        </view>
+        </block>
       </view>
-      </block>
-    </view>
     </view>
 
     <!--弹窗-->
@@ -379,8 +433,8 @@
           </view>
           <view class="borderView"></view>
         </view>
-        <view class="cancelBtn" bindtap ="punchCancel" data-statu="close">取消</view>
-        <view class="sureBtn" bindtap ="punchConfirm" data-statu="close">确认</view>
+        <view class="cancelBtn" bindtap="punchCancel" data-statu="close">取消</view>
+        <view class="sureBtn" bindtap="punchConfirm" data-statu="close">确认</view>
       </view>
     </view>
 
@@ -409,8 +463,12 @@
       <view class="drawer_box">
         <view class="drawer_title">恭喜您打卡成功</view>
         <view class="drawer_content punchSuccess">
-          <view class="info">打卡类型: <text>{{currentPunchType}}</text></view>
-          <view class="info">打卡时间：<text>{{currentPunchTime}}</text></view>
+          <view class="info">打卡类型:
+            <text>{{currentPunchType}}</text>
+          </view>
+          <view class="info">打卡时间：
+            <text>{{currentPunchTime}}</text>
+          </view>
           <view class="borderView"></view>
         </view>
         <view class="closeBtn" bindtap="closeSuccessModal" data-statu="close">确定</view>
@@ -433,7 +491,7 @@
         type: Boolean
       }
     }
-    data ={
+    data = {
       userType: '',
       punchType: 'PUNCHIN',
       showPunchWin: false,
@@ -448,7 +506,7 @@
       currentPunchType: ''
     }
     methods = {
-      punchIn: function() {
+      punchIn: function () {
         this.showPunchWin = true
       },
       cancelModal: function () {
@@ -657,7 +715,7 @@
             break
         }
       },
-      showSuccessModal: function() {
+      showSuccessModal: function () {
         this.punchSuccess = true
       },
       closeSuccessModal: function () {
@@ -665,6 +723,7 @@
         this.$emit('workLogUpdate')
       }
     }
+
     getNowFormatDate() {
       var date = new Date()
       var seperator1 = '-'
@@ -692,7 +751,9 @@
       var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate + ' ' + strHours + seperator2 + strMinutes + seperator2 + strSeconds
       return currentdate
     }
+
     watch = {}
+
     getDistance(lat1, lng1, lat2, lng2) {
       lat1 = lat1 || 0
       lng1 = lng1 || 0
@@ -707,6 +768,7 @@
 
       return (r * 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2) + Math.cos(rad1) * Math.cos(rad2) * Math.pow(Math.sin(b / 2), 2)))).toFixed(0)
     }
+
     getHotelInfo(hotelId, puchType) {
       var that = this
       fetchHotelInfo(hotelId).then((data) => {
@@ -721,6 +783,8 @@
         console.log('getHotelInfo', that.hotelInfo)
       })
     }
-    onLoad () {}
+
+    onLoad() {
+    }
   }
 </script>

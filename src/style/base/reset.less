@@ -1,11 +1,20 @@
-@import "fn.less";
+@import "fn";
 
-page {
-    line-height: 1.6;
-    font-family: @weuiFontDefault;
-    background-color:#f1f1f1;
+html {
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
 }
 
-icon{
-    vertical-align: middle;
+body {
+    line-height: 1.6;
+    font-family: @weuiFontDefault;
+}
+
+a img {
+    border: 0;
+}
+
+a {
+    text-decoration: none;
+    .setTapColor();
 }

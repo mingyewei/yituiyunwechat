@@ -1,4 +1,4 @@
-@import "../../../base/fn.less";
+@import "../../../base/fn";
 
 .weui-form-preview{
     position: relative;
@@ -10,12 +10,6 @@
         .setBottomLine(@weuiCellBorderColor);
     }
 }
-.weui-form-preview__value{
-    font-size: 14px;
-}
-.weui-form-preview__value_in-hd{
-    font-size: 26px;
-}
 .weui-form-preview__hd{
     position: relative;
     padding: @weuiCellGapV @weuiCellGapH;
@@ -24,6 +18,10 @@
     &:after{
         .setBottomLine(@weuiCellBorderColor);
         left: @weuiCellGapH;
+    }
+    .weui-form-preview__value{
+        font-style: normal;
+        font-size: 1.6em;
     }
 }
 .weui-form-preview__bd{
@@ -37,7 +35,7 @@
     position: relative;
     line-height: 50px;
     display: flex;
-    &:after {
+    &:before {
         .setTopLine(@weuiDialogLineColor);
     }
 }
@@ -64,6 +62,17 @@
     flex: 1;
     color: @weuiDialogLinkColor;
     text-align: center;
+    .setTapColor();
+    button&{
+        background-color: transparent;
+        border: 0;
+        outline: 0;
+        line-height: inherit;
+        font-size: inherit;
+    }
+    &:active {
+        background-color: @weuiDialogLinkActiveBc;
+    }
     &:after {
         .setLeftLine(@weuiDialogLineColor);
     }
@@ -72,9 +81,6 @@
             display: none;
         }
     }
-}
-.weui-form-preview__btn_active{
-    background-color: @weuiDialogLinkActiveBc;
 }
 .weui-form-preview__btn_default {
     color: @weuiTextColorGray;

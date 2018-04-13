@@ -70,7 +70,7 @@
 
 <template lang="wxml">
   <view class="wrap">
-    <text class="title">您的角色是“小时工”</text>
+    <!--<text class="title">您的角色是“小时工”</text>-->
   <input type="text" class="weui-search-bar__input txt" placeholder="请输入手机号码"  placeholder-style="color:#cbcbcb"/>
   <view class="codeWrap">
   <input type="text" class="weui-search-bar__input txt left" placeholder="请输入验证码" placeholder-style="color:#cbcbcb" />

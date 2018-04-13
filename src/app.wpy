@@ -21,8 +21,8 @@ import {loginWithUser} from './util/weChatAuth'
 export default class extends wepy.app {
   config = {
     pages: [
-      'pages/index',
       'pages/login', // 登录
+      'pages/index',
       'pages/register', // 注册
       'pages/home', // 容器页面 - 首页
       'pages/checkout', // 容器页面 - 结账

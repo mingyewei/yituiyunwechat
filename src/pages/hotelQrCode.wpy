@@ -1,18 +1,20 @@
 <style lang="less">
-  .hotelQrCodewrap{
-    background-color:#fff;
+  .hotelQrCodewrap {
+    background-color: #fff;
     text-align: center;
-    padding-top:32%;
+    padding-top: 32%;
   }
-  page{
+
+  page {
     background-color: #fff;
   }
-canvas{
-  margin-left:auto;
-  margin-right:auto;
-  width: 300px;
-  height: 300px;
-}
+
+  canvas {
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+    height: 300px;
+  }
 
 </style>
 
@@ -22,24 +24,28 @@ canvas{
   </view>
 </template>
 <script>
-    import wepy from 'wepy'
-    import QRCode from '../util/weapp-qrcode'
-    import {getCompanyId} from '../util/userInfo'
-    export default class hotelQrCode extends wepy.page {
-      config = {
-        navigationBarTitleText: '我的二维码'
-      };
-      data = {};
-      methods = {};
-      onLoad() {
-        let hotelId = getCompanyId()
-        let qrcode = new QRCode('canvas', {
-          text: hotelId,
-          width: 300,
-          height: 300,
-          correctLevel: QRCode.CorrectLevel.H
-        })
-      }
-      onShow() {}
+  import wepy from 'wepy'
+  import QRCode from '../util/weapp-qrcode'
+  import {getCompanyId} from '../util/userInfo'
+
+  export default class hotelQrCode extends wepy.page {
+    config = {
+      navigationBarTitleText: '我的二维码'
+    };
+    data = {};
+    methods = {};
+
+    onLoad() {
+      let hotelId = getCompanyId()
+      new QRCode('canvas', {
+        text: hotelId,
+        width: 300,
+        height: 300,
+        correctLevel: QRCode.CorrectLevel.H
+      })
     }
+
+    onShow() {
+    }
+  }
 </script>

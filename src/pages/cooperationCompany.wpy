@@ -1,64 +1,76 @@
 <style lang="less">
-  .wrap{
-    background-color:#fff;
+  .wrap {
+    background-color: #fff;
     text-align: center;
   }
-  page{
+
+  page {
     background-color: #fff;
   }
-  .txt{
-    color:#121212;
-    font-size:32rpx;
-    text-align:left;
-    width:90%;
-    padding: 20rpx 25rpx;
+
+  .txt {
+    color: #121212;
+    font-size: 32 rpx;
+    text-align: left;
+    width: 90%;
+    padding: 20 rpx 25 rpx;
     background: #f8f8f8;
-    margin: 10% auto 50rpx auto;
+    margin: 10% auto 50 rpx auto;
   }
-  .left{
+
+  .left {
     margin-top: 20%;
   }
-  .highlight{
+
+  .highlight {
     color: #0ec3bc;
   }
-  .general{
+
+  .general {
     color: #aaaaaa;
-    margin-right:30rpx;
-    font-size: 26rpx;
+    margin-right: 30 rpx;
+    font-size: 26 rpx;
   }
-  .inline{
+
+  .inline {
     display: inline-block;
   }
-  .leftIcon{
-    margin-right: 25rpx;
+
+  .leftIcon {
+    margin-right: 25 rpx;
     vertical-align: middle;
-    width:88rpx;
-    height:88rpx;
+    width: 88 rpx;
+    height: 88 rpx;
     border-radius: 50%;
   }
+
   .text {
-    color:#121212;
-    font-size:30rpx;
-    text-align:left;
+    color: #121212;
+    font-size: 30 rpx;
+    text-align: left;
   }
-  .weui-cell{
-    position:static!important;
-    border-bottom:1rpx solid #e1e1e1;
-    padding:20rpx 5rpx;
+
+  .weui-cell {
+    position: static !important;
+    border-bottom: 1 rpx solid #e1e1e1;
+    padding: 20 rpx 5 rpx;
   }
-  .weui-cells{
+
+  .weui-cells {
     width: 95%;
     margin-left: auto;
     margin-right: auto;
-    position:static!important;
-    margin-top:2%;
+    position: static !important;
+    margin-top: 2%;
     overflow: hidden;
   }
-  .name{
-    margin-bottom: -10rpx;
+
+  .name {
+    margin-bottom: -10 rpx;
     width: 100%;
   }
-  .add{
+
+  .add {
     position: fixed;
     left: 0;
     bottom: 0;
@@ -66,192 +78,204 @@
     color: #fff;
     width: 100%;
     text-align: center;
-    font-size: 30rpx;
-    padding:25rpx 0;
+    font-size: 30 rpx;
+    padding: 25 rpx 0;
   }
 
   /*删除操作*/
   .touch-item {
-    font-size: 14rpx;
+    font-size: 14 rpx;
     display: flex;
     justify-content: space-between;
-    border-bottom:1px solid #ccc;
+    border-bottom: 1px solid #ccc;
     width: 100%;
     overflow: hidden;
   }
-  .del {
-    background-color:orangered;
-    width:85rpx;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    color:#fff;
-    transform:translateX(90rpx);
-    -webkit-transition:all .4s;
-    transition:all .4s;
-    height:76rpx;
 
+  .del {
+    background-color: orangered;
+    width: 85 rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    transform: translateX(90 rpx);
+    -webkit-transition: all .4s;
+    transition: all .4s;
+    height: 76 rpx;
 
   }
+
   .touch-move-active .del {
-    transform: translateX(-70rpx);
+    transform: translateX(-70 rpx);
   }
 </style>
 
 <template lang="wxml">
-  <view class="wrap"  scroll-x="false">
+  <view class="wrap" scroll-x="false">
     <view class="weui-cells">
-  <block class="item" wx:for="{{hrcompanies}}" wx:for-item="item"  wx:key="rowId">
-      <view class="weui-cell weui-cell_access {{item.isTouchMove ? 'touch-move-active' : ''}}" hover-class="weui-cell_active" data-index="{{index}}" bindtouchmove="touchmove" bindtouchstart="touchstart">
-        <view class="weui-cell__hd" >
-          <block wx:if="{{item.logo !== undefined && item.logo !== ''}}" >
-            <image src="{{item.logo}}" class="leftIcon"></image>
-          </block>
-          <block wx:if="{{item.logo === undefined || item.logo === ''}}" >
+      <block class="item" wx:for="{{hrcompanies}}" wx:for-item="item" wx:key="rowId">
+        <view class="weui-cell weui-cell_access {{item.isTouchMove ? 'touch-move-active' : ''}}"
+              hover-class="weui-cell_active" data-index="{{index}}" bindtouchmove="touchmove"
+              bindtouchstart="touchstart">
+          <view class="weui-cell__hd">
+            <block wx:if="{{item.logo !== undefined && item.logo !== ''}}">
+              <image src="{{item.logo}}" class="leftIcon"></image>
+            </block>
+            <block wx:if="{{item.logo === undefined || item.logo === ''}}">
               <image src="../images/my/default.png" class="leftIcon"></image>
-          </block>
+            </block>
+          </view>
+          <view class="weui-cell__bd text">
+            <view class="name">{{item.name}}</view>
+            <view class="name">负责人：{{item.leader}}</view>
+            <view class="name">手机号：{{item.leaderMobile}}</view>
+          </view>
+          <view class="text del" catchtap="del(e)" data-index="{{index}}">删除</view>
         </view>
-        <view class="weui-cell__bd text">
-          <view class="name">{{item.name}}</view>
-          <view class="name">负责人：{{item.leader}}</view>
-          <view class="name">手机号：{{item.leaderMobile}}</view>
-        </view>
-        <view class="text del" catchtap="del(e)" data-index="{{index}}">删除</view>
-      </view>
-  </block>
+      </block>
     </view>
     <view class="add" bindtap="actioncnt">添加合作人力公司</view>
   </view>
 </template>
 <script>
-    import wepy from 'wepy'
-    import {getCompanyId} from '../util/userInfo'
-    import {fetchHrcompanies} from '../actions/hotelAction'
-    export default class cooperationCompany extends wepy.page {
-      config = {
-        navigationBarTitleText: '合作人力公司'
-      };
-      data = {
-        hrcompanies: {},
-        hrCompanyId: 0,
-        startX: 0,
-        startY: 0
-      };
-      methods = {
-        actioncnt () {
-          wx.showActionSheet({
-            itemList: ['从人力公司库选择添加', '手动添加'],
-            itemColor: '#0ec3bc',
-            success: function(res) {
+  import wepy from 'wepy'
+  import {getCompanyId} from '../util/userInfo'
+  import {fetchHrcompanies} from '../actions/hotelAction'
+
+  export default class cooperationCompany extends wepy.page {
+    config = {
+      navigationBarTitleText: '合作人力公司'
+    };
+    data = {
+      hrcompanies: {},
+      hrCompanyId: 0,
+      startX: 0,
+      startY: 0
+    };
+    methods = {
+      actioncnt() {
+        wx.showActionSheet({
+          itemList: ['从人力公司库选择添加', '手动添加'],
+          itemColor: '#0ec3bc',
+          success: function (res) {
 //              console.log(res.tapIndex)
-              if (res.tapIndex === 0) {
-                wx.navigateTo({
-                  url: 'selectCompany'
-                })
-              } else if (res.tapIndex === 1) {
-                wx.navigateTo({
-                  url: 'addCompany'
-                })
-              }
-            },
-            fail: function(res) {
-              console.log(res.errMsg)
+            if (res.tapIndex === 0) {
+              wx.navigateTo({
+                url: 'selectCompany'
+              })
+            } else if (res.tapIndex === 1) {
+              wx.navigateTo({
+                url: 'addCompany'
+              })
             }
-          })
-        },
-        // 开始位置
-        touchstart (e) {
-          if (e.touches.length === 1) {
-            // 设置活动起始点
-            this.data.startX = e.touches[0].clientX
-            this.data.startY = e.touches[0].clientY
+          },
+          fail: function (res) {
+            console.log(res.errMsg)
+          }
+        })
+      },
+      // 开始位置
+      touchstart(e) {
+        if (e.touches.length === 1) {
+          // 设置活动起始点
+          this.data.startX = e.touches[0].clientX
+          this.data.startY = e.touches[0].clientY
+        }
+      },
+      // 滑动事件处理
+      touchmove(e) {
+        let that = this
+        let index = e.currentTarget.dataset.index // 当前索引
+        let startX = that.data.startX // 开始X坐标
+        let startY = that.data.startY // 开始Y坐标
+        let touchMoveX = e.changedTouches[0].clientX // 滑动变化坐标
+        let touchMoveY = e.changedTouches[0].clientY // 滑动变化坐标
+        // 获取滑动角度
+        var angle = that.angle({X: startX, Y: startY}, {X: touchMoveX, Y: touchMoveY})
+        that.data.hrcompanies.forEach(function (v, i) {
+          // 滑动超过30度角 return
+          if (Math.abs(angle) > 30) return
+          if (i === index) {
+            if (touchMoveX > startX) { // 右滑
+              v.isTouchMove = false
+            } else { // 左滑
+              v.isTouchMove = true
+            }
+          }
+        })
+        this.setData({
+          hrcompanies: that.data.hrcompanies
+        })
+      }
+    };
+
+    getHrcompanies() {
+      var that = this
+      var hotelId = getCompanyId()
+      fetchHrcompanies(hotelId).then((data) => {
+        that.hrcompanies = data.data.data.filter(hr => hr.status === 1)
+        that.hrcompanies.forEach(function (v, i) {
+          that.initdata(v) // 初始化参数
+        })
+        that.$apply()
+      })
+    }
+
+    // 初始化数据
+    initdata(that) {
+      that.isTouchMove = false
+    }
+
+    /**
+     * 计算滑动角度
+     * @param {Object} start 起点坐标
+     * @param {Object} end 终点坐标
+     */
+    angle(start, end) {
+      let _X = end.X - start.X
+      let _Y = end.Y - start.Y
+      // 返回角度 /Math.atan()返回数字的反正切值
+      return 360 * Math.atan(_Y / _X) / (2 * Math.PI)
+    }
+
+    // 删除事件
+    del(e) {
+      var that = this
+      wx.showModal({
+        title: '提示',
+        content: '确定删除么',
+        showCancel: true,
+        success(res) {
+          if (res.confirm) {
+            that.data.hrcompanies.splice(e.currentTarget.dataset.index, 1)
+            // TODO 做完删除更新数据
           }
         },
-        // 滑动事件处理
-        touchmove (e) {
-          var that = this
-          var index = e.currentTarget.dataset.index, // 当前索引
-            startX = that.data.startX, // 开始X坐标
-            startY = that.data.startY, // 开始Y坐标
-            touchMoveX = e.changedTouches[0].clientX, // 滑动变化坐标
-            touchMoveY = e.changedTouches[0].clientY // 滑动变化坐标
-            //获取滑动角度
-            var angle=that.angle({ X: startX, Y: startY }, { X: touchMoveX, Y: touchMoveY })
-          that.data.hrcompanies.forEach(function (v, i) {
-            //滑动超过30度角 return
-            if (Math.abs(angle) > 30) return
-            if (i === index) {
-              if (touchMoveX > startX) //右滑
-                v.isTouchMove = false
-              else //左滑
-                v.isTouchMove = true
-            }
-          });
-          this.setData({
+        complete() {
+          that.data.hrcompanies[e.currentTarget.dataset.index].isTouchMove = false
+          that.setData({
             hrcompanies: that.data.hrcompanies
           })
         }
-      };
-      getHrcompanies() {
-        var that = this
-        var hotelId = getCompanyId()
-        fetchHrcompanies(hotelId).then((data) => {
-          that.hrcompanies = data.data.data.filter(hr => hr.status === 1);
-          that.hrcompanies.forEach(function (v, i) {
-            that.initdata(v); //初始化参数
-          })
-          that.$apply()
-        })
-      }
-      // 初始化数据
-      initdata (that) {
-          that.isTouchMove = false;
-      }
-      /**
-       * 计算滑动角度
-       * @param {Object} start 起点坐标
-       * @param {Object} end 终点坐标
-       */
-      angle(start, end) {
-        var _X = end.X - start.X,
-          _Y = end.Y - start.Y
-        //返回角度 /Math.atan()返回数字的反正切值
-        return 360 * Math.atan(_Y / _X) / (2 * Math.PI);
-      }
-      //删除事件
-      del (e) {
-        var that=this
-        wx.showModal({
-          title: '提示',
-          content: '确定删除么',
-          showCancel: true,
-          success (res) {
-            if(res.confirm){
-              that.data.hrcompanies.splice(e.currentTarget.dataset.index, 1)
-              // TODO 做完删除更新数据
-            }
-          },
-          complete(){
-            that.data.hrcompanies[e.currentTarget.dataset.index].isTouchMove=false
-            that.setData({
-              hrcompanies: that.data.hrcompanies
-            })
-          }
-        })
-      }
-      onLoad(option) {
-        this.$apply()
-        this.hrCompanyId = option.hrCompanyId
-        this.$apply()
-        this.getHrcompanies()
-      }
-      onShow() {
-        this.getHrcompanies()
-      }
-      onReady () {
-        // 页面渲染完成
-
-      }
+      })
     }
+
+    onLoad(option) {
+      this.$apply()
+      this.hrCompanyId = option.hrCompanyId
+      this.$apply()
+      this.getHrcompanies()
+    }
+
+    onShow() {
+      this.getHrcompanies()
+    }
+
+    onReady() {
+      // 页面渲染完成
+
+    }
+  }
 </script>

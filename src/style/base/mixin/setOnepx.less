@@ -5,8 +5,10 @@
     top: 0;
     right: 0;
     height: 1px;
-    border-top: 1rpx solid @c;
+    border-top: 1px solid @c;
     color: @c;
+    transform-origin: 0 0;
+    transform: scaleY(0.5);
 }
 
 .setBottomLine(@c: #C7C7C7) {
@@ -16,8 +18,10 @@
     bottom: 0;
     right: 0;
     height: 1px;
-    border-bottom: 1rpx solid @c;
+    border-bottom: 1px solid @c;
     color: @c;
+    transform-origin: 0 100%;
+    transform: scaleY(0.5);
 }
 
 .setLeftLine(@c: #C7C7C7) {
@@ -27,8 +31,10 @@
     top: 0;
     width: 1px;
     bottom: 0;
-    border-left: 1rpx solid @c;
+    border-left: 1px solid @c;
     color: @c;
+    transform-origin: 0 0;
+    transform: scaleX(0.5);
 }
 
 .setRightLine(@c: #C7C7C7) {
@@ -38,6 +44,8 @@
     top: 0;
     width: 1px;
     bottom: 0;
-    border-right: 1rpx solid @c;
+    border-right: 1px solid @c;
     color: @c;
+    transform-origin: 100% 0;
+    transform: scaleX(0.5);
 }

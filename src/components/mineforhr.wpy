@@ -1,43 +1,51 @@
 <style lang="less">
-  .hrwrap{
-    background-color:#fff;
+  .hrwrap {
+    background-color: #fff;
     text-align: center;
   }
-  .txt{
-    color:#121212;
-    font-size:32rpx;
-    text-align:left;
-    width:90%;
+
+  .txt {
+    color: #121212;
+    font-size: 32rpx;
+    text-align: left;
+    width: 90%;
     padding: 20rpx 25rpx;
     background: #f8f8f8;
     margin: 10% auto 50rpx auto;
   }
-  .left{
+
+  .left {
     margin-top: 20%;
   }
-  .highlight{
+
+  .highlight {
     color: #0ec3bc;
   }
-  .general{
+
+  .general {
     color: #aaaaaa;
     margin-right: 10rpx;
     font-size: 28rpx;
   }
-  .inline{
+
+  .inline {
     display: inline-block;
   }
-  .leftIcon{
+
+  .leftIcon {
     margin-right: 25rpx;
     vertical-align: middle;
-    width:40rpx;
-    height:30rpx;
+    width: 40rpx;
+    height: 30rpx;
   }
-  .lefticon{
+
+  .lefticon {
     margin-right: 25rpx;
     vertical-align: middle;
-    width:40rpx;
-    height:40rpx;
+    width: 40rpx;
+    height: 40rpx;
   }
+
   .icon {
     width: 74rpx;
     height: 74rpx;
@@ -45,63 +53,73 @@
     display: block;
     margin-top: 28rpx;
   }
+
   .hrwrap .text {
-    color:#121212;
-    font-size:30rpx;
-    text-align:left;
+    color: #121212;
+    font-size: 30rpx;
+    text-align: left;
   }
-  .name{
-    color:#121212;
-    font-size:30rpx;
+
+  .name {
+    color: #121212;
+    font-size: 30rpx;
     font-weight: 600;
-    text-align:left;
+    text-align: left;
   }
- .hrwrap .weui-cell{
-    width:90%;
-    margin-left:auto;
-    margin-right:auto;
-    padding:30rpx 10rpx;
+
+  .hrwrap .weui-cell {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 30rpx 10rpx;
   }
-  .hrwrap .weui-cells{
-    margin-top:15%;
+
+  .hrwrap .weui-cells {
+    margin-top: 15%;
   }
-  .green{
+
+  .green {
     background-color: #0ec1bb;
     height: 4rem;
   }
-  .head{
-    width:110rpx;
-    height:110rpx;
-    border-radius:50%;
-    margin-right:30rpx;
+
+  .head {
+    width: 110rpx;
+    height: 110rpx;
+    border-radius: 50%;
+    margin-right: 30rpx;
   }
-  .user{
-    border-radius:20rpx;
-    padding:40rpx 28rpx;
-    position:absolute;
-    top:2%;
-    left:3%;
-    width:87%;
-    background-color:#fff;
-    text-align:left;
-    box-shadow:0 1rpx 20rpx #daf7f3;
+
+  .user {
+    border-radius: 20rpx;
+    padding: 40rpx 28rpx;
+    position: absolute;
+    top: 2%;
+    left: 3%;
+    width: 87%;
+    background-color: #fff;
+    text-align: left;
+    box-shadow: 0 1rpx 20rpx #daf7f3;
   }
-  .sex{
+
+  .sex {
     width: 20rpx;
     height: 20rpx;
     margin-left: 10rpx;
   }
-  .woman{
-    width:18rpx;
+
+  .woman {
+    width: 18rpx;
     height: 24rpx;
     margin-left: 10rpx;
   }
-  .logout{
-    color:#ff0004;
-    font-size:29rpx;
-    background-color:#fff;
-    line-height:90rpx;
-    margin-top:20rpx;
+
+  .logout {
+    color: #ff0004;
+    font-size: 29rpx;
+    background-color: #fff;
+    line-height: 90rpx;
+    margin-top: 20rpx;
   }
 </style>
 
@@ -115,11 +133,11 @@
           <image wx:if="{{userInfo.sex === 'MALE'}}" src="../images/my/man.png" class="sex"></image>
           <image wx:if="{{userInfo.sex === 'FEMALE'}}" src="../images/my/woman.png" class="woman"></image>
         </view>
-        <text class="general">{{hrCompanyInfo.name}} </text>
+        <text class="general">{{hrCompanyInfo.name}}</text>
       </view>
     </view>
     <view class="weui-cells">
-      <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" bindtap="gotoCooperationHotel" >
+      <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" bindtap="gotoCooperationHotel">
         <view class="weui-cell__hd">
           <image src="../images/my/bind.png" class="leftIcon"></image>
         </view>
@@ -127,7 +145,7 @@
         <view class="weui-cell__ft weui-cell__ft_in-access"></view>
       </view>
 
-      <view class="weui-cell weui-cell_access" hover-class="weui-cell_active"  bindtap="gotoMesCenter">
+      <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" bindtap="gotoMesCenter">
         <view class="weui-cell__hd">
           <image src="../images/my/msg.png" class="lefticon"></image>
         </view>
@@ -135,7 +153,7 @@
         <view class="weui-cell__ft weui-cell__ft_in-access"></view>
       </view>
 
-      <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" bindtap="gotoFeedback" >
+      <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" bindtap="gotoFeedback">
         <view class="weui-cell__hd">
           <image src="../images/my/feedback.png" class="lefticon"></image>
         </view>
@@ -152,7 +170,7 @@
       </view>
     </view>
 
-    <view  class="logout" bindtap="logout">退出登录</view>
+    <view class="logout" bindtap="logout">退出登录</view>
 
     <view class="left">
       <text class="general">客服电话：010-4568-3255</text>
@@ -163,6 +181,7 @@
   import wepy from 'wepy'
   import {getWxUserInfo, getUserInfo} from '../util/userInfo'
   import {login} from '../util/weChatAuth'
+
   export default class mineforhr extends wepy.component {
     props = {
       hrCompanyInfo: {
@@ -170,7 +189,7 @@
         twoWay: true
       }
     }
-    data ={
+    data = {
       wxUserInfo: {},
       userInfo: {}
     }
@@ -180,7 +199,7 @@
           url: 'hotelData'
         })
       },
-      gotoCooperationHotel: function() {
+      gotoCooperationHotel: function () {
         wx.navigateTo({
           url: 'cooperationHotel'
         })
@@ -190,12 +209,12 @@
           url: 'msgCenter'
         })
       },
-      gotoFeedback: function() {
+      gotoFeedback: function () {
         wx.navigateTo({
           url: 'feedback'
         })
       },
-      gotoAboutUs: function() {
+      gotoAboutUs: function () {
         wx.navigateTo({
           url: 'aboutUs'
         })
@@ -204,21 +223,22 @@
         wx.showModal({
           title: '提示',
           content: '您将退出当前系统，是否确认？',
-          success: function(res) {
+          success: function (res) {
             if (res.confirm) {
               wx.clearStorageSync()
-              login((wxUserinfo) => {
-                wx.reLaunch({
-                  url: 'index'
-                })
+              // login((wxUserinfo) => {
+              wx.reLaunch({
+                url: 'login'
               })
+              // })
             }
           }
         })
       }
     }
     watch = {}
-    onLoad () {
+
+    onLoad() {
       this.wxUserInfo = getWxUserInfo()
       this.userInfo = getUserInfo()
       this.$apply()

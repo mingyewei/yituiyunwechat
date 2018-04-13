@@ -9,14 +9,7 @@
     background-color: #fff;
   }
   .title{
-    display:block;
-    color:#121212;
-    font-size:35rpx;
-    text-align:center;
-    width:100%;
-    padding-top:12%;
-    padding-bottom:14%;
-    font-weight:bold;
+    padding-top:10%;
   }
   .txt{
     color:#121212;
@@ -24,19 +17,20 @@
     text-align:left;
     width:92%;
     border-radius:0;
-    margin-bottom:52rpx;
+    margin-bottom:40rpx;
     line-height:95rpx;
     margin-left:auto;
     margin-right:auto;
-    border-bottom: 1rpx solid #d5d5d5;
-    padding-bottom: 10rpx;
-    padding-left: 10rpx;
+    border-bottom:1rpx solid #d5d5d5;
+    padding-bottom:10rpx;
+    padding-left:10rpx;
+
   }
 .loginBtn{
   background:#0ec3bc!important;
   width:94%;
   font-size:32rpx;
-  margin-top:100rpx;
+  margin-top:50rpx;
   border-radius:60rpx;
   color: #fff!important;
 }
@@ -44,12 +38,12 @@
   background:#ccc !important;
   width:94%;
   font-size:32rpx;
-  margin-top:100rpx;
+  margin-top:50rpx;
   border-radius:60rpx;
   color: #fff!important;
 }
   .info{
-    margin-left: 23rpx;
+    margin-left: 30rpx;
     font-size: 25rpx;
     margin-top: 30rpx;
     text-align: left;
@@ -97,24 +91,71 @@
     margin-right: auto;
   }
   .infowrap{
-    margin-top: -20rpx;
+    margin-top: 0rpx;
+  }
+  .userRole{
+    display: inline-block;
+    color:#d5d5d5;
+    font-size:30rpx;
+    text-align:left;
+    width:92%;
+    line-height:95rpx;
+    margin-left:auto;
+    margin-right:auto;
+    padding-left: 10rpx;
+  }
+  .pb{
+    margin-bottom: 0rpx;
+  }
+  .selectAll{
+    display: flex;
+  }
+  .select {
+    color:#fff;
+    font-size:27rpx;
+    text-align:center;
+    border-radius:28rpx;
+    margin-bottom:40rpx;
+    line-height:65rpx;
+    margin-left:auto;
+    margin-right:auto;
+    background:#cccccc;
+    width:185rpx;
+  }
+  .selectThis{
+    background:#0ec3bc;
+  }
+  .weui-icon-success{
+    color: #0ec3bc;
+    font-size: 30rpx;
+    margin:1rpx;
   }
 </style>
 
 <template lang="wxml">
   <view class="registerwrap">
-    <text class="title" wx:if="{{userType === 'worker'}}">您的角色是“小时工”</text>
-    <text class="title" wx:elif="{{userType === 'Hotel'}}">您的角色是“酒店负责人”</text>
-    <text class="title"  wx:elif="{{userType === 'Hr'}}">您的角色是“人力公司负责人”</text>
-  <input type="text" class="weui-search-bar__input txt" placeholder="请输入手机号码" placeholder-style="color:#cbcbcb"  bindinput="listenerMobileInput"/>
+  <input type="text" class="weui-search-bar__input txt title" placeholder="请输入手机号码" placeholder-style="color:#cbcbcb"  bindinput="listenerMobileInput"/>
   <view class="codeWrap">
   <input type="text" class="weui-search-bar__input txt left" placeholder="请输入验证码" placeholder-style="color:#cbcbcb" bindinput='listenerSmsCodeInput'/>
   <view class="code" bindtap="getSmsCode" wx:if="{{wait === 60}}"><text class="codetxt">{{getMsg}}</text></view>
   <view class="getCode" wx:if="{{wait < 60}}"><text class="codetxt">{{getMsg}}</text></view>
   </view>
-  <input password type="text" wx:if="{{userType !== 'worker'}}" class="weui-search-bar__input txt" placeholder="请输入密码" placeholder-style="color:#cbcbcb" bindinput='ListenerPasswordInput' />
+  <input password type="text" wx:if="{{userType !== 'worker'}}" class="weui-search-bar__input txt pb" placeholder="请输入密码" placeholder-style="color:#cbcbcb" bindinput='ListenerPasswordInput' />
+  <text class="userRole">用户角色</text>
+  <view class="selectAll">
+    <view class="select selectThis" hover-class="weui-cell_active" bindtap="gotoWorkerRegister">
+      <text>小时工</text>
+    </view>
+    <view class="select" bindtap="gotoHotelRegister">
+      <text>用人单位</text>
+    </view>
+    <view class="select" bindtap="gotoHrRegister">
+      <text>人力资源方</text>
+    </view>
+  </view>
   <view class="info infowrap">
-  <text class="general">我已阅读并接受</text>
+    <i class="weui-icon-success"></i>
+    <text class="general">我已阅读并接受</text>
   <view class="highlight inline">《服务协议及隐私条款》</view>
   </view>
   <button  type="default" class="gloomyBtn" wx:if="{{smsCode === '' || password === '' || clickedBtn === true}}">完成</button>
@@ -195,7 +236,7 @@
                 })
               } else {
                 wx.switchTab({
-                  url: 'home'
+                  url: 'login'
                 })
               }
             } else if (res.data.success === false) {

@@ -34,7 +34,27 @@ export function getSmsCodeBySmsType(mobile, smsType) {
     })
   })
 }
-
+export function loginByMobilePassword(mobile, password) {
+  console.log(mobile, password)
+  return new Promise(function(resolve, reject) {
+    let webApi = UrlHost + '/login'
+    wepy.request({
+      url: webApi,
+      method: 'GET',
+      data: {
+        username: mobile,
+        password: password
+      },
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    }).then((data) => {
+      resolve(data)
+      console.log('通过用户名密码登录返回值', data)
+    })
+  })
+}
 export function loginByMobile(mobile, smsCode) {
   return new Promise(function(resolve, reject) {
     let webApi = UrlHost + '/login-sms'

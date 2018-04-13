@@ -1,16 +1,29 @@
-@import "../../base/fn.less";
+@import "../../base/fn";
+
+/*
+z-index:
+0: .weui-swiped-btn
+1: .weui-cell_swiped .weui-cell__bd
+2: .weui-cells和.weui-cell的1px线
+*/
 
 .weui-cells {
-    position: relative;
     margin-top: @weuiCellsMarginTop;
     background-color: @weuiCellBg;
     line-height: @weuiCellLineHeight;
     font-size: @weuiCellFontSize; //cell中间有效高度23px，跟客户端默认图标尺寸一致
+
+    overflow: hidden; //因为每个cell的border使用before元素left搞的，ie下伪元素的containing block估计跟标准不同，在cell上用oh不生效
+
+    // onepx
+    position: relative;
     &:before {
         .setTopLine(@weuiCellBorderColor);
+        z-index: 2;
     }
     &:after {
         .setBottomLine(@weuiCellBorderColor);
+        z-index: 2;
     }
 }
 
@@ -21,9 +34,10 @@
     padding-right: @weuiCellGapH;
     color: @weuiTextColorGray;
     font-size: @weuiCellTipsFontSize;
-}
-.weui-cells_after-title{
-    margin-top: 0;
+
+    & + .weui-cells {
+        margin-top: 0;
+    }
 }
 
 .weui-cells__tips {
@@ -42,15 +56,13 @@
     &:before {
         .setTopLine(@weuiCellBorderColor);
         left: @weuiCellGapH;
+        z-index: 2;
     }
     &:first-child {
         &:before {
             display: none;
         }
     }
-}
-.weui-cell_active {
-    background-color: @weuiCellActiveBg;
 }
 .weui-cell_primary{
     align-items: flex-start;

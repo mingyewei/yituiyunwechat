@@ -215,11 +215,11 @@
           success: function(res) {
             if (res.confirm) {
               wx.clearStorageSync()
-              login((wxUserinfo) => {
-                wx.reLaunch({
-                  url: 'index'
-                })
-              })
+              // login((wxUserinfo) => {
+              //   wx.reLaunch({
+              //     url: 'index'
+              //   })
+              // })
             }
           }
         })

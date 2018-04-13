@@ -3,11 +3,12 @@
     background-color: #f1f1f1;
   }
   .hrList{
-    background: #fff;
-    border-radius: 15rpx;
+    background:#fff;
+    border-radius:15rpx;
     margin:20rpx 22rpx;
     padding:39rpx 30rpx 0;
-    position: relative;
+    position:relative;
+
   }
   .recruitClass{
     font-size:33rpx;
