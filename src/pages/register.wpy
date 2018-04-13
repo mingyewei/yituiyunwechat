@@ -141,10 +141,10 @@
     <view class="select {{userType === 'worker'?'selectThis':''}}" bindtap="gotoRegister(0)">
       <text>小时工</text>
     </view>
-    <view class="select {{userType === 'Hotel'?'selectThis':''}}" bindtap="gotoRegister(1)">
+    <view class="select {{userType === 'hotel'?'selectThis':''}}" bindtap="gotoRegister(1)">
       <text>用人单位</text>
     </view>
-    <view class="select {{userType === 'Hr'?'selectThis':''}}" bindtap="gotoRegister(2)">
+    <view class="select {{userType === 'hr'?'selectThis':''}}" bindtap="gotoRegister(2)">
       <text>人力资源方</text>
     </view>
   </view>
@@ -162,7 +162,6 @@
 
 </template>
 <script>
-    // wx:if="{{userType !== 'worker'}}"
     import wepy from 'wepy'
     import {getSmsCodeBySmsType, registerUser} from '../actions/authAction'
     export default class register extends wepy.page {
@@ -192,9 +191,9 @@
          if(e == 0) {
            this.userType = 'worker'
          } else if (e ==1) {
-           this.userType = 'Hotel'
+           this.userType = 'hotel'
          }else if (e == 2) {
-           this.userType = 'Hr'
+           this.userType = 'hr'
          }
         },
         // 监听手机号输入
@@ -245,7 +244,7 @@
           registerUser(wxUserInfo, this.userType, this.mobile, this.smsCode, this.password).then(res => {
             wx.hideLoading()
             if (res.data.success === true) {
-              if (this.userType === 'hr' || this.userType === 'hotel') {
+              if (res.data.userType === 'hr' || res.data.userType === 'hotel') {
                 wx.navigateTo({
                   url: 'addCompanyInfo?userType=' + this.userType
                 })

@@ -122,7 +122,7 @@
     </view>
     <view class="info tr" @tap="gotoRetrievepwd">
       <text  class="general">忘记密码?</text>
-      <view class="highlight inline">找回密码</view>
+      <view class="highlight inline">重置密码</view>
     </view>
   </view>
   </view>

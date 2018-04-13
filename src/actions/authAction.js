@@ -17,7 +17,6 @@ export function getUserMobileByOpenId(openId) {
     })
   })
 }
-
 export function getSmsCodeBySmsType(mobile, smsType) {
   return new Promise(function(resolve, reject) {
     let webApi = UrlHost + '/sms-codes/' + smsType + '/' + mobile
@@ -121,7 +120,6 @@ export function loginByMobile(mobile, smsCode) {
     })
   })
 }
-
 export function registerUser(wxUserInfo, userType, mobile, smsCode, password) {
   return new Promise(function(resolve, reject) {
     let webApi = UrlHost + '/register-weixin'
@@ -167,6 +165,30 @@ export function registerUser(wxUserInfo, userType, mobile, smsCode, password) {
             resolve(res)
           }
         })
+      }
+    })
+  })
+}
+export function resetPassword(mobile, smsCode, password) {
+  return new Promise(function(resolve, reject) {
+    let webApi = UrlHost + '/reset-pwd'
+    let newUserRequest = {}
+    newUserRequest.mobile = mobile
+    newUserRequest.smsCode = smsCode
+    newUserRequest.password = password
+    wepy.request({
+      url: webApi,
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      data: newUserRequest
+    }).then((data) => {
+      if (data.data.success === false) {
+        resolve(data)
+      } else {
+        resolve(data)
       }
     })
   })
