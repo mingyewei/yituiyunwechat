@@ -227,9 +227,9 @@
             if (res.confirm) {
               wx.clearStorageSync()
               // login((wxUserinfo) => {
-              wx.reLaunch({
-                url: 'login'
-              })
+                wx.reLaunch({
+                  url: 'login'
+                })
               // })
             }
           }

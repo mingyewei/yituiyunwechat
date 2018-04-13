@@ -35,23 +35,44 @@ export function getSmsCodeBySmsType(mobile, smsType) {
   })
 }
 export function loginByMobilePassword(mobile, password) {
-  console.log(mobile, password)
   return new Promise(function(resolve, reject) {
     let webApi = UrlHost + '/login'
     wepy.request({
       url: webApi,
-      method: 'GET',
+      method: 'POST',
       data: {
         username: mobile,
-        password: password
+        password: password,
+        platform: 'WEIXIN'
       },
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       }
     }).then((data) => {
-      resolve(data)
-      console.log('通过用户名密码登录返回值', data)
+      if (data.data.success === false) {
+        resolve(data)
+      } else {
+        let tokenInfo = data.data.data
+        wx.request({
+          url: UrlHost + '/me',
+          method: 'GET',
+          header: {
+            authorization: tokenInfo.access_token
+          },
+          success: function (res) {
+            let userInfo = res.data.data
+            if (userInfo) {
+              userInfo.tokenInfo = tokenInfo
+              wx.setStorageSync('keyUserInfo', userInfo)
+            }
+            resolve(userInfo)
+          },
+          fail: function (res) {
+            resolve(res)
+          }
+        })
+      }
     })
   })
 }
@@ -102,10 +123,8 @@ export function loginByMobile(mobile, smsCode) {
 }
 
 export function registerUser(wxUserInfo, userType, mobile, smsCode, password) {
-  console.log('mobile', mobile)
   return new Promise(function(resolve, reject) {
     let webApi = UrlHost + '/register-weixin'
-
     let newUserRequest = wxUserInfo
     console.log('wxUserInfo', wxUserInfo)
     console.log('newUserRequest', newUserRequest)
@@ -116,7 +135,7 @@ export function registerUser(wxUserInfo, userType, mobile, smsCode, password) {
     newUserRequest.userType = userType
     newUserRequest.sex = wxUserInfo.gender
     newUserRequest.headimgurl = wxUserInfo.avatarUrl
-    console.log('dengluqingqiu', newUserRequest)
+    console.log('注册信息提交', newUserRequest)
     wepy.request({
       url: webApi,
       method: 'POST',
@@ -127,7 +146,6 @@ export function registerUser(wxUserInfo, userType, mobile, smsCode, password) {
       data: newUserRequest
     }).then((data) => {
       let tokenInfo = data.data.data
-      console.log('register data', data)
       if (data.data.success === false) {
         resolve(data)
       } else {
@@ -142,13 +160,11 @@ export function registerUser(wxUserInfo, userType, mobile, smsCode, password) {
             if (userInfo) {
               userInfo.tokenInfo = tokenInfo
               wx.setStorageSync('keyUserInfo',userInfo)
-              console.log('微信用户信息存储成功', res)
             }
             resolve(userInfo)
-            console.log('register data:', data)
           },
           fail: function (res) {
-            console.log('fetch me is failed!')
+            resolve(res)
           }
         })
       }

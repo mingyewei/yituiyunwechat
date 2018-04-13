@@ -22,7 +22,7 @@ export default class extends wepy.app {
   config = {
     pages: [
       'pages/login', // 登录
-      'pages/index',
+      // 'pages/index',
       'pages/register', // 注册
       'pages/home', // 容器页面 - 首页
       'pages/checkout', // 容器页面 - 结账
@@ -126,7 +126,6 @@ export default class extends wepy.app {
           that.globalData.isCheckAuth = false
           that.setChangedData(isAuthed, wxUserInfo, userInfo)
         })
-        console.log('用户信息！', userInfo)
       }
     } catch (e) {
       console.log('获取用户异常！', e)

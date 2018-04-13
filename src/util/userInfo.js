@@ -19,7 +19,7 @@ export function getCompanyId() {
 export function getUserId() {
   var userId = ''
   var userInfo = wx.getStorageSync('keyUserInfo')
-  if (userInfo ){
+  if (userInfo) {
     userId = userInfo.id
   }
   return userId

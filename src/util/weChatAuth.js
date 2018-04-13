@@ -7,7 +7,6 @@ import {IdToken} from '../constants/index'
 import { getUserMobileByOpenId } from '../actions/authAction'
 
 export function login(cb) {
-  console.log('logining..........')
   // 调用登录接口
   wx.login({
     success: function (e) {
