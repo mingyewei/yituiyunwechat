@@ -1,4 +1,6 @@
+<!--suppress CssInvalidPropertyValue -->
 <style lang="less">
+
 </style>
 
 <template lang="wxml">
@@ -32,7 +34,7 @@
       };
       data = {
         workerHaveTask: false,
-        userType: '',
+        userType: 'worker',
         hotelId: '',
         workerCurrentTask: {},
         hotelTasklist: {},

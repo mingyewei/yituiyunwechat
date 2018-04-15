@@ -1,3 +1,4 @@
+<!--suppress CssInvalidPropertyValue -->
 <style lang="less">
   page{
     background-color: #f1f1f1;
@@ -111,7 +112,6 @@
       gotoRecruitDetails: function (task) {
         var taskId = task.id
         wepy.$instance.globalData.currentTask = task
-        console.log('taskId', taskId)
         wx.navigateTo({
           url: 'recruitDetails?taskId=' + taskId
         })

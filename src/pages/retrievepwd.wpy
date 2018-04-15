@@ -1,3 +1,4 @@
+<!--suppress CssInvalidPropertyValue -->
 <style lang="less">
   .wrap{
     background-color:#fff;
@@ -18,8 +19,6 @@
     margin-left:auto;
     margin-right:auto;
     border-bottom: 1rpx solid #d5d5d5;
-    padding-bottom: 10rpx;
-    padding-left: 10rpx;
   }
 .loginBtn{
   background:#cccccc;
@@ -48,9 +47,11 @@
     float:right;
     text-align:center;
     color:#fff;
-    background-color: #0ec3bc;
+    background-color:#0ec3bc;
     width:38.5%;
-    line-height:66rpx;
+    line-height:56rpx;
+    height:56rpx;
+    display:inline-blick;
   }
   .codetxt{
     width: 100%;
@@ -82,7 +83,7 @@
 </template>
 <script>
     import wepy from 'wepy'
-    import {getSmsCodeBySmsType, resetPassword} from '../actions/authAction'
+    import {getSmsCodeBySmsType, resetPassword, loginByMobilePassword} from '../actions/authAction'
     export default class retrievepwd extends wepy.page {
       config = {
         navigationBarTitleText: '重置密码'
@@ -112,7 +113,7 @@
           }
         },
         getSmsCode: function () {
-          getSmsCodeBySmsType(this.mobile, 'register').then((res) => {
+          getSmsCodeBySmsType(this.mobile, 'reset_password').then((res) => {
             if (res.data.success === true) {
               this.timeFunction()
             } else if (res.data.success === false) {
@@ -127,9 +128,6 @@
           })
         },
         resetPassword: function () {
-          // if (this.clickedBtn === true) {
-          //   return
-          // }
           wx.showLoading({
             title: '加载中',
             mask: true
@@ -142,8 +140,32 @@
                 content: '重置成功',
                 showCancel: false
               })
-              wx.navigateTo({
-                url: 'login'
+              loginByMobilePassword(this.mobile, this.password).then(res => {
+                wx.hideLoading()
+                if (res.data !== undefined && res.data.success === false) {
+                  wx.showModal({
+                    title: '提示',
+                    content: res.data.message,
+                    showCancel: false
+                  })
+                }
+                if (res.userType) {
+                  if ((res.userType === 'hotel' || res.userType === 'hr') && !res.company) {
+                    wx.navigateTo({
+                      url: 'addCompanyInfo?userType=' + res.userType
+                    })
+                  } else {
+                    wx.switchTab({
+                      url: 'home'
+                    })
+                  }
+                }
+              }, error => {
+                wx.showModal({
+                  title: '提示',
+                  content: '登录失败，' + error,
+                  showCancel: false
+                })
               })
             } else if (res.data.success === false) {
               wx.showModal({
@@ -164,9 +186,8 @@
           this.getMsg = '重新发送(' + this.wait + 's)'
           this.wait--
           setTimeout(function() {
-              that.timeFunction()
-            },
-            1000)
+            that.timeFunction()
+          }, 1000)
         }
         this.$apply()
       }

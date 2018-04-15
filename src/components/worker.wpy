@@ -1,8 +1,9 @@
+<!--suppress CssInvalidPropertyValue -->
 <style lang="less">
   .btnwrap {
     background-color: #fff;
     margin-bottom: 20rpx;
-    height: 5rem;
+    height: 200rpx;
   }
 
   .txt {
@@ -25,8 +26,9 @@
     text-align: left;
     display: block;
     margin-bottom: 15rpx;
-    font-weight: 600;
+    font-weight: bold;
     margin-left: 10rpx;
+    margin-bottom:60rpx;
   }
 
   .general {
@@ -36,6 +38,14 @@
     margin-bottom: 30rpx;
     width: 100%;
   }
+.general text{
+    color: #333333;
+    font-size: 24rpx;
+    text-align: left;
+    margin-bottom: 30rpx;
+    font-weight: 700;
+    width: 100%;
+  }
 
   /*.time{*/
   /*margin-left: 10rpx;*/
@@ -43,20 +53,19 @@
   /*color: #aaaaaa;*/
   /*}*/
   .head {
-    width: 130rpx;
-    height: 130rpx;
-    border-radius: 50%;
-    margin-right: 25rpx;
-    vertical-align: top;
+    width:140rpx;
+    height:140rpx;
+    border-radius:50%;
+    margin-right:30rpx;
+    vertical-align:top;
   }
 
   .hotal {
-    padding: 30rpx 15rpx 5rpx 15rpx;
+    padding: 40rpx 15rpx 5rpx 15rpx;
     background-color: #fff;
     text-align: left;
-    border-top: 1rpx solid #e1e1e1;
     clear: both;
-    margin-bottom: 30rpx;
+    margin-bottom: 40rpx;
   }
 
   .map {
@@ -82,7 +91,7 @@
     text-align: center;
     font-size: 30rpx;
     line-height: 90rpx;
-    margin-top: 6.5%;
+    margin-top: 6%;
   }
 
   .refuse {
@@ -112,10 +121,13 @@
   }
 
   .name {
-    color: #121212;
-    font-size: 30rpx;
-    text-align: left;
-    line-height: 35rpx;
+    color:#333333;
+    font-size:31rpx;
+    text-align:left;
+    line-height:31rpx;
+    font-weight:bold;
+    margin-bottom:22rpx;
+    display: inline-block;
   }
 
   .weui-cell {
@@ -123,11 +135,11 @@
   }
 
   .light {
-    color: #1fbfb7;
-    float: right;
-    margin-right: 20rpx;
-    font-size: 26rpx;
-    font-weight: normal;
+    color:#1fbfb7;
+    float:right;
+    margin-right:20rpx;
+    font-size:30rpx;
+    font-weight:bold;
   }
 
   .hour {
@@ -144,11 +156,13 @@
   }
 
   .work {
-    color: #454545;
-    font-size: 24 rpx;
-    padding: 20 rpx 0;
-    text-align: center;
-    width: 100%;
+    color: #333333;
+    font-size:24rpx;
+    border-top:1rpx dashed #e1e1e1;
+    text-align:center;
+    width:100%;
+    height:114rpx;
+    line-height:114rpx;
   }
 
   .date {
@@ -356,6 +370,15 @@
     color: #333;
     margin-right: 10rpx;
   }
+  .fontSize{
+    font-size: 24rpx;
+  }
+  .fl{
+    float: left;
+  }
+  .fr{
+    float: right;
+  }
 </style>
 
 <template>
@@ -375,23 +398,25 @@
         <image src="{{currentTask.hotelLogo}}" class="head"></image>
         <view class="inline">
           <view class="name">{{currentTask.hotelName}}</view>
-          <text class="general">{{currentTask.taskType}}/ {{currentTask.fromDate}} - {{currentTask.toDate}}</text>
+          <view class="general">{{currentTask.taskType}}/{{currentTask.fromDate}} - {{currentTask.toDate}}</view>
           <view class="general">
             <image src="../images/map.png" class="map"></image>
             {{currentTask.hotelAddress}}
           </view>
+          <view class="general fontSize"><text>任务内容:　</text>{{currentTask.taskContent}}</view>
         </view>
-        <view class="weui-cells">
-          <view class="weui-cell weui-cell_access">
-            <view class="weui-cell__hd">
-              <text>任务内容</text>
-            </view>
-            <view class="weui-cell__bd text">{{currentTask.taskContent}}</view>
-          </view>
-        </view>
-        <view class="work inline">已工作
-          <text class="tasktime">{{currentTask.taskWorkerHours}}</text>
-          <text class="hour">小时</text>
+        <!--<view class="weui-cells">-->
+          <!--<view class="weui-cell weui-cell_access">-->
+            <!--<view class="weui-cell__hd">-->
+              <!--<text></text>-->
+            <!--</view>-->
+            <!--<view class="weui-cell__bd text"></view>-->
+          <!--</view>-->
+        <!--</view>-->
+        <view class="work inline">
+          <text class="inline fl">日期:　{{currentTask.fromDate}}</text>
+          <text class="hour fr">小时</text>
+          <text class="inline fr">已工作时间: <text class="tasktime">{{currentTask.taskWorkerHours}}</text></text>
         </view>
       </view>
 

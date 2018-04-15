@@ -1,3 +1,4 @@
+<!--suppress CssInvalidPropertyValue -->
 <style lang="less">
   .wrap{
     text-align: center;
@@ -30,8 +31,9 @@
   }
   .text {
     color:#858585;
-    font-size:28rpx;
+    font-size:24rpx;
     text-align:right;
+    margin:0rpx 25rpx;
   }
   .name{
     color:#333;
@@ -43,7 +45,7 @@
     background-color:#fff;
     padding:15rpx 10rpx!important;
     position:static!important;
-    margin-bottom:15rpx;
+    margin:15rpx 25rpx;
   }
   .lefticon{
     margin-right: 25rpx;
@@ -81,6 +83,11 @@
   .workerinfo .weui-cell__ft{
     text-align: right;
     color:#999999;
+  }
+
+  .weui-cell__hd text {
+    font-weight: 600;
+    font-size: 37rpx;
   }
 </style>
 

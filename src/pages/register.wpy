@@ -1,287 +1,317 @@
-<!--suppress ALL -->
+<!--suppress CssInvalidPropertyValue -->
 <style lang="less">
-  .registerwrap{
-    background-color:#fff;
+  .registerwrap {
+    background-color: #fff;
     text-align: center;
-    padding-top:10%;
+    padding-top: 10%;
   }
-  page{
+
+  page {
     background-color: #fff;
   }
-  .txt{
+
+  .txt {
     color:#121212;
     font-size:30rpx;
     text-align:left;
     width:92%;
     border-radius:0;
-    margin-bottom:40rpx;
+    margin-bottom:52rpx;
     line-height:95rpx;
     margin-left:auto;
     margin-right:auto;
-    border-bottom:1rpx solid #d5d5d5;
-    padding-bottom:12rpx;
-    padding-left:10rpx;
+    border-bottom: 1rpx solid #d5d5d5;
 
   }
-  .gloomyBtn{
-    background:#cccccc;
-    width:94%;
-    font-size:32rpx;
-    margin-top:100rpx;
-    border-radius:60rpx;
+
+  .gloomyBtn {
+    background: #cccccc;
+    width: 94%;
+    font-size: 32rpx;
+    margin-top: 100rpx;
+    border-radius: 60rpx;
     color: #FFFFFF;
   }
-  .info{
+
+  .info {
     margin-left: 30rpx;
     font-size: 25rpx;
     margin-top: 30rpx;
     text-align: left;
-    clear:both;
+    clear: both;
   }
-  .highlight{
+
+  .highlight {
     color: #0ec3bc;
   }
-  .general{
+
+  .general {
     color: #aaaaaa;
     margin-right: 10rpx;
   }
-  .inline{
+
+  .inline {
     display: inline-block;
   }
-.code{
-  float:right;
-  text-align:center;
-  color:#fff;
-  background-color: #0ec3bc;
-  width:38.5%;
-  line-height:66rpx;
-}
-  .codetxt{
+
+  .code {
+    float:right;
+    text-align:center;
+    color:#fff;
+    background-color:#0ec3bc;
+    width:38.5%;
+    line-height:56rpx;
+    height:56rpx;
+    display:inline-blick;
+  }
+
+  .codetxt {
     width: 100%;
     display: block;
-    font-size:28rpx;
+    font-size: 28rpx;
   }
-.getCode{
-  float:right;
-  text-align:center;
-  color:#fff;
-  background-color: #ccc;
-  width:38.5%;
-  line-height:66rpx;
-}
-.left{
-  float: left;
-  width: 60%;
-}
 
-  .codeWrap{
+  .getCode {
+    float: right;
+    text-align: center;
+    color: #fff;
+    background-color: #ccc;
+    width: 38.5%;
+    line-height: 66rpx;
+  }
+
+  .left {
+    float: left;
+    width: 60%;
+  }
+
+  .codeWrap {
     width: 92%;
     margin-left: auto;
     margin-right: auto;
   }
-  .infowrap{
+
+  .infowrap {
     margin-top: 0rpx;
   }
-  .userRole{
+
+  .userRole {
     display: inline-block;
-    color:#cbcbcb;
-    font-size:30rpx;
-    text-align:left;
-    width:92%;
-    line-height:95rpx;
-    margin-left:auto;
-    margin-right:auto;
+    color: #cbcbcb;
+    font-size: 30rpx;
+    text-align: left;
+    width: 92%;
+    line-height: 95rpx;
+    margin-left: auto;
+    margin-right: auto;
     padding-left: 10rpx;
   }
-  .pb{
+
+  .pb {
     margin-bottom: 0rpx;
   }
-  .selectAll{
+
+  .selectAll {
     display: flex;
   }
+
   .select {
-    color:#fff;
-    font-size:27rpx;
-    text-align:center;
-    border-radius:28rpx;
-    margin-bottom:40rpx;
-    line-height:65rpx;
-    margin-left:auto;
-    margin-right:auto;
-    background:#cbcbcb;
-    width:185rpx;
+    color: #fff;
+    font-size: 27rpx;
+    text-align: center;
+    border-radius: 28rpx;
+    margin-bottom: 40rpx;
+    line-height: 65rpx;
+    margin-left: auto;
+    margin-right: auto;
+    background: #cbcbcb;
+    width: 185rpx;
   }
-  .selectThis{
-    background:#0ec3bc;
+
+  .selectThis {
+    background: #0ec3bc;
   }
-  .highlightBgc{
+
+  .highlightBgc {
     background-color: #0ec3bc;
   }
-  .weui-icon-success{
+
+  .weui-icon-success {
     font-size: 30rpx;
-    margin:1rpx;
+    margin: 1rpx;
     color: #0ec3bc;
   }
-  .failIcon{
+
+  .failIcon {
     color: #cbcbcb;
   }
 </style>
 
 <template lang="wxml">
   <view class="registerwrap">
-  <input type="text" class="weui-search-bar__input txt title" placeholder="请输入手机号码" placeholder-style="color:#cbcbcb"  bindinput="listenerMobileInput"/>
-  <view class="codeWrap">
-  <input type="text" class="weui-search-bar__input txt left" placeholder="请输入短信验证码" placeholder-style="color:#cbcbcb" bindinput='listenerSmsCodeInput'/>
-  <view class="code" bindtap="getSmsCode" wx:if="{{wait === 60}}"><text class="codetxt">{{getMsg}}</text></view>
-  <view class="getCode" wx:if="{{wait < 60}}"><text class="codetxt">{{getMsg}}</text></view>
-  </view>
-  <input password type="password" class="weui-search-bar__input txt pb" placeholder="请设置登录密码" placeholder-style="color:#cbcbcb" bindinput='ListenerPasswordInput' />
-  <text class="userRole">用户角色</text>
-  <view class="selectAll">
-    <view class="select {{userType === 'worker'?'selectThis':''}}" bindtap="gotoRegister(0)">
-      <text>小时工</text>
+    <input type="text" class="weui-search-bar__input txt title" placeholder="请输入手机号码" placeholder-style="color:#cbcbcb"
+           bindinput="listenerMobileInput"/>
+    <view class="codeWrap">
+      <input type="text" class="weui-search-bar__input txt left" placeholder="请输入短信验证码"
+             placeholder-style="color:#cbcbcb" bindinput='listenerSmsCodeInput'/>
+      <view class="code" bindtap="getSmsCode" wx:if="{{wait === 60}}">
+        <text class="codetxt">{{getMsg}}</text>
+      </view>
+      <view class="getCode" wx:if="{{wait < 60}}">
+        <text class="codetxt">{{getMsg}}</text>
+      </view>
     </view>
-    <view class="select {{userType === 'hotel'?'selectThis':''}}" bindtap="gotoRegister(1)">
-      <text>用人单位</text>
+    <input password type="password" class="weui-search-bar__input txt pb" placeholder="请设置登录密码"
+           placeholder-style="color:#cbcbcb" bindinput='ListenerPasswordInput'/>
+    <text class="userRole">用户角色</text>
+    <view class="selectAll">
+      <view class="select {{userType === 'worker'?'selectThis':''}}" bindtap="gotoRegister(0)">
+        <text>小时工</text>
+      </view>
+      <view class="select {{userType === 'hotel'?'selectThis':''}}" bindtap="gotoRegister(1)">
+        <text>用人单位</text>
+      </view>
+      <view class="select {{userType === 'hr'?'selectThis':''}}" bindtap="gotoRegister(2)">
+        <text>人力资源方</text>
+      </view>
     </view>
-    <view class="select {{userType === 'hr'?'selectThis':''}}" bindtap="gotoRegister(2)">
-      <text>人力资源方</text>
+    <view class="info infowrap">
+      <i class="weui-icon-success {{readFlag?'failIcon':''}}" bindtap="readMe"></i>
+      <text class="general">我已阅读并接受</text>
+      <view class="highlight inline" bindtap="serviceAgreement">《服务协议及隐私条款》</view>
     </view>
-  </view>
-  <view class="info infowrap">
-    <i class="weui-icon-success {{readFlag?'failIcon':''}}" bindtap="readMe"></i>
-    <text class="general">我已阅读并接受</text>
-  <view class="highlight inline" bindtap="serviceAgreement">《服务协议及隐私条款》</view>
-  </view>
-  <button  type="button" class="gloomyBtn {{clickedBtn?'':'highlightBgc'}}" bindtap="registerCommit">完成</button>
-  <view class="info" @tap="gotoLogin">
-    <text  class="general">已有账号?</text>
-    <view class="highlight inline">直接登录</view>
-  </view>
+    <button type="button" class="gloomyBtn {{clickedBtn?'':'highlightBgc'}}" bindtap="registerCommit">完成</button>
+    <view class="info" @tap="gotoLogin">
+      <text class="general">已有账号?</text>
+      <view class="highlight inline">直接登录</view>
+    </view>
   </view>
 
 </template>
 <script>
-    import wepy from 'wepy'
-    import {getSmsCodeBySmsType, registerUser} from '../actions/authAction'
-    export default class register extends wepy.page {
-      config = {
-        navigationBarTitleText: '注册'
-      };
-      data = {
-        mobile: '',
-        smsCode: '',
-        password: '',
-        userType: 'worker',
-        wait: 60,
-        getMsg: '获取验证码',
-        clickedBtn: true,
-        readFlag: true
-      };
-      methods = {
-        readMe () {
-          this.readFlag = !this.readFlag // 选中协议
-        },
-        serviceAgreement () { // 跳转到协议页面
-          wx.navigateTo({
-            url: 'serviceAgreement'
-          })
-        },
-        gotoRegister (e) {
-         if(e == 0) {
-           this.userType = 'worker'
-         } else if (e ==1) {
-           this.userType = 'hotel'
-         }else if (e == 2) {
-           this.userType = 'hr'
-         }
-        },
-        // 监听手机号输入
-        listenerMobileInput: function (e) {
-          this.mobile = e.detail.value
-        },
-        // 监听验证码输入
-        listenerSmsCodeInput: function (e) {
-          this.smsCode = e.detail.value
-        },
-        // 监听密码输入
-        ListenerPasswordInput: function (e) {
-          this.password = e.detail.value
-          if (this.password !=='' && this.mobile !== '' && this.smsCode !== '') {
-            this.clickedBtn = false
-          }
-        },
-        getSmsCode: function () {
-          getSmsCodeBySmsType(this.mobile, 'register').then((res) => {
-            if (res.data.success === true) {
-              this.timeFunction()
-            } else if (res.data.success === false) {
-              let str = res.data.message.substring(this.mobile.length)
-              if (str === 'invalid mobile number') {
-                wx.showModal({
-                  title: '提示',
-                  content: '手机号' + this.mobile + '不正确'
-                })
-              }
-            }
-          })
-        },
-        gotoLogin: function () {
-          wx.navigateTo({
-            url: 'login'
-          })
-        },
-        registerCommit: function () {
-          if (this.clickedBtn === true && this.readFlag === true) {
-            return
-          }
-          var that = this
-          wx.showLoading({
-            title: '加载中',
-            mask: true
-          })
-          var wxUserInfo = wx.getStorageSync('keyWxUserInfo')
-          registerUser(wxUserInfo, this.userType, this.mobile, this.smsCode, this.password).then(res => {
-            wx.hideLoading()
-            if (res.data.success === true) {
-              if (res.data.userType === 'hr' || res.data.userType === 'hotel') {
-                wx.navigateTo({
-                  url: 'addCompanyInfo?userType=' + this.userType
-                })
-              } else {
-                wx.switchTab({
-                  url: 'login'
-                })
-              }
-            } else if (res.data.success === false) {
+  import wepy from 'wepy'
+  import {getSmsCodeBySmsType, registerUser} from '../actions/authAction'
+
+  export default class register extends wepy.page {
+    config = {
+      navigationBarTitleText: '注册'
+    };
+    data = {
+      mobile: '',
+      smsCode: '',
+      password: '',
+      userType: 'worker',
+      wait: 60,
+      getMsg: '获取验证码',
+      clickedBtn: true,
+      readFlag: true
+    };
+    methods = {
+      readMe() {
+        this.readFlag = !this.readFlag // 选中协议
+      },
+      serviceAgreement() { // 跳转到协议页面
+        wx.navigateTo({
+          url: 'serviceAgreement'
+        })
+      },
+      gotoRegister(e) {
+        if (e === 0) {
+          this.userType = 'worker'
+        } else if (e === 1) {
+          this.userType = 'hotel'
+        } else if (e === 2) {
+          this.userType = 'hr'
+        }
+      },
+      // 监听手机号输入
+      listenerMobileInput: function (e) {
+        this.mobile = e.detail.value
+      },
+      // 监听验证码输入
+      listenerSmsCodeInput: function (e) {
+        this.smsCode = e.detail.value
+      },
+      // 监听密码输入
+      ListenerPasswordInput: function (e) {
+        this.password = e.detail.value
+        if (this.password !== '' && this.mobile !== '' && this.smsCode !== '') {
+          this.clickedBtn = false
+        }
+      },
+      getSmsCode: function () {
+        getSmsCodeBySmsType(this.mobile, 'register').then((res) => {
+          if (res.data.success === true) {
+            this.timeFunction()
+          } else if (res.data.success === false) {
+            let str = res.data.message.substring(this.mobile.length)
+            if (str === 'invalid mobile number') {
               wx.showModal({
                 title: '提示',
-                content: res.data.message,
-                showCancel: false
+                content: '手机号' + this.mobile + '不正确'
               })
             }
-          })
+          }
+        })
+      },
+      gotoLogin: function () {
+        wx.navigateTo({
+          url: 'login'
+        })
+      },
+      registerCommit: function () {
+        if (this.clickedBtn === true && this.readFlag === true) {
+          return
         }
-      };
-      timeFunction () {
-        var that = this
-        if (this.wait === 0) {
-          this.getMsg = '获取验证码'
-          this.wait = 60
-        } else {
-          this.getMsg = '重新发送(' + this.wait + 's)'
-          this.wait--
-          setTimeout(function() {
-              that.timeFunction()
-            },
-            1000)
-        }
-        this.$apply()
+        wx.showLoading({
+          title: '加载中',
+          mask: true
+        })
+        var wxUserInfo = wx.getStorageSync('keyWxUserInfo')
+        registerUser(wxUserInfo, this.userType, this.mobile, this.smsCode, this.password).then(res => {
+          wx.hideLoading()
+          if (res.data.success === true) {
+            if (res.data.userType === 'hr' || res.data.userType === 'hotel') {
+              wx.navigateTo({
+                url: 'addCompanyInfo?userType=' + this.userType
+              })
+            } else {
+              wx.switchTab({
+                url: 'login'
+              })
+            }
+          } else if (res.data.success === false) {
+            wx.showModal({
+              title: '提示',
+              content: res.data.message,
+              showCancel: false
+            })
+          }
+        })
       }
-      onLoad(option) {
-        var that = this
-        that.userType = option.userType
+    };
+
+    timeFunction() {
+      let that = this
+      if (this.wait === 0) {
+        this.getMsg = '获取验证码'
+        this.wait = 60
+      } else {
+        this.getMsg = '重新发送(' + this.wait + 's)'
+        this.wait--
+        setTimeout(function () {
+          that.timeFunction()
+        }, 1000)
       }
-      onShow() {}
+      that.$apply()
     }
+
+    onLoad(option) {
+      this.userType = option.userType
+      this.$apply()
+    }
+
+    onShow() {
+    }
+  }
 </script>

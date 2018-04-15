@@ -1,3 +1,4 @@
+<!--suppress CssInvalidPropertyValue -->
 <style lang="less">
   page{
     background-color: #f1f1f1;
@@ -69,7 +70,7 @@
   }
   .light{
     color: #0ec3bc;
-    font-size: 32rpx !important;
+    font-size: 32rpx;
   }
   /*弹窗*/
   /*mask*/

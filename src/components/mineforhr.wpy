@@ -1,3 +1,4 @@
+<!--suppress CssInvalidPropertyValue -->
 <style lang="less">
   .hrwrap {
     background-color: #fff;
@@ -180,7 +181,7 @@
 <script>
   import wepy from 'wepy'
   import {getWxUserInfo, getUserInfo} from '../util/userInfo'
-  import {login} from '../util/weChatAuth'
+  // import {login} from '../util/weChatAuth'
 
   export default class mineforhr extends wepy.component {
     props = {
@@ -227,9 +228,9 @@
             if (res.confirm) {
               wx.clearStorageSync()
               // login((wxUserinfo) => {
-                wx.reLaunch({
-                  url: 'login'
-                })
+              wx.reLaunch({
+                url: 'login'
+              })
               // })
             }
           }

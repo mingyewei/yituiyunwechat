@@ -1,368 +1,390 @@
 <style lang="less">
-  .wrap{
-    background-color:#fff;
+  .wrap {
+    background-color: #fff;
     text-align: center;
     padding-top: 10%;
   }
-  page{
+
+  page {
     background-color: #fff;
   }
-  .txt{
+
+  .txt {
     color:#121212;
     font-size:30rpx;
     text-align:left;
     width:92%;
     border-radius:0;
-    margin-bottom:40rpx;
+    margin-bottom:52rpx;
     line-height:95rpx;
     margin-left:auto;
     margin-right:auto;
-    border-bottom:1rpx solid #d5d5d5;
-    padding-bottom:12rpx;
-    padding-left:10rpx;
+    border-bottom: 1rpx solid #d5d5d5;
   }
 
-.gloomyBtn{
-  background:#cccccc;
-  width:94%;
-  font-size:32rpx;
-  margin-top:100rpx;
-  border-radius:60rpx;
-  color: #FFFFFF;
-}
-  .highlight{
+  .gloomyBtn {
+    background: #cccccc;
+    width: 94%;
+    font-size: 32rpx;
+    margin-top: 100rpx;
+    border-radius: 60rpx;
+    color: #FFFFFF;
+  }
+
+  .highlight {
     color: #0ec3bc;
   }
-  .general{
+
+  .general {
     color: #aaaaaa;
     margin-right: 10rpx;
   }
-  .inline{
+
+  .inline {
     display: inline-block;
   }
-  .codeWrap{
+
+  .codeWrap {
     width: 92%;
     margin-left: auto;
     margin-right: auto;
   }
-  .codeleft{
+
+  .codeleft {
     float: left;
     width: 60%;
   }
-  .code{
-    float:right;
-    text-align:center;
-    color:#fff;
-    background-color:#0ec3bc;
-    width:38.5%;
-    line-height:28px;
+
+  .code {
+    float: right;
+    text-align: center;
+    color: #fff;
+    background-color: #0ec3bc;
+    width: 38.5%;
+    line-height: 28px;
   }
-  .codetxt{
+
+  .codetxt {
     width: 100%;
     display: block;
-    font-size:28rpx;
+    font-size: 28rpx;
   }
-  .getCode{
+
+  .getCode {
     background-color: #ccc !important;
   }
-  .info{
+
+  .info {
     width: 300rpx;
     margin-left: 23rpx;
     margin-right: 23rpx;
     font-size: 25rpx;
-    text-align:left;
+    text-align: left;
     margin-top: 30rpx;
-    display:inline-block;
-    clear:both;
+    display: inline-block;
+    clear: both;
   }
-  .disFlax{
+
+  .disFlax {
     display: inline-block;
   }
-  .tl{
+
+  .tl {
     display: inline-block;
     text-align: left;
   }
-  .tr{
+
+  .tr {
     display: inline-block;
     text-align: right;
   }
-  .highlight{
+
+  .highlight {
     color: #0ec3bc;
   }
-  .highlightBgc{
+
+  .highlightBgc {
     background-color: #0ec3bc;
   }
-  .general{
+
+  .general {
     color: #aaaaaa;
     margin-right: 10rpx;
   }
-  .inline{
+
+  .inline {
     display: inline-block;
   }
 </style>
 
 <template lang="wxml">
   <view class="wrap">
-  <input type="number" class="weui-search-bar__input txt" placeholder="请输入手机号码" value="{{mobile}}" placeholder-style="color:#cbcbcb" bindinput="listenerPhoneInput"/>
-  <input password="true" class="weui-search-bar__input txt" placeholder="请输入密码"  placeholder-style="color:#cbcbcb" value="{{password}}" bindinput="listenerPasswordInput"/>
-  <!--<view class="codeWrap">-->
+    <input type="number" class="weui-search-bar__input txt" placeholder="请输入手机号码" value="{{mobile}}"
+           placeholder-style="color:#cbcbcb" bindinput="listenerPhoneInput"/>
+    <input password="true" class="weui-search-bar__input txt" placeholder="请输入密码" placeholder-style="color:#cbcbcb"
+           value="{{password}}" bindinput="listenerPasswordInput"/>
+    <!--<view class="codeWrap">-->
     <!--<input type="text" class="weui-search-bar__input txt codeleft" placeholder="请输入验证码" placeholder-style="color:#cbcbcb" bindinput="listenerSmsCodeInput" />-->
     <!--<view class="code" bindtap="getSmsCode" wx:if="{{wait === 60}}"><text class="codetxt">{{getMsg}}</text></view>-->
     <!--<view class="code getCode" wx:if="{{wait < 60}}"><text class="codetxt">{{getMsg}}</text></view>-->
-  <!--</view>-->
-  <!--<button  type="default" class="gloomyBtn" wx:if="{{smsCode === '' || clickedBtn === true}}">登录</button>-->
-  <!--<button  type="default" class="loginBtn" wx:if="{{smsCode !== ''&& clickedBtn === true}}" bindtap = "loginByMobile">登录</button>-->
-  <!--<button  type="default" class="gloomyBtn {{this.clickedBtn?'':'highlightBgc'}}" wx:if="{{smsCode === '' || clickedBtn === true}}">登录</button>-->
-  <!--<button  type="button" class="gloomyBtn {{clickedBtn?'':'highlightBgc'}}" bindtap = "loginByMobileSms">登录</button>-->
-  <button  type="button" class="gloomyBtn {{clickedBtn?'':'highlightBgc'}}" bindtap = "loginByMobilePassword">登录</button>
-  <view class="disFlax">
-    <view class="info tl" @tap="gotoRegister">
-      <text  class="general">没有账号?</text>
-      <view class="highlight inline">请注册</view>
+    <!--</view>-->
+    <!--<button  type="default" class="gloomyBtn" wx:if="{{smsCode === '' || clickedBtn === true}}">登录</button>-->
+    <!--<button  type="default" class="loginBtn" wx:if="{{smsCode !== ''&& clickedBtn === true}}" bindtap = "loginByMobile">登录</button>-->
+    <!--<button  type="default" class="gloomyBtn {{this.clickedBtn?'':'highlightBgc'}}" wx:if="{{smsCode === '' || clickedBtn === true}}">登录</button>-->
+    <!--<button  type="button" class="gloomyBtn {{clickedBtn?'':'highlightBgc'}}" bindtap = "loginByMobileSms">登录</button>-->
+    <button type="button" class="gloomyBtn {{clickedBtn?'':'highlightBgc'}}" bindtap="loginByMobilePassword">登录</button>
+    <view class="disFlax">
+      <view class="info tl" @tap="gotoRegister">
+        <text class="general">没有账号?</text>
+        <view class="highlight inline">请注册</view>
+      </view>
+      <view class="info tr" @tap="gotoRetrievepwd">
+        <text class="general">忘记密码?</text>
+        <view class="highlight inline">重置密码</view>
+      </view>
     </view>
-    <view class="info tr" @tap="gotoRetrievepwd">
-      <text  class="general">忘记密码?</text>
-      <view class="highlight inline">重置密码</view>
-    </view>
-  </view>
   </view>
 
 </template>
 <script>
-    import wepy from 'wepy'
-    import {getSmsCodeBySmsType, loginByMobile, loginByMobilePassword} from '../actions/authAction'
-    export default class login extends wepy.page {
-      config = {
-        navigationBarTitleText: '登录'
-      };
-      data = {
-        mobile: '', // 当前input手机号
-        smsCode: '', // 验证码
-        wait: 60, // 验证码等待时间
-        password: '', // 密码登录的密码
-        getMsg: '获取验证码', // 验证码提示
-        clickedBtn: true // 点击登录的状态判断 true 禁用 false 激活
-      };
-      methods = {
-        // 监听验证码输入
-        listenerSmsCodeInput: function (e) {
-          this.smsCode = e.detail.value
-          if (this.smsCode !== '' && this.smsCode !== undefined && this.smsCode.length === 6) {
-            this.clickedBtn = false
-          } else {
-            this.clickedBtn = true
-          }
-        },
-        //  监听手机号输入
-        listenerPhoneInput (e) {
-          this.mobile = e.detail.value
-          if (this.mobile !== '' && this.password !== '') {
-            this.clickedBtn = false
-          } else {
-            this.clickedBtn = true
-          }
-        },
-       //  监听密码输入
-        listenerPasswordInput (e) {
-          this.password = e.detail.value
-          if (this.mobile !== '' && this.password !== '') {
-            this.clickedBtn = false
-          } else {
-            this.clickedBtn = true
-          }
-        },
-        // 获取验证码
-        // getSmsCode: function () {
-        //   getSmsCodeBySmsType(this.mobile, 'login').then((res) => {
-        //     if (res.data.success === true) {
-        //       this.timeFunction()
-        //     } else if (res.data.success === false) {
-        //       let str = res.data.message.substring(this.mobile.length)
-        //       console.log('str', str)
-        //       if (str === 'invalid mobile number') {
-        //         wx.showModal({
-        //           title: '提示',
-        //           content: '手机号' + this.mobile + '不正确'
-        //         })
-        //       } else if (res.data.message === '触发天级流控Permits:10') {
-        //         wx.showModal({
-        //           title: '提示',
-        //           content: '您今日发送的验收码已超出限制！',
-        //           showCancel: false
-        //         })
-        //       } else {
-        //         wx.showModal({
-        //           title: '提示',
-        //           content: res.data.message,
-        //           showCancel: false
-        //         })
-        //       }
-        //     }
-        //   })
-        // }, // 获取验证码
-        // 通过手机号,密码登录
-        loginByMobilePassword: function () {
-          var that = this
-          console.log(this.mobile, this.password)
+  import wepy from 'wepy'
+  import {loginByMobilePassword} from '../actions/authAction'
+
+  export default class login extends wepy.page {
+    config = {
+      navigationBarTitleText: '登录'
+    };
+    data = {
+      mobile: '', // 当前input手机号
+      smsCode: '', // 验证码
+      wait: 60, // 验证码等待时间
+      password: '', // 密码登录的密码
+      getMsg: '获取验证码', // 验证码提示
+      clickedBtn: true // 点击登录的状态判断 true 禁用 false 激活
+    };
+    methods = {
+      // 监听验证码输入
+      listenerSmsCodeInput: function (e) {
+        this.smsCode = e.detail.value
+        if (this.smsCode !== '' && this.smsCode !== undefined && this.smsCode.length === 6) {
+          this.clickedBtn = false
+        } else {
           this.clickedBtn = true
-          wx.showLoading({
-            title: '加载中',
-            mask: true
-          })
-          loginByMobilePassword(this.mobile, this.password).then(res => {
-            wx.hideLoading()
-            if (res.data !== undefined && res.data.success === false) {
-              that.$apply()
-              wx.showModal({
-                title: '提示',
-                content: res.data.message,
-                showCancel: false
-              })
-            }
-            if (res.userType) {
-              if ((res.userType === 'hotel' || res.userType === 'hr') && !res.company) {
-                wx.navigateTo({
-                  url: 'addCompanyInfo?userType=' + res.userType
-                })
-              } else {
-                wx.switchTab({
-                  url: 'home'
-                })
-              }
-            }
-          }, error => {
+        }
+      },
+      //  监听手机号输入
+      listenerPhoneInput(e) {
+        this.mobile = e.detail.value
+        if (this.mobile !== '' && this.password !== '') {
+          this.clickedBtn = false
+        } else {
+          this.clickedBtn = true
+        }
+      },
+      //  监听密码输入
+      listenerPasswordInput(e) {
+        this.password = e.detail.value
+        if (this.mobile !== '' && this.password !== '') {
+          this.clickedBtn = false
+        } else {
+          this.clickedBtn = true
+        }
+      },
+      // 获取验证码
+      // getSmsCode: function () {
+      //   getSmsCodeBySmsType(this.mobile, 'login').then((res) => {
+      //     if (res.data.success === true) {
+      //       this.timeFunction()
+      //     } else if (res.data.success === false) {
+      //       let str = res.data.message.substring(this.mobile.length)
+      //       console.log('str', str)
+      //       if (str === 'invalid mobile number') {
+      //         wx.showModal({
+      //           title: '提示',
+      //           content: '手机号' + this.mobile + '不正确'
+      //         })
+      //       } else if (res.data.message === '触发天级流控Permits:10') {
+      //         wx.showModal({
+      //           title: '提示',
+      //           content: '您今日发送的验收码已超出限制！',
+      //           showCancel: false
+      //         })
+      //       } else {
+      //         wx.showModal({
+      //           title: '提示',
+      //           content: res.data.message,
+      //           showCancel: false
+      //         })
+      //       }
+      //     }
+      //   })
+      // }, // 获取验证码
+      // 通过手机号,密码登录
+      loginByMobilePassword: function () {
+        var that = this
+        console.log(this.mobile, this.password)
+        this.clickedBtn = true
+        wx.showLoading({
+          title: '加载中',
+          mask: true
+        })
+        loginByMobilePassword(this.mobile, this.password).then(res => {
+          wx.hideLoading()
+          if (res.data !== undefined && res.data.success === false) {
+            that.$apply()
             wx.showModal({
               title: '提示',
-              content: '登录失败，' + error,
+              content: res.data.message,
               showCancel: false
             })
-          })
-        },
-        // 通过验证码登录
-        // loginByMobileSms: function () {
-        //   var that = this
-        //   if (this.clickedBtn === false) {
-        //     wx.showLoading({
-        //       title: '加载中',
-        //       mask: true
-        //     })
-        //     loginByMobile(this.mobile, this.smsCode).then(res => {
-        //       wx.hideLoading()
-        //       if (res.data !== undefined && res.data.success === false) {
-        //         that.$apply()
-        //         wx.showModal({
-        //           title: '提示',
-        //           content: res.data.message,
-        //           showCancel: false
-        //         })
-        //       }
-        //       if (res.userType) {
-        //         if ((res.userType === 'hotel' || res.userType === 'hr') && !res.company) {
-        //           wx.navigateTo({
-        //             url: 'addCompanyInfo?userType=' + res.userType
-        //           })
-        //         } else {
-        //           wx.switchTab({
-        //             url: 'home'
-        //           })
-        //         }
-        //       }
-        //     }, error => {
-        //       wx.showModal({
-        //         title: '提示',
-        //         content: '登录失败，' + error,
-        //         showCancel: false
-        //       })
-        //     })
-        //   }
-        // },
-        // 跳到注册页
-        gotoRegister: function() {
-          wx.navigateTo({
-            url: 'register'
-          })
-        },
-        // 跳到重置密码
-        gotoRetrievepwd: function () {
-          wx.navigateTo({
-            url: 'retrievepwd'
-          })
-        }
-      };
-      // 判断验证码超时时间设置
-      // timeFunction () {
-      //   var that = this
-      //   if (this.wait === 0) {
-      //     this.getMsg = '获取验证码'
-      //     this.wait = 60
-      //   } else {
-      //     this.getMsg = '重新发送(' + this.wait + 's)'
-      //     this.wait--
-      //     setTimeout(function() {
-      //       that.timeFunction()
-      //     },
-      //       1000)
-      //   }
-      //   this.$apply()
-      // }
-      fetchData() {
-        var userInfo = wx.getStorageSync('keyUserInfo')
-        console.log('user info in select.fetchData:', userInfo)
-        if (userInfo) {
-          if (userInfo.userType === 'hotel' || userInfo.userType === 'hr') {
-            if (!userInfo.company) {
+          }
+          if (res.userType) {
+            if ((res.userType === 'hotel' || res.userType === 'hr') && !res.company) {
               wx.navigateTo({
-                url: 'addCompanyInfo?userType=' + userInfo.userType
+                url: 'addCompanyInfo?userType=' + res.userType
               })
             } else {
               wx.switchTab({
                 url: 'home'
               })
             }
+          }
+        }, error => {
+          wx.showModal({
+            title: '提示',
+            content: '登录失败，' + error,
+            showCancel: false
+          })
+        })
+      },
+      // 通过验证码登录
+      // loginByMobileSms: function () {
+      //   var that = this
+      //   if (this.clickedBtn === false) {
+      //     wx.showLoading({
+      //       title: '加载中',
+      //       mask: true
+      //     })
+      //     loginByMobile(this.mobile, this.smsCode).then(res => {
+      //       wx.hideLoading()
+      //       if (res.data !== undefined && res.data.success === false) {
+      //         that.$apply()
+      //         wx.showModal({
+      //           title: '提示',
+      //           content: res.data.message,
+      //           showCancel: false
+      //         })
+      //       }
+      //       if (res.userType) {
+      //         if ((res.userType === 'hotel' || res.userType === 'hr') && !res.company) {
+      //           wx.navigateTo({
+      //             url: 'addCompanyInfo?userType=' + res.userType
+      //           })
+      //         } else {
+      //           wx.switchTab({
+      //             url: 'home'
+      //           })
+      //         }
+      //       }
+      //     }, error => {
+      //       wx.showModal({
+      //         title: '提示',
+      //         content: '登录失败，' + error,
+      //         showCancel: false
+      //       })
+      //     })
+      //   }
+      // },
+      // 跳到注册页
+      gotoRegister: function () {
+        wx.navigateTo({
+          url: 'register'
+        })
+      },
+      // 跳到重置密码
+      gotoRetrievepwd: function () {
+        wx.navigateTo({
+          url: 'retrievepwd'
+        })
+      }
+    };
+    // 判断验证码超时时间设置
+    // timeFunction () {
+    //   var that = this
+    //   if (this.wait === 0) {
+    //     this.getMsg = '获取验证码'
+    //     this.wait = 60
+    //   } else {
+    //     this.getMsg = '重新发送(' + this.wait + 's)'
+    //     this.wait--
+    //     setTimeout(function() {
+    //       that.timeFunction()
+    //     },
+    //       1000)
+    //   }
+    //   this.$apply()
+    // }
+    fetchData() {
+      var userInfo = wx.getStorageSync('keyUserInfo')
+      console.log('user info in select.fetchData:', userInfo)
+      if (userInfo) {
+        if (userInfo.userType === 'hotel' || userInfo.userType === 'hr') {
+          if (!userInfo.company) {
+            wx.navigateTo({
+              url: 'addCompanyInfo?userType=' + userInfo.userType
+            })
           } else {
             wx.switchTab({
               url: 'home'
             })
           }
         } else {
-          var wxUserInfo = wx.getStorageSync('keyWxUserInfo')
-          console.log(this.loginMobile)
-          if (wxUserInfo && wxUserInfo.mobile) {
-            wx.redirectTo({
-              url: 'login?mobile=' + wxUserInfo.mobile
-            })
-          }
-        }
-        wx.switchTab({
-          url: 'login'
-        })
-      }
-      onLoad(option) {
-        // console.log(JSON.stringify(option) + '---------------------------------------------------')
-        // 通过授权获取当前用户手机号到input中
-        this.mobile = option.mobile
-        wepy.$instance.addListener(function (isAuthed, wxUserInfo, userInfo) {
-          wx.hideLoading()
-          if (isAuthed && userInfo.id) {
-            wx.switchTab({
-              url: 'home'
-            })
-          }
-        })
-        if (wepy.$instance.globalData.isCheckAuth) {
-          wx.showLoading({
-            title: '身份校验中'
+          wx.switchTab({
+            url: 'home'
           })
         }
-        // this.fetchData()
+      } else {
+        var wxUserInfo = wx.getStorageSync('keyWxUserInfo')
+        console.log(this.loginMobile)
+        if (wxUserInfo && wxUserInfo.mobile) {
+          wx.redirectTo({
+            url: 'login?mobile=' + wxUserInfo.mobile
+          })
+        }
       }
-      onPullDownRefresh() {
-        console.log('select page begin onPullDownRefresh')
-        this.fetchData()
-        console.log('select page begin stopPullDownRefresh:')
-        wx.stopPullDownRefresh()
-      }
-
-      onShow() {}
+      wx.switchTab({
+        url: 'login'
+      })
     }
+
+    onLoad(option) {
+      // console.log(JSON.stringify(option) + '---------------------------------------------------')
+      // 通过授权获取当前用户手机号到input中
+      this.mobile = option.mobile
+      wepy.$instance.addListener(function (isAuthed, wxUserInfo, userInfo) {
+        wx.hideLoading()
+        if (isAuthed && userInfo.id) {
+          wx.switchTab({
+            url: 'home'
+          })
+        }
+      })
+      if (wepy.$instance.globalData.isCheckAuth) {
+        wx.showLoading({
+          title: '身份校验中'
+        })
+      }
+      // this.fetchData()
+    }
+
+    onPullDownRefresh() {
+      console.log('select page begin onPullDownRefresh')
+      this.fetchData()
+      console.log('select page begin stopPullDownRefresh:')
+      wx.stopPullDownRefresh()
+    }
+
+    onShow() {
+    }
+  }
 </script>

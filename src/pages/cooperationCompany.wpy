@@ -1,3 +1,5 @@
+<!--suppress CssInvalidPropertyValue -->
+<style lang="less">
 <style lang="less">
   .wrap {
     background-color: #fff;
@@ -10,12 +12,12 @@
 
   .txt {
     color: #121212;
-    font-size: 32 rpx;
+    font-size: 32rpx;
     text-align: left;
     width: 90%;
-    padding: 20 rpx 25 rpx;
+    padding: 20rpx 25rpx;
     background: #f8f8f8;
-    margin: 10% auto 50 rpx auto;
+    margin: 10% auto 50rpx auto;
   }
 
   .left {
@@ -28,8 +30,8 @@
 
   .general {
     color: #aaaaaa;
-    margin-right: 30 rpx;
-    font-size: 26 rpx;
+    margin-right: 30rpx;
+    font-size: 26rpx;
   }
 
   .inline {
@@ -37,23 +39,23 @@
   }
 
   .leftIcon {
-    margin-right: 25 rpx;
+    margin-right: 25rpx;
     vertical-align: middle;
-    width: 88 rpx;
-    height: 88 rpx;
+    width: 88rpx;
+    height: 88rpx;
     border-radius: 50%;
   }
 
   .text {
     color: #121212;
-    font-size: 30 rpx;
+    font-size: 30rpx;
     text-align: left;
   }
 
   .weui-cell {
     position: static !important;
-    border-bottom: 1 rpx solid #e1e1e1;
-    padding: 20 rpx 5 rpx;
+    border-bottom: 1rpx solid #e1e1e1;
+    padding: 20rpx 5rpx;
   }
 
   .weui-cells {
@@ -66,7 +68,7 @@
   }
 
   .name {
-    margin-bottom: -10 rpx;
+    margin-bottom: -10rpx;
     width: 100%;
   }
 
@@ -78,13 +80,13 @@
     color: #fff;
     width: 100%;
     text-align: center;
-    font-size: 30 rpx;
-    padding: 25 rpx 0;
+    font-size: 30rpx;
+    padding: 25rpx 0;
   }
 
   /*删除操作*/
   .touch-item {
-    font-size: 14 rpx;
+    font-size: 14rpx;
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid #ccc;
@@ -94,21 +96,21 @@
 
   .del {
     background-color: orangered;
-    width: 85 rpx;
+    width: 85rpx;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     color: #fff;
-    transform: translateX(90 rpx);
+    transform: translateX(90rpx);
     -webkit-transition: all .4s;
     transition: all .4s;
-    height: 76 rpx;
+    height: 76rpx;
 
   }
 
   .touch-move-active .del {
-    transform: translateX(-70 rpx);
+    transform: translateX(-70rpx);
   }
 </style>
 

@@ -37,12 +37,13 @@
 
     onLoad() {
       let hotelId = getCompanyId()
-      new QRCode('canvas', {
+      let qrCode = new QRCode('canvas', {
         text: hotelId,
         width: 300,
         height: 300,
         correctLevel: QRCode.CorrectLevel.H
       })
+      console.log(qrCode)
     }
 
     onShow() {

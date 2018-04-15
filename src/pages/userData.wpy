@@ -1,3 +1,4 @@
+<!--suppress CssInvalidPropertyValue -->
 <style lang="less">
   .wrap {
     text-align: center;
@@ -5,12 +6,12 @@
 
   .txt {
     color: #121212;
-    font-size: 32 rpx;
+    font-size: 32rpx;
     text-align: left;
     width: 90%;
-    padding: 20 rpx 25 rpx;
+    padding: 20rpx 25rpx;
     background: #f8f8f8;
-    margin: 10% auto 50 rpx auto;
+    margin: 10% auto 50rpx auto;
   }
 
   .left {
@@ -23,8 +24,8 @@
 
   .general {
     color: #aaaaaa;
-    margin-right: 10 rpx;
-    font-size: 28 rpx;
+    margin-right: 10rpx;
+    font-size: 28rpx;
   }
 
   .inline {
@@ -32,48 +33,48 @@
   }
 
   .leftIcon {
-    margin-right: 25 rpx;
+    margin-right: 25rpx;
     vertical-align: middle;
-    width: 45 rpx;
-    height: 33 rpx;
+    width: 45rpx;
+    height: 33rpx;
   }
 
   .lefticon {
-    margin-right: 25 rpx;
+    margin-right: 25rpx;
     vertical-align: middle;
-    width: 45 rpx;
-    height: 45 rpx;
+    width: 45rpx;
+    height: 45rpx;
   }
 
   .icon {
-    width: 74 rpx;
-    height: 74 rpx;
+    width: 74rpx;
+    height: 74rpx;
     margin: 0 auto;
     display: block;
-    margin-top: 28 rpx;
+    margin-top: 28rpx;
   }
 
   .text {
     color: #808080;
-    font-size: 28 rpx;
+    font-size: 28rpx;
     text-align: right;
-    margin-right: 10 rpx;
+    margin-right: 10rpx;
   }
 
   .name {
     color: #121212;
-    font-size: 30 rpx;
+    font-size: 30rpx;
     font-weight: 600;
     text-align: left;
   }
 
   .weui-cell {
     position: static !important;
-    border-bottom: 1 rpx solid #e1e1e1;
+    border-bottom: 1rpx solid #e1e1e1;
     width: 90%;
     margin-left: auto;
     margin-right: auto;
-    padding: 22 rpx 10 rpx;
+    padding: 22rpx 10rpx;
     background-color: #fff;
   }
 
@@ -84,17 +85,17 @@
   }
 
   .head {
-    width: 110 rpx;
-    height: 110 rpx;
+    width: 110rpx;
+    height: 110rpx;
     border-radius: 50%;
   }
 
   .logout {
     color: #ff0004;
-    font-size: 29 rpx;
+    font-size: 29rpx;
     background-color: #fff;
-    line-height: 90 rpx;
-    margin-top: 20 rpx;
+    line-height: 90rpx;
+    margin-top: 20rpx;
   }
 
   /*弹窗*/
@@ -118,30 +119,30 @@
     z-index: 1001;
     background: #FAFAFA;
     margin: -150px 5% 0 5%;
-    padding-bottom: 35 rpx;
+    padding-bottom: 35rpx;
     border-radius: 12px;
     width: 90%;
   }
 
   .drawer_title {
-    line-height: 120 rpx;
-    font-size: 37 rpx;
+    line-height: 120rpx;
+    font-size: 37rpx;
     color: #000;
     text-align: center;
   }
 
   .borderView {
-    border-bottom: 1 rpx solid #e1e1e1;
-    margin: 0 50 rpx 50 rpx;
+    border-bottom: 1rpx solid #e1e1e1;
+    margin: 0 50rpx 50rpx;
   }
 
   .saveBtn {
     width: 80%;
     margin: 0 auto;
-    line-height: 90 rpx;
-    border-radius: 45 rpx;
+    line-height: 90rpx;
+    border-radius: 45rpx;
     background-color: #0ec3bc;
-    font-size: 26 rpx;
+    font-size: 26rpx;
     position: static !important;
     color: #fff;
   }
@@ -149,49 +150,49 @@
   .save {
     width: 40%;
     margin: 0 auto;
-    line-height: 90 rpx;
-    border-radius: 20 rpx;
+    line-height: 90rpx;
+    border-radius: 20rpx;
     background-color: #0ec3bc;
-    font-size: 26 rpx;
+    font-size: 26rpx;
     position: static !important;
     color: #fff;
     display: inline-block;
-    margin-left: 10 rpx;
+    margin-left: 10rpx;
   }
 
   .close {
     width: 40%;
     margin: 0 auto;
-    line-height: 90 rpx;
-    border-radius: 20 rpx;
+    line-height: 90rpx;
+    border-radius: 20rpx;
     background-color: #fff;
-    font-size: 26 rpx;
+    font-size: 26rpx;
     position: static !important;
     color: #666;
     display: inline-block;
-    border: 1 rpx solid #eee;
-    margin-right: 10 rpx;
+    border: 1rpx solid #eee;
+    margin-right: 10rpx;
   }
 
   .inputname {
     color: #121212;
-    font-size: 28 rpx;
+    font-size: 28rpx;
     text-align: left;
     width: 80%;
     margin: 0 auto;
-    line-height: 60 rpx;
-    margin-bottom: 20 rpx;
+    line-height: 60rpx;
+    margin-bottom: 20rpx;
   }
 
   .putLicense {
     float: right;
-    margin-right: 63 rpx;
+    margin-right: 63rpx;
     color: #121212;
-    font-size: 30 rpx;
+    font-size: 30rpx;
   }
 
   .weui-cell__hd text {
-    font-size: 28 rpx;
+    font-size: 28rpx;
   }
 </style>
 
@@ -330,7 +331,6 @@
     changeIdcardnumber,
     getMe
   } from '../actions/workerAction'
-  import {login} from '../util/weChatAuth'
   import {UrlHost} from '../constants/index'
 
   export default class userData extends wepy.page {
@@ -396,7 +396,6 @@
           itemList: ['男', '女'],
           itemColor: '#0ec3bc',
           success: function (res) {
-            console.log('select sex result:', res)
             switch (res.tapIndex) {
               case 0:
                 that.userInfo.gender = '男'
@@ -429,7 +428,6 @@
                 that.$apply()
                 wx.hideLoading()
               }
-              console.log('changeGender data', data)
             })
           }
         })
@@ -533,15 +531,15 @@
       logout: function () {
         wx.showModal({
           title: '提示',
-          content: '您将退出当前系统，是否确认？',
+          content: '您确认退出当前系统？',
           success: function (res) {
             if (res.confirm) {
               wx.clearStorage()
               wx.clearStorageSync()
               // login((wxUserinfo) => {
-              //   wx.reLaunch({
-              //     url: 'index'
-              //   })
+              wx.reLaunch({
+                url: 'login'
+              })
               // })
             }
           }

@@ -1,3 +1,4 @@
+<!--suppress CssInvalidPropertyValue -->
 <style lang="less">
   .wrap {
     background-color: #fff;
@@ -14,44 +15,44 @@
 
   .txt {
     color: #121212;
-    font-size: 30 rpx;
+    font-size: 30rpx;
     text-align: left;
-    line-height: 55 rpx;
+    line-height: 55rpx;
   }
 
   .title {
-    font-size: 36 rpx;
+    font-size: 36rpx;
     text-align: left;
     display: block;
-    margin-bottom: 8 rpx;
+    margin-bottom: 8rpx;
     font-weight: bold;
   }
 
   .general {
     color: #aaaaaa;
-    font-size: 26 rpx;
+    font-size: 26rpx;
     text-align: left;
-    margin-bottom: 30 rpx;
+    margin-bottom: 30rpx;
     width: 100%;
   }
 
   .time {
-    margin-left: 10 rpx;
-    font-size: 26 rpx;
+    margin-left: 10rpx;
+    font-size: 26rpx;
     color: #aaaaaa;
   }
 
   .icon {
-    width: 150 rpx;
-    height: 150 rpx;
-    margin: 28 rpx auto 20 rpx auto;
+    width: 150rpx;
+    height: 150rpx;
+    margin: 28rpx auto 20rpx auto;
   }
 
   .light {
     color: #13bfc1;
-    font-size: 28 rpx;
+    font-size: 28rpx;
     margin-top: 72%;
-    margin-bottom: 40 rpx;
+    margin-bottom: 40rpx;
   }
 
   .block {
@@ -60,7 +61,7 @@
   }
 
   .info {
-    font-size: 26 rpx;
+    font-size: 26rpx;
     color: #a1a1a1;
   }
 
