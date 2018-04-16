@@ -1,6 +1,5 @@
 <!--suppress CssInvalidPropertyValue -->
 <style lang="less">
-<style lang="less">
   .wrap {
     background-color: #fff;
     text-align: center;

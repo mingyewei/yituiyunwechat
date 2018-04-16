@@ -169,7 +169,7 @@
         <view class="weui-cell__hd">
           <image src="../images/my/bind.png" class="leftIcon"></image>
         </view>
-        <view class="weui-cell__bd text">公司绑定</view>
+        <view class="weui-cell__bd text">绑定公司</view>
         <view class="weui-cell__ft weui-cell__ft_in-access"></view>
       </view>
 

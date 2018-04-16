@@ -1,12 +1,15 @@
+<!--suppress CssInvalidPropertyValue -->
 <style lang="less">
-  .wrap{
-    background-color:#fff;
-    padding-top: 5%;
-    width: 95%;
-    margin-left: auto;
-    margin-right: auto;
-  }
   page{
+    background-color: #FFFFFF;
+    height: 100%;
+    width: 100%;
+  }
+  .wrap{
+    background-color: #f1f1f1;
+    width: 100%;
+  }
+  .radio-group{
     background-color: #fff;
   }
   .radio{
@@ -25,29 +28,89 @@
     width: 100%;
     margin-top:30%;
   }
+  .searchmd{
+    color: #f1f1f1;
+    display: inline-block;
+    width: 100%;
+    height:100rpx;
+    padding:20rpx 0rpx 0rpx 10rpx;
+  }
+  .search{
+    font-size:24rpx;
+    text-align:left;
+    width:75%;
+    border-radius:10rpx;
+    border:0.5px solid #d5d5d;
+    height:60rpx;
+    line-height:60rpx;
+    display:inline-block;
+    background:#fff;
+
+  }
+  [placeholder] {
+    font-family: 'Microsoft yahei';
+    color: #999999;
+    text-indent: 12px;
+  }
+  .searchBtn{
+    width:120rpx;
+    height:60rpx;
+    text-align:center;
+    display:inline-block;
+    font-size:26rpx;
+    color:#858585;
+    margin-left:15rpx;
+    border-radius:7rpx;
+    line-height:60rpx;
+    border:none;
+    background-color: #f1f1f1;
+    outline:none;
+  }
+  .add {
+    position:fixed;
+    left:0;
+    bottom:0;
+    background-color:#0ec3bc;
+    color:#fff;
+    width:100%;
+    text-align:center;
+    font-size:30rpx;
+    padding:25rpx 0;
+
+  }
+
 </style>
 
 <template lang="wxml">
   <view class="wrap">
-  <radio-group class="radio-group" bindchange="radioChange">
-  <view  wx:if="{{showHrcompanies.length === 0}}" class="Null">抱歉！暂时没有相关的人力公司哦~~</view>
-    <label class="radio" wx:for="{{showHrcompanies}}"  wx:for-item="item"  wx:key="{{item.id}}">
-   {{item.name}} <radio value="{{item.id}}"  />
-    </label>
-  </radio-group>
+    <view class="searchmd">
+      <input class="weui-input search" type="text" placeholder="搜索人力公司" bindinput="search">
+      <button class="searchBtn" bindtap="searchHrInfo">搜索</button>
+    </view>
   </view>
+  <view class="wrap">
+    <radio-group class="radio-group" bindchange="radioChange">
+      <view wx:if="{{showHrcompanies.length === 0}}" class="Null">抱歉！暂时没有相关的人力公司哦~~</view>
+      <label class="radio" wx:for="{{showHrcompanies}}" wx:for-item="item" wx:key="{{item.id}}">
+        {{item.name}}
+        <radio value="{{item.id}}"/>
+      </label>
+    </radio-group>
+  </view>
+  <view class="add" wx:if="{{showHrcompanies.length !== 0}}" bindtap="radioAdd">确定添加</view>
 </template>
 <script>
     import wepy from 'wepy'
     import {getUserType, getCompanyId, getUserId} from '../util/userInfo'
     import {searchHrcompanies} from '../actions/hrcompaniesAction'
     import {hotelAddHrcompanies, fetchHrcompanies} from '../actions/hotelAction'
-    import {workersBindHrcompanies, searchWorkerHrs} from '../actions/workerAction'
+    import {workersBindHrcompaniesList, searchWorkerHrs} from '../actions/workerAction'
     export default class selectCompany extends wepy.page {
       config = {
         navigationBarTitleText: '选择人力公司'
       };
       data = {
+        searchInfo: '',
         showHrcompanies: [],
         queryObj: {
           paginator: {
@@ -55,32 +118,55 @@
             pageSize: 100
           },
           selector: {
-            status: 1
+            status: 1,
+            name: ''
           }
         },
-        idSet: {
-          hotelId: '',
-          hrCompanyId: ''
-        },
-        workerIdSet: {
-          workerId: '',
-          hrCompanyId: ''
-        },
+        // set: new Set(),
+        hotelSethridS: [],
+        workerSetHrIdS: [],
         workerHrs: [],
+        hotelId: '',
+        workerId: '',
         userId: '',
         allHrcompanies: [],
         hotelhrcompanies: []
       };
       methods = {
+        search(e) {
+          this.queryObj.selector.name = e.detail.value
+        },
         radioChange: function(e) {
           var that = this
           var userType = getUserType()
           switch (userType) {
             case 'hotel':
-              that.idSet.hrCompanyId = e.detail.value
+              that.hotelSethridS.push({
+                id: e.detail.value
+              })
+              that.$apply()
+              break
+            case 'hr':
+              break
+            case 'worker':
+              // var set = new Set()
+              // set.add({id: e.detail.value})
+              that.workerSetHrIdS.push({
+                id: e.detail.value
+              })
+              // that.set.add({id: e.detail.value})
+              // console.log(that.set)
+              that.$apply()
+              break
+          }
+        },
+        radioAdd: function () {
+          var that = this
+          var userType = getUserType()
+          switch (userType) {
+            case 'hotel':
               wx.showLoading({title: '添加中'})
-              hotelAddHrcompanies(this.idSet).then((data) => {
-                console.log('hotelAddHrcompanies result', data)
+              hotelAddHrcompanies(this.hotelSethridS).then((data) => {
                 if (data.data.success) {
                   wx.hideLoading()
                   wx.showModal({
@@ -102,16 +188,15 @@
                     content: '添加失败，请重试！',
                     showCancel: false
                   })
+                  wx.hideLoading()
                 }
               })
               break
             case 'hr':
               break
             case 'worker':
-              that.workerIdSet.hrCompanyId = e.detail.value
               wx.showLoading({title: '添加中'})
-              workersBindHrcompanies(this.workerIdSet).then((data) => {
-                console.log('data.success', data.success)
+              workersBindHrcompaniesList(that.workerSetHrIdS).then((data) => {
                 if (data.data.success) {
                   wx.hideLoading()
                   wx.showModal({
@@ -133,12 +218,11 @@
                     content: data.data.message,
                     showCancel: false
                   })
+                  wx.hideLoading()
                 }
-                console.log('workersBindHrcompanies result', data)
               })
               break
           }
-          console.log('radio发生change事件，携带value值为：', e.detail.value)
         }
       };
       searchHrInfo() {
@@ -180,6 +264,7 @@
               searchWorkerHrs(this.queryObj).then((data) => {
                 that.workerHrs = data.data.data.list
                 console.log('searchWorkerHrs', that.workerHrs)
+                that.showHrcompanies = []
                 for (var i = 0; i < that.allHrcompanies.length; i++) {
                   var hrcompany = that.allHrcompanies[i]
                   var hrcompanyId = hrcompany.id
@@ -211,13 +296,13 @@
         var userType = getUserType()
         switch (userType) {
           case 'hotel':
-            that.idSet.hotelId = getCompanyId()
+            that.hotelId = getCompanyId()
             that.searchHrInfo()
             that.$apply()
             break
           case 'worker':
             that.userId = getUserId()
-            that.workerIdSet.workerId = getUserId()
+            that.workerId = getUserId()
             that.searchHrInfo()
             that.$apply()
             break

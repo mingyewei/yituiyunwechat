@@ -1,3 +1,4 @@
+<!--suppress CssInvalidPropertyValue -->
 <style lang="less">
   .bindHrwrap{
     background-color:#fff;
@@ -23,27 +24,37 @@
     color: #0ec3bc;
   }
   .general{
-    color: #aaaaaa;
-    margin-right:30rpx;
-    font-size: 26rpx;
+    color:#121212;
+    font-size:26rpx;
+    display:block;
+    width:100%;
+    margin-left:30rpx;
+    margin-bottom:20rpx;
+    margin-right: 30rpx;
+  }
+  .general .generalInfo{
+    color: #666666;
+    font-weight: bold;
+    display: inline-block;
+    width:170rpx;
   }
   .inline{
     display: inline-block;
   }
   .leftIcon{
-    margin-right: 25rpx;
-    vertical-align: middle;
+    vertical-align:middle;
     width:88rpx;
     height:88rpx;
-    border-radius: 50%;
+    border-radius:50%;
+    float:left;
+    margin-left:20rpx;
+    margin-top: 20rpx;
   }
   .text {
     color:#121212;
     font-size:30rpx;
     text-align:left;
-  }
-  .weui-cell{
-    padding:20rpx 5rpx;
+    position: relative;
   }
   .weui-cells{
     width: 95%;
@@ -52,7 +63,11 @@
     margin-top:2%;
   }
   .name{
-    margin-bottom: -10rpx;
+    float:left;
+    margin-left:30rpx;
+    margin-top:36rpx;
+    font-weight:700;
+    font-size:32rpx;
   }
   .add{
     position: fixed;
@@ -73,46 +88,105 @@
     margin-top:30%;
     padding: 30rpx 0;
   }
-</style>
+ .nullTips {
+    text-align: center;
+    font-size: 24rpx;
+    color: #999;
+    width: 100%;
+    padding: 30rpx 0;
+  }
 
+  .gloomyBtn {
+    width: 94%;
+    font-size: 32rpx;
+    margin-top: 40rpx;
+    border-radius: 60rpx;
+    color: #FFFFFF;
+    background-color: #0ec3bc;
+  }
+  .weui-cell_access{
+    margin:50rpx 25rpx;
+    box-shadow:0 0 35rpx 0 #cccccc;
+    border-radius:30rpx;
+    padding-bottom:15rpx;
+  }
+  .weui-cell__hd{
+    height: 125rpx;
+  }
+  .binding{
+    height:50rpx;
+    width:170rpx;
+    border-radius:23rpx;
+    background:#ff6181;
+    color:#FFFFFF;
+    font-size:24rpx;
+    position:absolute;
+    right:30rpx;
+    top:0rpx;
+    text-align:center;
+    line-height:50rpx;
+  }
+  .unbinding{
+    background: #959595;
+  }
+  .address{
+    display:inline-block;
+    width:430rpx;
+
+  }
+  .InfoTips {
+    text-align: center;
+    font-size: 22rpx;
+    color: #999;
+    width: 100%;
+    padding: 30rpx 0;
+  }
+</style>
 <template lang="wxml">
   <view class="bindHrwrap">
     <view class="weui-cells">
-  <view  wx:if="{{hrcompanies.length === 0}}" class="Null">还未绑定哦, 快去添加几个吧~~</view>
-  <block class="item" wx:for="{{hrcompanies}}" wx:for-item="item"  wx:key="rowId">
-      <view class="weui-cell weui-cell_access">
-        <view class="weui-cell__hd">
-          <block wx:if="{{item.logo !== undefined && item.logo !== ''}}" >
-            <image src="{{item.logo}}" class="leftIcon"></image>
-          </block>
-          <block wx:if="{{item.logo === undefined || item.logo === ''}}" >
-              <image src="../images/my/default.png" class="leftIcon"></image>
-          </block>
-        </view>
-        <view class="weui-cell__bd text">
-          <view class="name">{{item.name}}</view>
-          <text class="general">负责人：{{item.leader}}</text>
-          <text class="general">手机号：{{item.leaderMobile}}</text>
-        </view>
+      <view wx:if="{{hrcompanies.length === 0}}">
+        <view class="Null">还未绑定哦, 快去添加几个吧~~</view>
+        <button type="button" class="gloomyBtn" bindtap="scanCodeAdd">扫码绑定</button>
+        <button type="button" class="gloomyBtn" bindtap="actioncnt">人力资源库</button>
+        <view class="nullTips">提示:　绑定人力公司后即可领取派发的任务并获取酬劳,如若解绑则需要一段时间的解绑期,解绑期到后则自动解绑</view>
       </view>
-  </block>
-
-
+      <block class="item" wx:for="{{hrcompanies}}" wx:for-item="item" wx:key="rowId">
+        <view class="weui-cell_access">
+          <view class="weui-cell__hd">
+            <block wx:if="{{item.logo !== undefined && item.logo !== ''}}">
+              <image src="{{item.logo}}" class="leftIcon"></image>
+            </block>
+            <block wx:if="{{item.logo === undefined || item.logo === ''}}">
+              <image src="../images/my/default.png" class="leftIcon"></image>
+            </block>
+            <text class="name">{{item.name}}</text>
+          </view>
+          <view class="weui-cell__bd text">
+            <text class="general"><text class="generalInfo">负责人：</text>{{item.leader}}</text>
+            <text class="general"><text class="generalInfo">负责人电话：</text>{{item.leaderMobile}}</text>
+            <text class="general"><text class="generalInfo">公司地址：</text><text class="address">{{item.address}}</text></text>
+            <view class="InfoTips" style="padding: 0">{{item.tipStr}}</view>
+            <button type="button" class="binding {{item.bindStatus===1?'':'unbinding'}}" bindtap="unbinding({{item.bindStatus}}, {{item.name}}, {{item.id}})">{{item.bindState}}</button>
+          </view>
+        </view>
+      </block>
+      <view class="add" wx:if="{{hrcompanies.length !== 0}}" bindtap="actioncnt">绑定公司</view>
     </view>
-
-    <view class="add" bindtap="actioncnt">添加合作人力公司</view>
   </view>
 </template>
 <script>
     import wepy from 'wepy'
-    import {searchWorkerHrs} from '../actions/workerAction'
+    import {searchWorkerHrs, unBinding} from '../actions/workerAction'
     import {getUserId} from '../util/userInfo'
 
     export default class workersBindHrs extends wepy.page {
       config = {
-        navigationBarTitleText: '已绑定的人力公司'
+        navigationBarTitleText: '绑定公司'
       };
       data = {
+        tipStr: '',
+        bindState: '',
         queryObj: {
           paginator: {
             page: 1,
@@ -124,32 +198,82 @@
         userId: ''
       };
       methods = {
-        actioncnt: function() {
-          wx.showActionSheet({
-            itemList: ['从人力公司库选择添加'],
-            itemColor: '#0ec3bc',
-            success: function(res) {
-              if (res.tapIndex === 0) {
-                wx.navigateTo({
-                  url: 'selectCompany'
-                })
+        unbinding: function (e, i, id) { // 解绑操作
+          var that = this
+          if (e !== 1) {
+            return this
+          } else {
+            wx.showModal({
+              title: '提示',
+              content: '您确认要解绑' + i + '么？',
+              success: function (res) {
+                if (res.confirm) {
+                  unBinding(id).then((data) => {
+                    if (data.success === true) {
+                      that.methods.getHrcompanies()
+                    }
+                  })
+                }
               }
+            })
+          }
+        },
+        actioncnt: function() {
+          if (this.hrcompanies.length === 0) {
+            wx.navigateTo({
+              url: 'selectCompany'
+            })
+          } else {
+            var that = this
+            wx.showActionSheet({
+              itemList: ['从人力公司库选择添加', '扫码添加'],
+              itemColor: '#0ec3bc',
+              success: function(res) {
+                if (res.tapIndex === 0) {
+                  wx.navigateTo({
+                    url: 'selectCompany'
+                  })
+                } else if (res.tapIndex === 1) {
+                  that.methods.scanCodeAdd()
+                }
+              }
+            })
+          }
+        }, // 人力资源库添加
+        scanCodeAdd: function () {
+          wx.scanCode({
+            onlyFromCamera: true,
+            success: (res) => {
+              console.log(res.result, '扫码添加事件')
             }
           })
-        }
+        } // 扫码添加人力公司
       };
-//      else if (res.tapIndex === 1) {
-//      wx.navigateTo({url: 'bindCompany'})
-//    }
       getHrcompanies() {
         var that = this
         wx.showLoading({title: '加载中'})
         this.queryObj.selector = {workerId: this.userId}
         searchWorkerHrs(this.queryObj).then((data) => {
           that.hrcompanies = data.data.data.list
+          if (data.data.data.list.length !== 0) {
+            for (var i = 0, len = that.hrcompanies.length; i < len; i++) {
+              if (that.hrcompanies[i].bindStatus === 0) {
+                that.hrcompanies[i].tipStr = '人力公司正在审核,请等待...'
+                that.hrcompanies[i].bindState = '未审核'
+              } else if (that.hrcompanies[i].bindStatus === 1) {
+                that.hrcompanies[i].tipStr = '如若解绑则需要' + that.hrcompanies[i].relieveDays + '天的解绑期,解绑期到后则自动解绑'
+                that.hrcompanies[i].bindState = '申请解绑'
+              } else if (that.hrcompanies[i].bindStatus === 3) {
+                that.hrcompanies[i].tipStr = '距您解绑该公司还剩' + Math.ceil(that.hrcompanies[i].waitDays / 3600 / 24) + '天'
+                that.hrcompanies[i].bindState = '解绑中'
+              }
+            }
+            wx.setNavigationBarTitle({
+              title: '公司详情'
+            })
+          }
           that.$apply()
           wx.hideLoading()
-          console.log('getHrcompanies', that.hrcompanies)
         })
       }
       onLoad() {

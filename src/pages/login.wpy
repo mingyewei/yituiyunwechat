@@ -121,7 +121,7 @@
   <view class="wrap">
     <input type="number" class="weui-search-bar__input txt" placeholder="请输入手机号码" value="{{mobile}}"
            placeholder-style="color:#cbcbcb" bindinput="listenerPhoneInput"/>
-    <input password="true" class="weui-search-bar__input txt" placeholder="请输入密码" placeholder-style="color:#cbcbcb"
+<input password="true" class="weui-search-bar__input txt" placeholder="请输入密码" placeholder-style="color:#cbcbcb"
            value="{{password}}" bindinput="listenerPasswordInput"/>
     <!--<view class="codeWrap">-->
     <!--<input type="text" class="weui-search-bar__input txt codeleft" placeholder="请输入验证码" placeholder-style="color:#cbcbcb" bindinput="listenerSmsCodeInput" />-->
