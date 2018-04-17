@@ -91,6 +91,7 @@
                 } else {
                   that.workerCurrentTask.showNull = 1
                   that.workerCurrentTask.fromDate = moment(new Date(that.workerCurrentTask.fromDate)).format('YYYY-MM-DD HH:mm')
+                  that.workerCurrentTask.fromDateriqi = moment(new Date(that.workerCurrentTask.fromDate)).format('YYYY-MM-DD')
                   that.workerCurrentTask.toDate = moment(new Date(that.workerCurrentTask.toDate)).format('YYYY-MM-DD HH:mm')
                 }
                 if (typeof that.workerCurrentTask.workLogs !== 'undefined') {

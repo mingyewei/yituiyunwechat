@@ -12,9 +12,10 @@
 
   }
   .recruitClass{
-    font-size:33rpx;
-    color:#111111;
+    font-size:31rpx;
+    color:#121212;
     margin-bottom:30rpx;
+    font-weight:700;
   }
   .orderNumber{
     font-size:26rpx;

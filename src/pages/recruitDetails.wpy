@@ -1,7 +1,8 @@
 <!--suppress CssInvalidPropertyValue -->
 <style lang="less">
-  .wrap{
+  page{
     text-align: center;
+    background-color:#f1f1f1;
   }
 .title{
   font-size:35rpx;
@@ -11,41 +12,42 @@
   padding: 40rpx 0;
 }
 .stitle{
-  font-size:30rpx;
+  font-size:27rpx;
   display:block;
   font-weight: 600;
+  color: #121212;
   background-color:#fff;
-  padding: 20rpx 0 20rpx 20rpx;
+  padding: 40rpx 0 20rpx 20rpx;
   text-align: left;
 }
   .general{
     font-size:25rpx;
     text-align:center;
-    margin-bottom:40rpx;
     width:100%;
     color:#aaaaaa;
-    margin-top: 40rpx;
+    background-color: #f1f1f1;
+    padding: 40rpx 0rpx;
   }
   .general text{
     margin: 0 20rpx;
   }
   .text {
     color:#858585;
-    font-size:24rpx;
+    font-size:21rpx;
     text-align:right;
     margin:0rpx 25rpx;
   }
   .name{
-    color:#333;
-    font-size:28rpx;
+    color:#121212;
+    font-size:26rpx;
+    font-weight: bold;
   }
 
   .weui-cells{
-    margin-top: 0!important;
     background-color:#fff;
-    padding:15rpx 10rpx!important;
-    position:static!important;
-    margin:15rpx 25rpx;
+    padding:10rpx;
+    position:static;
+    margin-top:0rpx;
   }
   .lefticon{
     margin-right: 25rpx;
@@ -54,11 +56,13 @@
     height:45rpx;
   }
   .info{
-    color: #858585;
-    margin-bottom: 20rpx;
-    text-align: left;
-    margin-top:-20rpx;
+    color:#858585;
+    text-align:left;
     margin-left:20rpx;
+    font-size:22rpx;
+    width:100%;
+    display: inline-block;
+    margin-bottom:30rpx;
   }
   .info text{
     margin-left: 30rpx;
@@ -70,15 +74,16 @@
     margin-left: 17rpx;
   }
   .workerinfo{
-    display: flex;
+    padding: 20rpx 14rpx 30rpx;
+    border-top: 1rpx solid #e1e1e1;
   }
   .workerinfo view{
-    flex: 1;
-    text-align: left;
+    display: inline-block;
   }
   .workerinfo .sex{
-    text-align: center;
-    color:#999999;
+    width:20rpx;
+    height:20rpx;
+    margin-left:10rpx;
   }
   .workerinfo .weui-cell__ft{
     text-align: right;
@@ -87,81 +92,82 @@
 
   .weui-cell__hd text {
     font-weight: 600;
-    font-size: 37rpx;
+    font-size: 27rpx;
+  }
+  .lineBottom{
+    margin-bottom: 10rpx;
+  }
+  .head{
+    width:80rpx;
+    height:80rpx;
+    border-radius:50%;
+    float: left;
   }
 </style>
 
 <template lang="wxml">
-  <view class="wrap">
-
     <view class="title">{{taskInfo.taskTypeText}}</view>
-
     <view class="weui-cells">
-
-      <view class="weui-cell weui-cell_access"  >
+      <view class="weui-cell weui-cell_access">
         <view class="weui-cell__hd">
           <text>任务时间</text>
         </view>
         <view class="weui-cell__bd text">{{taskInfo.fromDate}} - {{taskInfo.toDate}}</view>
       </view>
-
-      <view class="weui-cell weui-cell_access" >
+      <view class="weui-cell weui-cell_access">
         <view class="weui-cell__hd">
-         <text>需要人数</text>
+          <text>工作时间</text>
+        </view>
+        <view class="weui-cell__bd text">{{taskInfo.workStartTime}} - {{taskInfo.workEndTime}}</view>
+      </view>
+      <view class="weui-cell weui-cell_access">
+        <view class="weui-cell__hd">
+          <text>需要人数</text>
         </view>
         <view class="weui-cell__bd text">{{taskInfo.needWorkers}}</view>
       </view>
-
-      <view class="weui-cell weui-cell_access" >
+      <view class="weui-cell weui-cell_access">
         <view class="weui-cell__hd">
           <text>定价（元/小时）</text>
         </view>
         <view class="weui-cell__bd text">{{taskInfo.hourlyPay}}</view>
       </view>
-
-      <view class="weui-cell weui-cell_access" >
+      <view class="weui-cell weui-cell_access">
         <view class="weui-cell__hd">
           <text>任务内容</text>
         </view>
         <view class="weui-cell__bd text">{{taskInfo.taskContent}}</view>
       </view>
-
     </view>
-
-    <view class="general "> ——  <text> 人力公司接单情况</text>  ——</view>
-
-
-  <block class="item" wx:for="{{taskInfo.listTaskHr}}" wx:for-item="item"  wx:key="{{item.id}}">
-  <view class="weui-cells">
-    <view class="stitle">{{item.hrCompanyName}}</view>
-     <view class="info">所需人数：{{item.needWorkers}} </view>
-
-      <view  wx:if="{{item.confirmedWorkers > 0}}">
-        <view class="tasktotal">已接单人数：{{item.confirmedWorkers}}</view>
-        <block class="item" wx:for="{{item.confirmedSet}}" wx:for-item="worker"  wx:key="{{item.id}}">
-          <view class="weui-cell weui-cell_access workerinfo">
-            <view class="name">{{worker.workerName}}</view>
-            <view class="sex">{{worker.gender}}/{{worker.age}}岁</view>
-            <view class="weui-cell__ft">{{worker.mobile}}</view>
-          </view>
-        </block>
+    <view class="general"> ——<text> 人力公司接单情况</text>——</view>
+    <block class="item" wx:for="{{taskInfo.listTaskHr}}" wx:for-item="item" wx:key="{{item.id}}">
+      <view class="weui-cells lineBottom">
+        <view class="stitle">{{item.hrCompanyName}}</view>
+        <view class="info">所需人数：{{item.needWorkers}}　　已接单人数：{{item.confirmedWorkers}}</view>
+        <view wx:if="{{item.confirmedWorkers > 0}}">
+          <block class="item" wx:for="{{item.confirmedSet}}" wx:for-item="worker" wx:key="{{item.id}}">
+            <view class="weui-cell_access workerinfo">
+              <image src="{{worker.headImage}}" class="head"></image>
+              <view class="name">{{worker.workerName}}</view>
+              <view class="sex">{{worker.gender}}/{{worker.age}}岁</view>
+              <view class="weui-cell__ft">{{worker.mobile}}</view>
+            </view>
+          </block>
+        </view>
+        <view wx:if="{{item.refusedSet.length > 0}}">
+          <view class="tasktotal">已拒绝人数：{{item.refusedWorkers}}</view>
+          <block class="item" wx:for="{{item.refusedSet}}" wx:for-item="worker" wx:key="{{item.id}}">
+            <view class="weui-cell_access workerinfo">
+              <view class="name">{{worker.workerName}}</view>
+              <image class="sex" src="../images/my/man.png" wx:if="{{worker.gender}}"></image>
+              <image class="sex" src="../images/my/woman.png" wx:if="{{!worker.gender}}"></image>
+              <view class="sex">{{worker.age}}岁</view>
+              <view class="weui-cell__ft">{{worker.mobile}}</view>
+            </view>
+          </block>
+        </view>
       </view>
-
-      <view  wx:if="{{item.refusedSet.length > 0}}">
-        <view class="tasktotal">已拒绝人数：{{item.refusedWorkers}}</view>
-        <block class="item" wx:for="{{item.refusedSet}}" wx:for-item="worker"  wx:key="{{item.id}}">
-          <view class="weui-cell weui-cell_access workerinfo">
-            <view class="name">{{worker.workerName}}</view>
-            <view class="sex">{{worker.gender}}/{{worker.age}}岁</view>
-            <view class="weui-cell__ft">{{worker.mobile}}</view>
-          </view>
-        </block>
-      </view>
-
-
-  </view>
 </block>
-  </view>
 </template>
 <script>
     import wepy from 'wepy'
@@ -178,14 +184,14 @@
       methods = {};
       getSingleTask() {
         var that = this
-        console.log('getSingleTask taskid', that.taskInfo.id)
         wx.showLoading({title: '加载中'})
         fetchsingleTask(that.taskInfo.id).then((data) => {
           that.taskInfo = data.data.data
           that.taskInfo.fromDate = moment(new Date(that.taskInfo.fromDate)).format('YYYY-MM-DD HH:mm')
           that.taskInfo.toDate = moment(new Date(that.taskInfo.toDate)).format('YYYY-MM-DD HH:mm')
+          that.taskInfo.workEndTime = moment(new Date(that.taskInfo.dayEndTime)).format('HH:mm')
+          that.taskInfo.workStartTime = moment(new Date(that.taskInfo.dayStartTime)).format('HH:mm')
           that.$apply()
-          console.log('getSingleTask', that.taskInfo)
           wx.hideLoading()
         })
       }

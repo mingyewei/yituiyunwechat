@@ -171,7 +171,7 @@
                   wx.hideLoading()
                   wx.showModal({
                     title: '提示',
-                    content: '添加成功！',
+                    content: '添加成功！请等待审核...',
                     showCancel: false,
                     success: function(res) {
                       if (res.confirm) {
@@ -201,11 +201,14 @@
                   wx.hideLoading()
                   wx.showModal({
                     title: '提示',
-                    content: '添加成功！',
+                    content: '添加成功！请等待审核...',
                     showCancel: false,
                     success: function(res) {
-                      if (res.confirm) {
-                        wx.redirectTo({
+                      if (res) {
+                        // wx.redirectTo({
+                        //   url: 'workersBindHrs'
+                        // })
+                        wx.navigateTo({
                           url: 'workersBindHrs'
                         })
                         that.$apply()
@@ -215,7 +218,7 @@
                 } else {
                   wx.showModal({
                     title: '提示',
-                    content: data.data.message,
+                    content: '添加失败，请重试！',
                     showCancel: false
                   })
                   wx.hideLoading()

@@ -11,9 +11,11 @@
     position: relative;
   }
   .recruitClass{
-    font-size:33rpx;
-    color:#111111;
+    font-size:31rpx;
+    color:#121212;
     margin-bottom:30rpx;
+    font-weight:700;
+
   }
   .time icon{
     margin-right: 20rpx;
@@ -62,12 +64,20 @@
     border-radius:50%;
   }
   .releaseList .time, .releaseList .personPrice,.releaseList .address{
-    font-size:26rpx!important;
+    font-size:22rpx;
     color:#898989;
     padding-bottom:25rpx;
     font-weight: normal;
   }
-
+  .address{
+    border-bottom:1rpx solid #e1e1e1;
+  }
+  .hotelName{
+    padding:30rpx 0;
+    font-size:22rpx;
+    vertical-align:middle;
+    color:#858585;
+  }
 </style>
 <template>
   <image class="release" src="../images/manpower/release.png" mode="scaleToFill"  bindtap="gotoReleaseRecruit"></image>
@@ -84,6 +94,7 @@
       <view class="personPrice"><view class="iconpiont"></view>人数: {{item.needWorkers}} | 定价: {{item.hourlyPay}}元/小时</view>
       <view class="address"><view class="iconpiont"></view>{{item.taskContent}}</view>
     </view>
+    <view class="hotelName">{{item.hotelName}}</view>
   </view>
   </block>
 
