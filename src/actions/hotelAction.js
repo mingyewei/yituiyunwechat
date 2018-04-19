@@ -146,7 +146,7 @@ export function fetchTaskType() {
   })
 }
 
-//发布酒店任务
+// 发布酒店任务
 export function releaseTasks(recruitInfo) {
   return new Promise(function (resolve, reject) {
     wx.request({
@@ -164,7 +164,6 @@ export function releaseTasks(recruitInfo) {
     })
   })
 }
-
 
 // 分页查询酒店信息
 export function searchHotelTasks(queryObj) {
@@ -185,7 +184,7 @@ export function searchHotelTasks(queryObj) {
   })
 }
 
-//查询单个任务
+// 查询单个任务
 export function fetchsingleTask(id) {
   return new Promise(function (resolve, reject) {
     wx.request({
