@@ -1,6 +1,8 @@
 <!--suppress CssInvalidPropertyValue -->
 <style lang="less">
+body{
 
+}
 </style>
 
 <template lang="wxml">
