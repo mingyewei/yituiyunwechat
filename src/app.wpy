@@ -31,7 +31,7 @@ export default class extends wepy.app {
       'pages/retrievepwd', // 找回密码
       'pages/changepwd', // 修改密码
       'pages/aboutUs', // 关于我们
-      'pages/feedback', // 意见反馈
+      'pages/feedback', //  意见反馈
       'pages/bindCompany', // 绑定公司
       'pages/userData', // 小时工个人资料
       'pages/healthRecord', // 消小时工个人资料 - 健康证
