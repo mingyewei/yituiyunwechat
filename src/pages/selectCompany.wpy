@@ -84,7 +84,7 @@
 <template lang="wxml">
   <view class="wrap">
     <view class="searchmd">
-      <input class="weui-input search" type="text" placeholder="搜索人力公司" bindinput="search">
+      <input class="weui-input search" type="text" placeholder="搜索人力公司" bindinput="search"/>
       <button class="searchBtn" bindtap="searchHrInfo">搜索</button>
     </view>
   </view>

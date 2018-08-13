@@ -599,7 +599,7 @@
       this.fromTime = moment().add(10, 'm').format('HH:mm')
       this.recruit.fromDate = moment(this.fromDate + ' ' + this.fromTime)
 
-      this.dayStartDate = moment("1970-01-01").format('YYYY-MM-DD')
+      this.dayStartDate = moment('1970-01-01').format('YYYY-MM-DD')
       this.dayStartTime = moment().add(5, 'm').format('HH:mm')
       this.recruit.dayStartTime = moment(this.dayStartDate + ' ' + this.dayStartTime)
 

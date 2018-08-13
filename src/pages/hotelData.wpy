@@ -156,7 +156,6 @@
 <template lang="wxml">
   <view class="wrap">
   <view class="weui-cells">
-
     <view class="weui-cell weui-cell_access" hover-class="weui-cell_active"  bindtap="chooseimage(logo)">
       <view class="weui-cell__hd">
         <text>{{textTitle.logo}}</text>
